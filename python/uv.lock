@@ -1,0 +1,12 @@
+version = 1
+revision = 3
+requires-python = ">=3.14"
+
+[options]
+exclude-newer = "2026-07-22T16:48:13.027404Z"
+exclude-newer-span = "P3D"
+
+[[package]]
+name = "distrib-sh"
+version = "0.0.0"
+source = { editable = "." }

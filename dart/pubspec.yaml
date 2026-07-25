@@ -1,0 +1,14 @@
+# See: https://dart.dev/tools/pub/pubspec
+---
+name: distrib
+version: 0.0.0
+description: >-
+  Distrib helps you distribute your software.
+homepage: https://distrib.sh
+repository: https://github.com/artob/distrib
+issue_tracker: https://github.com/artob/distrib/issues
+dev_dependencies:
+  lints: ^6.0.0
+  test: ^1.25.0
+environment:
+  sdk: ^3.11.0
