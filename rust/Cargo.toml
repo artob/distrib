@@ -23,36 +23,56 @@ summary = "Distrib helps you distribute your software."
 
 [features]
 default = ["all", "std"]
-all = []
-alloc = ["serde?/alloc"]
-cli = ["std", "clientele", "dep:clap"]
-std = ["derive_more/std", "alloc"]
+all = ["interops", "languages"]
+alloc = ["dogma/alloc", "serde_json/alloc", "serde_with?/alloc"]
+cli = ["std", "clientele", "clientele/default", "clientele/tracing", "dep:clap"]
+std = ["alloc", "derive_more/std", "dogma/std", "serde_with?/std"]
 unstable = []
 
 # Interoperability:
 interops = ["serde"]
-serde = ["dep:serde", "alloc"]
+serde = ["alloc", "dep:serde", "dep:serde_json"]
+
+# Languages:
+languages = ["dart", "js", "python", "ruby", "rust"]
+dart = ["dep:serde_norway"]
+js = ["dep:package_json_schema"]
+python = ["dep:pyproject-toml", "dep:toml0"]
+ruby = ["dep:serde_norway", "dep:serde_with"]
+rust = ["dep:cargo_toml", "dep:toml1"]
 
 [dependencies]
 derive_more = { version = "2", default-features = false, features = ["display", "from_str"] }
+dogma = { version = "0.2.1", default-features = false }
 thiserror = { version = "2", default-features = false }
 
 # Interoperability:
 serde = { version = "1", default-features = false, features = ["derive"], optional = true }
+serde_json = { version = "1.0", default-features = false, features = ["preserve_order"], optional = true }
+
+# Languages:
+cargo_toml = { version = "1.0", default-features = false, optional = true }
+package_json_schema = { version = "0.3", default-features = false, optional = true }
+pyproject-toml = { version = "0.13", default-features = false, optional = true }
+#rubyrs = { version = "0.2", default-features = false, optional = true }
+serde_norway = { version = "0.9", default-features = false, optional = true }
+serde_with = { version = "3.21", default-features = false, features = ["macros"], optional = true }
+toml0 = { package = "toml", version = "0.9", default-features = false, optional = true }
+toml1 = { package = "toml", version = "1.0", default-features = false, optional = true }
 
 # CLI:
 clap = { version = "4.5", default-features = false, optional = true }
 clientele = { version = "0.3.8", features = [], optional = true }
 
-# Preview locally with: RUSTDOCFLAGS="--cfg docsrs" cargo +nightly doc --all-features
-[package.metadata.docs.rs]
-all-features = true
-rustdoc-args = ["--cfg", "docsrs"]
-
 [[bin]]
 name = "distrib"
 path = "src/main.rs"
 required-features = ["cli"]
+
+# Preview locally with: RUSTDOCFLAGS="--cfg docsrs" cargo +nightly doc --all-features
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
 
 # See: https://github.com/cargo-bins/cargo-binstall/blob/main/SUPPORT.md
 [package.metadata.binstall]
