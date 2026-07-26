@@ -44,6 +44,8 @@
 cargo binstall -y distrib
 ```
 
+<img width="100%" alt="Installation via cargo-binstall" src="https://github.com/artob/distrib/raw/master/rust/etc/asciinema/install.gif"/>
+
 #### Installation via [mise]
 
 ```bash
