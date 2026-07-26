@@ -23,11 +23,13 @@ pub mod dart {
     mod error;
     pub use error::*;
 
-    mod load;
-    pub use load::*;
-
     pub mod pubspec;
     pub use pubspec::Pubspec;
+
+    #[cfg(feature = "std")]
+    mod load;
+    #[cfg(feature = "std")]
+    pub use load::*;
 }
 
 /// Support for JavaScript/TypeScript projects.
@@ -36,11 +38,13 @@ pub mod js {
     mod error;
     pub use error::*;
 
-    mod load;
-    pub use load::*;
-
     pub mod package;
     pub use package::*;
+
+    #[cfg(feature = "std")]
+    mod load;
+    #[cfg(feature = "std")]
+    pub use load::*;
 }
 
 /// Support for Python projects.
@@ -49,11 +53,13 @@ pub mod python {
     mod error;
     pub use error::*;
 
-    mod load;
-    pub use load::*;
-
     pub mod pyproject;
     pub use pyproject::*;
+
+    #[cfg(feature = "std")]
+    mod load;
+    #[cfg(feature = "std")]
+    pub use load::*;
 }
 
 /// Support for Ruby projects.
@@ -65,7 +71,9 @@ pub mod ruby {
     pub mod gemspec;
     pub use gemspec::*;
 
+    #[cfg(feature = "std")]
     mod load;
+    #[cfg(feature = "std")]
     pub use load::*;
 }
 
@@ -75,9 +83,11 @@ pub mod rust {
     mod error;
     pub use error::*;
 
-    mod load;
-    pub use load::*;
-
     pub mod manifest;
     pub use manifest::*;
+
+    #[cfg(feature = "std")]
+    mod load;
+    #[cfg(feature = "std")]
+    pub use load::*;
 }
