@@ -1,0 +1,94 @@
+# See: https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[package]
+name = "distrib"
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+description.workspace = true
+#documentation.workspace = true
+readme.workspace = true
+homepage.workspace = true
+repository.workspace = true
+license.workspace = true
+keywords.workspace = true
+categories.workspace = true
+publish.workspace = true
+
+# See: https://readmer.dev
+[package.metadata.readmer.project]
+title = "Distrib"
+summary = "Distrib helps you distribute your software."
+
+[features]
+default = ["all", "std"]
+all = ["interops", "languages"]
+alloc = [
+    "distrib-dart?/alloc",
+    "distrib-js?/alloc",
+    "distrib-python?/alloc",
+    "distrib-ruby?/alloc",
+    "distrib-rust?/alloc",
+    "dogma/alloc",
+]
+cli = ["std", "clientele", "clientele/default", "clientele/tracing", "dep:clap"]
+std = [
+    "alloc",
+    "derive_more/std",
+    "distrib-dart?/std",
+    "distrib-js?/std",
+    "distrib-python?/std",
+    "distrib-ruby?/std",
+    "distrib-rust?/std",
+    "dogma/std",
+]
+unstable = []
+
+# Interoperability:
+interops = ["serde"]
+serde = [
+    "distrib-dart?/serde",
+    "distrib-js?/serde",
+    "distrib-python?/serde",
+    "distrib-ruby?/serde",
+    "distrib-rust?/serde",
+]
+
+# Languages:
+languages = ["dart", "js", "python", "ruby", "rust"]
+dart = ["dep:distrib-dart"]
+js = ["dep:distrib-js"]
+python = ["dep:distrib-python"]
+ruby = ["dep:distrib-ruby"]
+rust = ["dep:distrib-rust"]
+
+[dependencies]
+derive_more = { workspace = true, features = ["display", "from_str"] }
+dogma.workspace = true
+thiserror.workspace = true
+
+# Languages:
+distrib-dart = { workspace = true, optional = true }
+distrib-js = { workspace = true, optional = true }
+distrib-python = { workspace = true, optional = true }
+distrib-ruby = { workspace = true, optional = true }
+distrib-rust = { workspace = true, optional = true }
+
+# CLI:
+clap = { version = "4.5", default-features = false, optional = true }
+clientele = { version = "0.3.8", features = [], optional = true }
+
+[[bin]]
+name = "distrib"
+path = "src/main.rs"
+required-features = ["cli"]
+
+# Preview locally with: RUSTDOCFLAGS="--cfg docsrs" cargo +nightly doc --all-features
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
+
+# See: https://github.com/cargo-bins/cargo-binstall/blob/main/SUPPORT.md
+[package.metadata.binstall]
+disabled-strategies = ["quick-install"]

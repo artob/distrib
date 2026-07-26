@@ -1,11 +1,10 @@
 # See: https://doc.rust-lang.org/cargo/reference/manifest.html
 
-[package]
-name = "distrib"
+[workspace.package]
 version = "0.0.0"
 authors = ["Arto Bendiken"]
 edition = "2024"
-#rust-version = "1.85"
+rust-version = "1.85"
 description = "Distrib helps you distribute your software."
 #documentation = "https://docs.rs/distrib"
 readme = true
@@ -16,69 +15,43 @@ keywords = ["distrib"]
 categories = ["command-line-utilities", "no-std"]
 publish = true
 
-# See: https://readmer.dev
-[package.metadata.readmer.project]
-title = "Distrib"
-summary = "Distrib helps you distribute your software."
+[workspace]
+members = ["lib/*"]
+resolver = "2"
 
-[features]
-default = ["all", "std"]
-all = ["interops", "languages"]
-alloc = ["dogma/alloc", "serde_json/alloc", "serde_with?/alloc"]
-cli = ["std", "clientele", "clientele/default", "clientele/tracing", "dep:clap"]
-std = ["alloc", "derive_more/std", "dogma/std", "serde_with?/std"]
-unstable = []
+[workspace.dependencies]
+distrib = { version = "=0.0.0", default-features = true }
+distrib-dart = { version = "=0.0.0", default-features = true }
+distrib-js = { version = "=0.0.0", default-features = true }
+distrib-python = { version = "=0.0.0", default-features = true }
+distrib-ruby = { version = "=0.0.0", default-features = true }
+distrib-rust = { version = "=0.0.0", default-features = true }
 
-# Interoperability:
-interops = ["serde"]
-serde = ["alloc", "dep:serde", "dep:serde_json"]
-
-# Languages:
-languages = ["dart", "js", "python", "ruby", "rust"]
-dart = ["dep:serde_norway"]
-js = ["dep:package_json_schema"]
-python = ["dep:pyproject-toml", "dep:toml0"]
-ruby = ["dep:serde_norway", "dep:serde_with"]
-rust = ["dep:cargo_toml", "dep:toml1"]
-
-[dependencies]
-derive_more = { version = "2", default-features = false, features = ["display", "from_str"] }
+# Implementation:
+cargo_toml = { version = "1.0", default-features = false }
+derive_more = { version = "2", default-features = false }
 dogma = { version = "0.2.1", default-features = false }
+package_json_schema = { version = "0.3", default-features = false }
+pyproject-toml = { version = "0.13", default-features = false }
+serde_norway = { version = "0.9", default-features = false }
 thiserror = { version = "2", default-features = false }
 
 # Interoperability:
-serde = { version = "1", default-features = false, features = ["derive"], optional = true }
-serde_json = { version = "1.0", default-features = false, features = ["preserve_order"], optional = true }
-
-# Languages:
-cargo_toml = { version = "1.0", default-features = false, optional = true }
-package_json_schema = { version = "0.3", default-features = false, optional = true }
-pyproject-toml = { version = "0.13", default-features = false, optional = true }
-#rubyrs = { version = "0.2", default-features = false, optional = true }
-serde_norway = { version = "0.9", default-features = false, optional = true }
-serde_with = { version = "3.21", default-features = false, features = ["macros"], optional = true }
-toml0 = { package = "toml", version = "0.9", default-features = false, optional = true }
-toml1 = { package = "toml", version = "1.0", default-features = false, optional = true }
-
-# CLI:
-clap = { version = "4.5", default-features = false, optional = true }
-clientele = { version = "0.3.8", features = [], optional = true }
-
-[[bin]]
-name = "distrib"
-path = "src/main.rs"
-required-features = ["cli"]
-
-# Preview locally with: RUSTDOCFLAGS="--cfg docsrs" cargo +nightly doc --all-features
-[package.metadata.docs.rs]
-all-features = true
-rustdoc-args = ["--cfg", "docsrs"]
-
-# See: https://github.com/cargo-bins/cargo-binstall/blob/main/SUPPORT.md
-[package.metadata.binstall]
-disabled-strategies = ["quick-install"]
+serde = { version = "1", default-features = false, features = ["derive"] }
+serde_json = { version = "1", default-features = false, features = ["preserve_order"] }
+serde_with = { version = "3.21", default-features = false, features = ["macros"] }
+toml0 = { package = "toml", version = "0.9", default-features = false }
+toml1 = { package = "toml", version = "1.0", default-features = false }
 
 # The profile that 'dist' will build with
 [profile.dist]
 inherits = "release"
 lto = "thin"
+
+[patch.crates-io]
+distrib = { path = "lib/distrib" }
+distrib-dart = { path = "lib/distrib-dart" }
+distrib-js = { path = "lib/distrib-js" }
+distrib-python = { path = "lib/distrib-python" }
+distrib-ruby = { path = "lib/distrib-ruby" }
+distrib-rust = { path = "lib/distrib-rust" }
