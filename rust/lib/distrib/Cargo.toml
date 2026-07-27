@@ -23,8 +23,9 @@ summary = "Distrib helps you distribute your software."
 
 [features]
 default = ["all", "std"]
-all = ["interops", "languages"]
+all = ["interops", "languages", "macros"]
 alloc = [
+    "distrib-macros?/alloc",
     "distrib-dart?/alloc",
     "distrib-js?/alloc",
     "distrib-python?/alloc",
@@ -36,6 +37,7 @@ cli = ["std", "clientele", "clientele/default", "clientele/tracing", "dep:clap"]
 std = [
     "alloc",
     "derive_more/std",
+    "distrib-macros?/std",
     "distrib-dart?/std",
     "distrib-js?/std",
     "distrib-python?/std",
@@ -44,6 +46,9 @@ std = [
     "dogma/std",
 ]
 unstable = []
+
+# Features:
+macros = ["dep:distrib-macros"]
 
 # Interoperability:
 interops = ["serde"]
@@ -67,6 +72,9 @@ rust = ["dep:distrib-rust"]
 derive_more = { workspace = true, features = ["display", "from_str"] }
 dogma.workspace = true
 thiserror.workspace = true
+
+# Features:
+distrib-macros = { workspace = true, optional = true }
 
 # Languages:
 distrib-dart = { workspace = true, optional = true }

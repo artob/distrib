@@ -21,6 +21,7 @@ resolver = "2"
 
 [workspace.dependencies]
 distrib = { version = "=0.0.0", default-features = true }
+distrib-macros = { version = "=0.0.0", default-features = true }
 distrib-dart = { version = "=0.0.0", default-features = true }
 distrib-js = { version = "=0.0.0", default-features = true }
 distrib-python = { version = "=0.0.0", default-features = true }
@@ -50,6 +51,7 @@ lto = "thin"
 
 [patch.crates-io]
 distrib = { path = "lib/distrib" }
+distrib-macros = { path = "lib/distrib-macros" }
 distrib-dart = { path = "lib/distrib-dart" }
 distrib-js = { path = "lib/distrib-js" }
 distrib-python = { path = "lib/distrib-python" }

@@ -1,0 +1,44 @@
+# See: https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[package]
+name = "distrib-macros"
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+description.workspace = true
+#documentation.workspace = true
+readme.workspace = true
+homepage.workspace = true
+repository.workspace = true
+license.workspace = true
+keywords.workspace = true
+categories.workspace = true
+publish.workspace = true
+
+# See: https://readmer.dev
+[package.metadata.readmer.project]
+title = "Distrib: Macros"
+summary = "Distrib helps you distribute your software."
+
+[features]
+default = ["all", "std"]
+all = []
+alloc = []
+std = ["alloc"]
+unstable = []
+
+[dependencies]
+darling = ">=0.20.0, <0.24.0"
+quote = "1"
+syn = { version = "2", features = ["full"] }
+
+[dev-dependencies]
+
+[lib]
+proc-macro = true
+
+# Preview locally with: RUSTDOCFLAGS="--cfg docsrs" cargo +nightly doc --all-features
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]

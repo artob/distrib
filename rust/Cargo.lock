@@ -314,6 +314,7 @@ dependencies = [
  "derive_more",
  "distrib-dart",
  "distrib-js",
+ "distrib-macros",
  "distrib-python",
  "distrib-ruby",
  "distrib-rust",
@@ -344,6 +345,15 @@ dependencies = [
  "serde",
  "serde_json",
  "thiserror 2.0.18",
+]
+
+[[package]]
+name = "distrib-macros"
+version = "0.0.0"
+dependencies = [
+ "darling",
+ "quote",
+ "syn",
 ]
 
 [[package]]
