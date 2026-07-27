@@ -12,7 +12,7 @@ homepage = "https://distrib.sh"
 repository = "https://github.com/artob/distrib"
 license = "Unlicense"
 keywords = ["distrib"]
-categories = ["command-line-utilities", "no-std"]
+categories = ["command-line-utilities", "api-bindings", "development-tools::ffi", "no-std"]
 publish = true
 
 [workspace]
@@ -22,11 +22,14 @@ resolver = "2"
 [workspace.dependencies]
 distrib = { version = "=0.0.0", default-features = true }
 distrib-macros = { version = "=0.0.0", default-features = true }
+
+# Languages:
 distrib-dart = { version = "=0.0.0", default-features = true }
 distrib-js = { version = "=0.0.0", default-features = true }
 distrib-python = { version = "=0.0.0", default-features = true }
 distrib-ruby = { version = "=0.0.0", default-features = true }
 distrib-rust = { version = "=0.0.0", default-features = true }
+distrib-wasm = { version = "=0.0.0", default-features = true }
 
 # Implementation:
 cargo_toml = { version = "1.0", default-features = false }
@@ -57,3 +60,4 @@ distrib-js = { path = "lib/distrib-js" }
 distrib-python = { path = "lib/distrib-python" }
 distrib-ruby = { path = "lib/distrib-ruby" }
 distrib-rust = { path = "lib/distrib-rust" }
+distrib-wasm = { path = "lib/distrib-wasm" }

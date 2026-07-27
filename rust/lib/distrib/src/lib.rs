@@ -33,6 +33,10 @@ pub use distrib_ruby as ruby;
 #[cfg(feature = "rust")]
 pub use distrib_rust as rust;
 
+/// Support for WebAssembly targets.
+#[cfg(feature = "wasm")]
+pub use distrib_wasm as wasm;
+
 #[doc = include_str!("../../../README.md")]
 #[cfg(doctest)]
 pub struct ReadmeDoctests;
