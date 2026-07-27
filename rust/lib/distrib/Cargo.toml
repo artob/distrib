@@ -65,12 +65,12 @@ serde = [
 
 # Languages:
 languages = ["dart", "js", "python", "ruby", "rust", "wasm"]
-dart = ["dep:distrib-dart"]
-js = ["dep:distrib-js"]
-python = ["dep:distrib-python"]
-ruby = ["dep:distrib-ruby"]
-rust = ["dep:distrib-rust"]
-wasm = ["dep:distrib-wasm"]
+dart = ["distrib-macros?/dart", "dep:distrib-dart"]
+js = ["distrib-macros?/js", "dep:distrib-js"]
+python = ["distrib-macros?/python", "dep:distrib-python"]
+ruby = ["distrib-macros?/ruby", "dep:distrib-ruby"]
+rust = ["distrib-macros?/rust", "dep:distrib-rust"]
+wasm = ["distrib-macros?/wasm", "dep:distrib-wasm"]
 
 [dependencies]
 derive_more = { workspace = true, features = ["display", "from_str"] }

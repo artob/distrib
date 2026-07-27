@@ -23,10 +23,19 @@ summary = "Distrib helps you distribute your software."
 
 [features]
 default = ["all", "std"]
-all = []
+all = ["languages"]
 alloc = []
 std = ["alloc"]
 unstable = []
+
+# Languages:
+languages = ["dart", "js", "python", "ruby", "rust", "wasm"]
+dart = []
+js = []
+python = []
+ruby = []
+rust = []
+wasm = []
 
 [dependencies]
 darling = ">=0.20.0, <0.24.0"
