@@ -1,7 +1,7 @@
 # See: https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [package]
-name = "distrib-wasm"
+name = "distrib-build"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
@@ -18,29 +18,29 @@ publish.workspace = true
 
 # See: https://readmer.dev
 [package.metadata.readmer.project]
-title = "Distrib: WebAssembly Support"
+title = "Distrib: Build"
 summary = "Distrib helps you distribute your software."
 
 [features]
 default = ["all", "std"]
-all = ["serde"]
+all = ["languages"]
 alloc = []
 std = ["alloc"]
 unstable = []
 
-# Interoperability:
-serde = ["dep:serde"]
+# Languages:
+languages = ["dart", "js", "python", "ruby", "rust", "wasm"]
+dart = []
+js = []
+python = ["dep:pyo3-build-config"]
+ruby = []
+rust = []
+wasm = []
 
 [dependencies]
-derive_more = { workspace = true, features = ["display", "from_str"] }
-dogma.workspace = true
-thiserror.workspace = true
-wasm-bindgen.workspace = true
 
-# Interoperability:
-serde = { workspace = true, optional = true }
-
-[dev-dependencies]
+# Languages:
+pyo3-build-config = { workspace = true, optional = true }
 
 # Preview locally with: RUSTDOCFLAGS="--cfg docsrs" cargo +nightly doc --all-features
 [package.metadata.docs.rs]

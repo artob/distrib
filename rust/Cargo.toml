@@ -21,6 +21,7 @@ resolver = "2"
 
 [workspace.dependencies]
 distrib = { version = "=0.0.0", default-features = true }
+distrib-build = { version = "=0.0.0", default-features = true }
 distrib-macros = { version = "=0.0.0", default-features = true }
 
 # Languages:
@@ -31,12 +32,27 @@ distrib-ruby = { version = "=0.0.0", default-features = true }
 distrib-rust = { version = "=0.0.0", default-features = true }
 distrib-wasm = { version = "=0.0.0", default-features = true }
 
-# Implementation:
+# Languages - Dart:
+
+# Languages - JS/TS:
+package_json_schema = { version = "0.3", default-features = false }
+
+# Languages - Python:
+pyo3 = { version = "0.29", default-features = false }
+pyo3-build-config = { version = "0.29", default-features = false }
+pyproject-toml = { version = "0.13", default-features = false }
+
+# Languages - Ruby:
+
+# Languages - Rust:
 cargo_toml = { version = "1.0", default-features = false }
+
+# Languages - WebAssembly:
+wasm-bindgen = { version = "0.2", default-features = false }
+
+# Miscellaneous:
 derive_more = { version = "2", default-features = false }
 dogma = { version = "0.2.1", default-features = false }
-package_json_schema = { version = "0.3", default-features = false }
-pyproject-toml = { version = "0.13", default-features = false }
 serde_norway = { version = "0.9", default-features = false }
 thiserror = { version = "2", default-features = false }
 
@@ -54,6 +70,7 @@ lto = "thin"
 
 [patch.crates-io]
 distrib = { path = "lib/distrib" }
+distrib-build = { path = "lib/distrib-build" }
 distrib-macros = { path = "lib/distrib-macros" }
 distrib-dart = { path = "lib/distrib-dart" }
 distrib-js = { path = "lib/distrib-js" }
