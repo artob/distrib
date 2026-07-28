@@ -110,7 +110,7 @@ use distrib::*;
 
 ### Exporting Functions
 
-```rust
+```rust,ignore
 #[distrib::export]
 pub fn square(n: i64) -> i64 {
     n * n
