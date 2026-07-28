@@ -417,6 +417,7 @@ dependencies = [
  "dart-sys",
  "derive_more",
  "dogma 0.2.1",
+ "indexmap",
  "serde",
  "serde_json",
  "serde_norway",
@@ -467,6 +468,7 @@ version = "0.0.0"
 dependencies = [
  "derive_more",
  "dogma 0.2.1",
+ "indexmap",
  "magnus",
  "serde",
  "serde_json",

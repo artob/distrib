@@ -1,12 +1,14 @@
 // This is free and unencumbered software released into the public domain.
 
-use alloc::{collections::BTreeMap, string::String, vec::Vec};
+use alloc::{string::String, vec::Vec};
+use indexmap::IndexMap;
 
-pub type Map<K, V = serde_json::Value> = BTreeMap<K, V>;
+#[cfg(all(feature = "alloc", feature = "serde"))]
+pub type Map<K, V = serde_json::Value> = IndexMap<K, V>;
 
 /// See: <https://dart.dev/tools/pub/pubspec>
 #[cfg_attr(feature = "serde", serde_with::serde_as)]
-#[derive(Clone, Debug, Default, Eq, Hash, PartialEq)]
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 #[cfg_attr(feature = "serde", serde(default, tag = "@type"))]
 pub struct Pubspec {
@@ -38,14 +40,17 @@ pub struct Pubspec {
     pub documentation: Option<Url>,
 
     /// See: <https://dart.dev/tools/pub/pubspec#dependencies>
+    #[cfg(all(feature = "alloc", feature = "serde"))]
     #[cfg_attr(feature = "serde", serde(skip_serializing_if = "Option::is_none"))]
     pub dependencies: Option<Map<String, Dependency>>,
 
     /// See: <https://dart.dev/tools/pub/pubspec#dependencies>
+    #[cfg(all(feature = "alloc", feature = "serde"))]
     #[cfg_attr(feature = "serde", serde(skip_serializing_if = "Option::is_none"))]
     pub dev_dependencies: Option<Map<String, Dependency>>,
 
     /// See: <https://dart.dev/tools/pub/pubspec#dependencies>
+    #[cfg(all(feature = "alloc", feature = "serde"))]
     #[cfg_attr(feature = "serde", serde(skip_serializing_if = "Option::is_none"))]
     pub dependency_overrides: Option<Map<String, Dependency>>,
 
@@ -54,10 +59,12 @@ pub struct Pubspec {
     pub environment: Option<Environment>,
 
     /// See: <https://dart.dev/tools/pub/pubspec#executables>
+    #[cfg(all(feature = "alloc", feature = "serde"))]
     #[cfg_attr(feature = "serde", serde(skip_serializing_if = "Option::is_none"))]
     pub executables: Option<Map<String, Option<String>>>,
 
     /// See: <https://dart.dev/tools/pub/pubspec#platforms>
+    #[cfg(all(feature = "alloc", feature = "serde"))]
     #[cfg_attr(feature = "serde", serde(skip_serializing_if = "Option::is_none"))]
     pub platforms: Option<Map<String, Option<()>>>,
 
@@ -86,6 +93,7 @@ pub struct Pubspec {
     pub ignored_advisories: Option<Vec<String>>,
 
     /// See: <https://dart.dev/tools/pub/pubspec#hooks>
+    #[cfg(all(feature = "alloc", feature = "serde"))]
     #[cfg_attr(feature = "serde", serde(skip_serializing_if = "Option::is_none"))]
     pub hooks: Option<Map<String, Hook>>,
 }
@@ -105,6 +113,7 @@ pub struct Environment {
 }
 
 /// See: <https://dart.dev/tools/hooks#hook-configuration>
+#[cfg(all(feature = "alloc", feature = "serde"))]
 pub type Hook = Map<String, String>; // TODO
 
 /// See: <https://dart.dev/tools/pub/pubspec#name>

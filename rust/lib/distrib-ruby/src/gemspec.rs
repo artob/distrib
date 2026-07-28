@@ -1,8 +1,12 @@
 // This is free and unencumbered software released into the public domain.
 
 use alloc::{collections::BTreeMap, string::String, vec::Vec};
+use indexmap::IndexMap;
 
 pub type Gemspec = Specification;
+
+#[cfg(all(feature = "alloc", feature = "serde"))]
+pub type Map<K, V = serde_json::Value> = IndexMap<K, V>;
 
 /// The package information for a gem, typically defined in a `.gemspec` file.
 ///
@@ -170,7 +174,7 @@ pub enum Platform {
 }
 
 /// See: <https://guides.rubygems.org/specification-reference/#metadata>
-#[derive(Clone, Debug, Default, Eq, Hash, PartialEq)]
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 #[cfg_attr(feature = "serde", serde(default))]
 pub struct Metadata {
@@ -206,9 +210,10 @@ pub struct Metadata {
     #[cfg_attr(feature = "serde", serde(skip_serializing_if = "Option::is_none"))]
     pub wiki_uri: Option<String>,
 
+    #[cfg(all(feature = "alloc", feature = "serde"))]
     #[cfg_attr(
         feature = "serde",
-        serde(flatten, skip_serializing_if = "serde_json::Map::is_empty")
+        serde(flatten, skip_serializing_if = "Map::is_empty")
     )]
-    pub other: serde_json::Map<String, serde_json::Value>,
+    pub other: Map<String>,
 }

@@ -25,16 +25,17 @@ summary = "Distrib helps you distribute your software."
 default = ["all", "std"]
 all = ["dart-sys", "serde"]
 alloc = []
-std = ["alloc"]
+std = ["alloc", "indexmap/std"]
 unstable = []
 
 # Interoperability:
 dart-sys = ["dep:dart-sys"]
-serde = ["dep:serde", "dep:serde_json", "dep:serde_with"]
+serde = ["indexmap/serde", "dep:serde", "dep:serde_json", "dep:serde_with"]
 
 [dependencies]
 derive_more = { workspace = true, features = ["display", "from_str"] }
 dogma.workspace = true
+indexmap.workspace = true
 serde_norway.workspace = true
 thiserror.workspace = true
 
