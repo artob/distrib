@@ -385,7 +385,7 @@ dependencies = [
 
 [[package]]
 name = "distrib"
-version = "0.0.0"
+version = "0.0.1"
 dependencies = [
  "clap",
  "clientele",
@@ -403,7 +403,7 @@ dependencies = [
 
 [[package]]
 name = "distrib-build"
-version = "0.0.0"
+version = "0.0.1"
 dependencies = [
  "napi-build",
  "pyo3-build-config",
@@ -412,7 +412,7 @@ dependencies = [
 
 [[package]]
 name = "distrib-dart"
-version = "0.0.0"
+version = "0.0.1"
 dependencies = [
  "dart-sys",
  "derive_more",
@@ -427,7 +427,7 @@ dependencies = [
 
 [[package]]
 name = "distrib-js"
-version = "0.0.0"
+version = "0.0.1"
 dependencies = [
  "derive_more",
  "dogma 0.2.1",
@@ -441,7 +441,7 @@ dependencies = [
 
 [[package]]
 name = "distrib-macros"
-version = "0.0.0"
+version = "0.0.1"
 dependencies = [
  "darling",
  "quote",
@@ -450,7 +450,7 @@ dependencies = [
 
 [[package]]
 name = "distrib-python"
-version = "0.0.0"
+version = "0.0.1"
 dependencies = [
  "derive_more",
  "dogma 0.2.1",
@@ -464,7 +464,7 @@ dependencies = [
 
 [[package]]
 name = "distrib-ruby"
-version = "0.0.0"
+version = "0.0.1"
 dependencies = [
  "derive_more",
  "dogma 0.2.1",
@@ -479,7 +479,7 @@ dependencies = [
 
 [[package]]
 name = "distrib-rust"
-version = "0.0.0"
+version = "0.0.1"
 dependencies = [
  "cargo_toml",
  "derive_more",
@@ -492,7 +492,7 @@ dependencies = [
 
 [[package]]
 name = "distrib-wasm"
-version = "0.0.0"
+version = "0.0.1"
 dependencies = [
  "derive_more",
  "dogma 0.2.1",

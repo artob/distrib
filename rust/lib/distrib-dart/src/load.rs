@@ -1,7 +1,6 @@
 // This is free and unencumbered software released into the public domain.
 
 use super::{LoadPubspecError, Pubspec};
-use serde_json::Value;
 use std::path::Path;
 
 pub fn load_pubspec(path: impl AsRef<Path>) -> Result<Pubspec, LoadPubspecError> {

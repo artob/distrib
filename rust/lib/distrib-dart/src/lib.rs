@@ -23,7 +23,7 @@ pub use error::*;
 pub mod pubspec;
 pub use pubspec::Pubspec;
 
-#[cfg(feature = "std")]
+#[cfg(all(feature = "std", feature = "serde"))]
 mod load;
-#[cfg(feature = "std")]
+#[cfg(all(feature = "std", feature = "serde"))]
 pub use load::*;
