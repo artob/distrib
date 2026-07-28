@@ -94,6 +94,15 @@ Enable only specific features:
 use {{ package.name }}::*;
 ```
 
+### Exporting Functions
+
+```rust
+#[distrib::export]
+pub fn square(n: i64) -> i64 {
+    n * n
+}
+```
+
 ## 📚 Reference
 
 [docs.rs/{{ package.name }}](https://docs.rs/{{ package.name }})

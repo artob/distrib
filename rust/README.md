@@ -108,6 +108,15 @@ distrib = { version = "0", default-features = false, features = ["alloc"] }
 use distrib::*;
 ```
 
+### Exporting Functions
+
+```rust
+#[distrib::export]
+pub fn square(n: i64) -> i64 {
+    n * n
+}
+```
+
 ## 📚 Reference
 
 [docs.rs/distrib](https://docs.rs/distrib)
