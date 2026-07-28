@@ -13,6 +13,10 @@ extern crate alloc;
 #[cfg(feature = "std")]
 extern crate std;
 
+#[cfg(feature = "dart-sys")]
+#[doc(hidden)]
+pub use dart_sys;
+
 mod error;
 pub use error::*;
 

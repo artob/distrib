@@ -13,6 +13,10 @@ extern crate alloc;
 #[cfg(feature = "std")]
 extern crate std;
 
+#[cfg(feature = "magnus")]
+#[doc(hidden)]
+pub use magnus;
+
 mod error;
 pub use error::*;
 

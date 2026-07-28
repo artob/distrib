@@ -23,12 +23,13 @@ summary = "Distrib helps you distribute your software."
 
 [features]
 default = ["all", "std"]
-all = ["serde"]
+all = ["magnus", "serde"]
 alloc = []
 std = ["alloc"]
 unstable = []
 
 # Interoperability:
+magnus = ["dep:magnus"]
 serde = ["dep:serde", "dep:serde_json", "dep:serde_with"]
 
 [dependencies]
@@ -38,11 +39,10 @@ serde_norway.workspace = true
 thiserror.workspace = true
 
 # Interoperability:
+magnus = { workspace = true, optional = true }
 serde = { workspace = true, optional = true }
 serde_json = { workspace = true, optional = true }
 serde_with = { workspace = true, optional = true }
-
-[dev-dependencies]
 
 # Preview locally with: RUSTDOCFLAGS="--cfg docsrs" cargo +nightly doc --all-features
 [package.metadata.docs.rs]

@@ -12,3 +12,7 @@ extern crate alloc;
 
 #[cfg(feature = "std")]
 extern crate std;
+
+#[cfg(feature = "wasm-bindgen")]
+#[doc(hidden)]
+pub use wasm_bindgen;

@@ -42,8 +42,6 @@ darling = ">=0.20.0, <0.24.0"
 quote = "1"
 syn = { version = "2", features = ["full"] }
 
-[dev-dependencies]
-
 [lib]
 proc-macro = true
 

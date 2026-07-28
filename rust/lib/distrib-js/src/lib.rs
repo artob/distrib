@@ -13,6 +13,10 @@ extern crate alloc;
 #[cfg(feature = "std")]
 extern crate std;
 
+#[cfg(feature = "napi")]
+#[doc(hidden)]
+pub use napi;
+
 mod error;
 pub use error::*;
 

@@ -23,12 +23,13 @@ summary = "Distrib helps you distribute your software."
 
 [features]
 default = ["all", "std"]
-all = ["serde"]
+all = ["dart-sys", "serde"]
 alloc = []
 std = ["alloc"]
 unstable = []
 
 # Interoperability:
+dart-sys = ["dep:dart-sys"]
 serde = ["dep:serde", "dep:serde_json", "dep:serde_with"]
 
 [dependencies]
@@ -38,11 +39,10 @@ serde_norway.workspace = true
 thiserror.workspace = true
 
 # Interoperability:
+dart-sys = { workspace = true, optional = true }
 serde = { workspace = true, optional = true }
 serde_json = { workspace = true, optional = true }
 serde_with = { workspace = true, optional = true }
-
-[dev-dependencies]
 
 # Preview locally with: RUSTDOCFLAGS="--cfg docsrs" cargo +nightly doc --all-features
 [package.metadata.docs.rs]

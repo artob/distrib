@@ -23,12 +23,13 @@ summary = "Distrib helps you distribute your software."
 
 [features]
 default = ["all", "std"]
-all = ["serde"]
+all = ["pyo3", "serde"]
 alloc = []
 std = ["alloc"]
 unstable = []
 
 # Interoperability:
+pyo3 = ["dep:pyo3"]
 serde = ["dep:serde", "dep:serde_json"]
 
 [dependencies]
@@ -39,10 +40,9 @@ thiserror.workspace = true
 toml0.workspace = true
 
 # Interoperability:
+pyo3 = { workspace = true, optional = true }
 serde = { workspace = true, optional = true }
 serde_json = { workspace = true, optional = true }
-
-[dev-dependencies]
 
 # Preview locally with: RUSTDOCFLAGS="--cfg docsrs" cargo +nightly doc --all-features
 [package.metadata.docs.rs]

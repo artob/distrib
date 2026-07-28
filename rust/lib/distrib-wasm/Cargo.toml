@@ -23,24 +23,23 @@ summary = "Distrib helps you distribute your software."
 
 [features]
 default = ["all", "std"]
-all = ["serde"]
+all = ["serde", "wasm-bindgen"]
 alloc = []
 std = ["alloc"]
 unstable = []
 
 # Interoperability:
 serde = ["dep:serde"]
+wasm-bindgen = ["dep:wasm-bindgen"]
 
 [dependencies]
 derive_more = { workspace = true, features = ["display", "from_str"] }
 dogma.workspace = true
 thiserror.workspace = true
-wasm-bindgen.workspace = true
 
 # Interoperability:
 serde = { workspace = true, optional = true }
-
-[dev-dependencies]
+wasm-bindgen = { workspace = true, optional = true }
 
 # Preview locally with: RUSTDOCFLAGS="--cfg docsrs" cargo +nightly doc --all-features
 [package.metadata.docs.rs]

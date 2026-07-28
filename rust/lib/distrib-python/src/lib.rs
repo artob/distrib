@@ -13,6 +13,10 @@ extern crate alloc;
 #[cfg(feature = "std")]
 extern crate std;
 
+#[cfg(feature = "pyo3")]
+#[doc(hidden)]
+pub use pyo3;
+
 mod error;
 pub use error::*;
 

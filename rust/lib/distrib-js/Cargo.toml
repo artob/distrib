@@ -23,12 +23,13 @@ summary = "Distrib helps you distribute your software."
 
 [features]
 default = ["all", "std"]
-all = ["serde"]
+all = ["napi", "serde"]
 alloc = []
 std = ["alloc"]
 unstable = []
 
 # Interoperability:
+napi = ["dep:napi"]
 serde = ["dep:serde", "dep:serde_json"]
 
 [dependencies]
@@ -38,10 +39,9 @@ package_json_schema.workspace = true
 thiserror.workspace = true
 
 # Interoperability:
+napi = { workspace = true, optional = true }
 serde = { workspace = true, optional = true }
 serde_json = { workspace = true, optional = true }
-
-[dev-dependencies]
 
 # Preview locally with: RUSTDOCFLAGS="--cfg docsrs" cargo +nightly doc --all-features
 [package.metadata.docs.rs]
