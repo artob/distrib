@@ -13,6 +13,12 @@ extern crate alloc;
 #[cfg(feature = "std")]
 extern crate std;
 
+pub mod prelude {
+    #[cfg(feature = "macros")]
+    pub use distrib_macros::export;
+}
+pub use prelude::*;
+
 /// Support for Dart projects.
 #[cfg(feature = "dart")]
 pub use distrib_dart as dart;

@@ -17,6 +17,10 @@ extern crate std;
 #[doc(hidden)]
 pub use napi;
 
+#[cfg(feature = "napi")]
+#[doc(hidden)]
+pub use napi_derive;
+
 mod error;
 pub use error::*;
 

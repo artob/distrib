@@ -41,7 +41,8 @@ pub fn js() {
 #[cfg(feature = "python")]
 pub fn python() {
     pyo3_build_config::add_python_framework_link_args();
-    pyo3_build_config::add_extension_module_link_args();
+    //pyo3_build_config::add_libpython_rpath_link_args();
+    //pyo3_build_config::add_extension_module_link_args();
 }
 
 #[cfg(feature = "ruby")]
