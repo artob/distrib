@@ -51,7 +51,15 @@ unstable = []
 
 # Features:
 export = ["macros"]
-macros = ["dep:distrib-macros"]
+macros = [
+    "distrib-dart?/dart-sys",
+    "distrib-js?/napi",
+    "distrib-python?/pyo3",
+    "distrib-ruby?/magnus",
+    #"distrib-rust?/",
+    "distrib-wasm?/wasm-bindgen",
+    "dep:distrib-macros",
+]
 
 # Interoperability:
 interops = ["serde"]

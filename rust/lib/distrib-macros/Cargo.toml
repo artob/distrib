@@ -23,7 +23,7 @@ summary = "Distrib helps you distribute your software."
 
 [features]
 default = ["all", "std"]
-all = ["languages"]
+all = []
 alloc = []
 std = ["alloc"]
 unstable = []
