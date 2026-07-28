@@ -23,7 +23,7 @@ summary = "Distrib helps you distribute your software."
 
 [features]
 default = ["all", "std"]
-all = ["interops", "languages", "macros"]
+all = ["interops", "languages"]
 alloc = [
     "distrib-macros?/alloc",
     "distrib-dart?/alloc",
@@ -50,6 +50,7 @@ std = [
 unstable = []
 
 # Features:
+export = ["macros"]
 macros = ["dep:distrib-macros"]
 
 # Interoperability:
