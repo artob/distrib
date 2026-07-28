@@ -32,10 +32,15 @@ pub fn all() {
 pub fn dart() {}
 
 #[cfg(feature = "js")]
-pub fn js() {}
+pub fn js() {
+    // See: <https://crates.io/crates/napi-build>
+    // See: <https://docs.rs/napi-build/latest/napi_build/fn.setup.html>
+    napi_build::setup();
+}
 
 #[cfg(feature = "python")]
 pub fn python() {
+    pyo3_build_config::add_python_framework_link_args();
     pyo3_build_config::add_extension_module_link_args();
 }
 

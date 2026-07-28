@@ -31,16 +31,18 @@ unstable = []
 # Languages:
 languages = ["dart", "js", "python", "ruby", "rust", "wasm"]
 dart = []
-js = []
+js = ["dep:napi-build"]
 python = ["dep:pyo3-build-config"]
-ruby = []
+ruby = ["dep:rb-sys-build"]
 rust = []
 wasm = []
 
 [dependencies]
 
 # Languages:
+napi-build = { workspace = true, optional = true }
 pyo3-build-config = { workspace = true, optional = true }
+rb-sys-build = { workspace = true, optional = true }
 
 # Preview locally with: RUSTDOCFLAGS="--cfg docsrs" cargo +nightly doc --all-features
 [package.metadata.docs.rs]
