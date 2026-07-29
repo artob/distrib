@@ -1,13 +1,13 @@
 --- !ruby/object:Gem::Specification
 name: distrib
 version: !ruby/object:Gem::Version
-  version: 0.0.0
+  version: 0.0.1
 platform: ruby
 authors:
 - Arto Bendiken
 bindir: bin
 cert_chain: []
-date: 2026-07-25 00:00:00.000000000 Z
+date: 2026-07-29 00:00:00.000000000 Z
 dependencies:
 - !ruby/object:Gem::Dependency
   name: rake
@@ -52,7 +52,8 @@ dependencies:
       - !ruby/object:Gem::Version
         version: '0.9'
 description: Distrib helps you distribute your software.
-email: arto@bendiken.net
+email:
+- arto@bendiken.net
 executables: []
 extensions: []
 extra_rdoc_files: []
@@ -63,16 +64,19 @@ files:
 - UNLICENSE
 - VERSION
 - lib/distrib.rb
+- lib/distrib/ruby.rb
+- lib/distrib/ruby/gemspec.rb
+- lib/distrib/ruby/tasks.rb
 - lib/distrib/version.rb
 homepage: https://distrib.sh
 licenses:
 - Unlicense
 metadata:
+  source_code_uri: https://github.com/artob/distrib
   bug_tracker_uri: https://github.com/artob/distrib/issues
   changelog_uri: https://github.com/artob/distrib/blob/master/CHANGES.md
   documentation_uri: https://rubydoc.info/gems/distrib
   homepage_uri: https://distrib.sh
-  source_code_uri: https://github.com/artob/distrib
 rdoc_options: []
 require_paths:
 - lib
