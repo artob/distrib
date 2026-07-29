@@ -408,6 +408,7 @@ dependencies = [
  "napi-build",
  "pyo3-build-config",
  "rb-sys-build",
+ "rb-sys-env",
 ]
 
 [[package]]

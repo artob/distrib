@@ -51,6 +51,7 @@ pyproject-toml = { version = "0.13", default-features = false }
 magnus = { version = "0.8.2", default-features = false }
 rb-sys = { version = "0.9.128", default-features = false }
 rb-sys-build = { version = "0.9.128", default-features = false }
+rb-sys-env = { version = "0.2.3", default-features = false }
 
 # Languages - Rust:
 cargo_toml = { version = "1.0", default-features = false }

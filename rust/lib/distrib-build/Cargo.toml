@@ -33,7 +33,7 @@ languages = ["dart", "js", "python", "ruby", "rust", "wasm"]
 dart = []
 js = ["dep:napi-build"]
 python = ["dep:pyo3-build-config"]
-ruby = ["dep:rb-sys-build"]
+ruby = ["dep:rb-sys-build", "dep:rb-sys-env"]
 rust = []
 wasm = []
 
@@ -43,6 +43,7 @@ wasm = []
 napi-build = { workspace = true, optional = true }
 pyo3-build-config = { workspace = true, optional = true }
 rb-sys-build = { workspace = true, optional = true }
+rb-sys-env = { workspace = true, optional = true }
 
 # Preview locally with: RUSTDOCFLAGS="--cfg docsrs" cargo +nightly doc --all-features
 [package.metadata.docs.rs]
