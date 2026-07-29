@@ -4,4 +4,5 @@
 # Distrib helps you distribute your software.
 module Distrib; end
 
+require_relative 'distrib/ruby'
 require_relative 'distrib/version'
