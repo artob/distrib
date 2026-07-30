@@ -1,13 +1,13 @@
 --- !ruby/object:Gem::Specification
 name: distrib
 version: !ruby/object:Gem::Version
-  version: 0.0.1
+  version: 0.0.2
 platform: ruby
 authors:
 - Arto Bendiken
 bindir: bin
 cert_chain: []
-date: 2026-07-29 00:00:00.000000000 Z
+date: 2026-07-30 00:00:00.000000000 Z
 dependencies:
 - !ruby/object:Gem::Dependency
   name: rake
