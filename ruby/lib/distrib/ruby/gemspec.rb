@@ -52,7 +52,7 @@ module Distrib::Ruby::Gemspec
 
     yield gemspec if block_given?
 
-    gemspec.metadata = (gemspec.metadata || {}.transform_keys(&:to_s))
+    gemspec.metadata = (gemspec.metadata || {}).transform_keys(&:to_s)
 
     if !gemspec.metadata.has_key?('documentation_uri')
       gemspec.metadata['documentation_uri'] =
