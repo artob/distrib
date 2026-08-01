@@ -390,6 +390,7 @@ dependencies = [
  "clap",
  "clientele",
  "derive_more",
+ "distrib-beam",
  "distrib-dart",
  "distrib-js",
  "distrib-macros",
@@ -398,6 +399,18 @@ dependencies = [
  "distrib-rust",
  "distrib-wasm",
  "dogma 0.2.1",
+ "thiserror 2.0.19",
+]
+
+[[package]]
+name = "distrib-beam"
+version = "0.0.2"
+dependencies = [
+ "derive_more",
+ "dogma 0.2.1",
+ "otter-nif",
+ "rustler",
+ "serde",
  "thiserror 2.0.19",
 ]
 
@@ -552,6 +565,15 @@ name = "either"
 version = "1.17.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9e5e8f6c15a24b9a3ee5efec809ccd006d3b30e8b3bb63c39af737c7f87daa1d"
+
+[[package]]
+name = "enif-ffi"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "aace019e3a3861c860b300de6fb67fde7743f5941dfb1582855614ab5255750e"
+dependencies = [
+ "libc",
+]
 
 [[package]]
 name = "equivalent"
@@ -865,6 +887,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "inventory"
+version = "0.3.24"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a4f0c30c76f2f4ccee3fe55a2435f691ca00c0e4bd87abe4f4a851b1d4dac39b"
+dependencies = [
+ "rustversion",
+]
+
+[[package]]
 name = "iri-string"
 version = "0.7.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1113,6 +1144,28 @@ dependencies = [
 ]
 
 [[package]]
+name = "otter-nif"
+version = "0.3.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9211f437c1735e7de207b6d52403c45f4eb582f792570123a06c468ddff69621"
+dependencies = [
+ "enif-ffi",
+ "libc",
+ "otter-nif-macros",
+]
+
+[[package]]
+name = "otter-nif-macros"
+version = "0.3.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ff425a13d280a2ea33fd5aaa230a358dc52e810466182fbc04c8d4071c9d9161"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.118",
+]
+
+[[package]]
 name = "package_json_schema"
 version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1321,6 +1374,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "regex-lite"
+version = "0.1.9"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cab834c73d247e67f4fae452806d17d3c7501756d98c8808d7c9c7aa7d18f973"
+
+[[package]]
 name = "regex-syntax"
 version = "0.8.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1362,6 +1421,32 @@ dependencies = [
  "libc",
  "linux-raw-sys",
  "windows-sys",
+]
+
+[[package]]
+name = "rustler"
+version = "0.38.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "60ac8495cb6091c1f8bd0c3bb816cd4e6f0a073f396d77eb602cb7f0615212de"
+dependencies = [
+ "inventory",
+ "libc",
+ "libloading 0.9.0",
+ "regex-lite",
+ "rustler_codegen",
+]
+
+[[package]]
+name = "rustler_codegen"
+version = "0.38.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "780a2a6b7e3cfac35820473f85cec1cd84d1bdd37ebcb4e24fb126ef0f074838"
+dependencies = [
+ "heck",
+ "inventory",
+ "proc-macro2",
+ "quote",
+ "syn 2.0.118",
 ]
 
 [[package]]

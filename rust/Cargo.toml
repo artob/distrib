@@ -25,12 +25,17 @@ distrib-build = { version = "=0.0.2", default-features = true }
 distrib-macros = { version = "=0.0.2", default-features = true }
 
 # Languages:
+distrib-beam = { version = "=0.0.2", default-features = true }
 distrib-dart = { version = "=0.0.2", default-features = true }
 distrib-js = { version = "=0.0.2", default-features = true }
 distrib-python = { version = "=0.0.2", default-features = true }
 distrib-ruby = { version = "=0.0.2", default-features = true }
 distrib-rust = { version = "=0.0.2", default-features = true }
 distrib-wasm = { version = "=0.0.2", default-features = true }
+
+# Languages - BEAM:
+otter = { version = "0.3.1", default-features = false, package = "otter-nif" }
+rustler = { version = "0.38", default-features = false }
 
 # Languages - Dart:
 dart-sys = { version = "4.1.5", default-features = false }
@@ -82,6 +87,7 @@ lto = "thin"
 distrib = { path = "lib/distrib" }
 distrib-build = { path = "lib/distrib-build" }
 distrib-macros = { path = "lib/distrib-macros" }
+distrib-beam = { path = "lib/distrib-beam" }
 distrib-dart = { path = "lib/distrib-dart" }
 distrib-js = { path = "lib/distrib-js" }
 distrib-python = { path = "lib/distrib-python" }

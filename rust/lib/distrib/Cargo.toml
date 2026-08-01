@@ -26,6 +26,7 @@ default = ["all", "std"]
 all = ["interops", "languages"]
 alloc = [
     "distrib-macros?/alloc",
+    "distrib-beam?/alloc",
     "distrib-dart?/alloc",
     "distrib-js?/alloc",
     "distrib-python?/alloc",
@@ -39,6 +40,7 @@ std = [
     "alloc",
     "derive_more/std",
     "distrib-macros?/std",
+    "distrib-beam?/std",
     "distrib-dart?/std",
     "distrib-js?/std",
     "distrib-python?/std",
@@ -52,6 +54,7 @@ unstable = []
 # Features:
 export = ["macros"]
 macros = [
+    "distrib-beam?/rustler",
     "distrib-dart?/dart-sys",
     "distrib-js?/napi",
     "distrib-python?/pyo3",
@@ -64,6 +67,7 @@ macros = [
 # Interoperability:
 interops = ["serde"]
 serde = [
+    "distrib-beam?/serde",
     "distrib-dart?/serde",
     "distrib-js?/serde",
     "distrib-python?/serde",
@@ -73,13 +77,19 @@ serde = [
 ]
 
 # Languages:
-languages = ["dart", "js", "python", "ruby", "rust", "wasm"]
+languages = ["beam", "dart", "js", "python", "ruby", "rust", "wasm"]
+beam = ["distrib-macros?/beam", "dep:distrib-beam"]
 dart = ["distrib-macros?/dart", "dep:distrib-dart"]
 js = ["distrib-macros?/js", "dep:distrib-js"]
 python = ["distrib-macros?/python", "dep:distrib-python"]
 ruby = ["distrib-macros?/ruby", "dep:distrib-ruby"]
 rust = ["distrib-macros?/rust", "dep:distrib-rust"]
 wasm = ["distrib-macros?/wasm", "dep:distrib-wasm"]
+
+# Language aliases:
+elixir = ["beam"]
+erlang = ["beam"]
+gleam = ["beam"]
 
 [dependencies]
 derive_more = { workspace = true, features = ["display", "from_str"] }
@@ -90,6 +100,7 @@ thiserror.workspace = true
 distrib-macros = { workspace = true, optional = true }
 
 # Languages:
+distrib-beam = { workspace = true, optional = true }
 distrib-dart = { workspace = true, optional = true }
 distrib-js = { workspace = true, optional = true }
 distrib-python = { workspace = true, optional = true }

@@ -29,13 +29,19 @@ std = ["alloc"]
 unstable = []
 
 # Languages:
-languages = ["dart", "js", "python", "ruby", "rust", "wasm"]
+languages = ["beam", "dart", "js", "python", "ruby", "rust", "wasm"]
+beam = []
 dart = []
 js = []
 python = []
 ruby = []
 rust = []
 wasm = []
+
+# Language aliases:
+elixir = ["beam"]
+erlang = ["beam"]
+gleam = ["beam"]
 
 [dependencies]
 darling = ">=0.20.0, <0.24.0"

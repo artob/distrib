@@ -28,6 +28,7 @@ struct ExportArgs {
 #[derive(Clone, Debug, Default, FromMeta)]
 #[darling(default, derive_syn_parse)]
 struct ExportRenameArgs {
+    beam: Option<String>,
     dart: Option<String>,
     js: Option<String>,
     python: Option<String>,
@@ -48,6 +49,12 @@ pub fn export(args: TokenStream, input: TokenStream) -> TokenStream {
     //std::dbg!(&args); // DEBUG
 
     let input = syn::parse_macro_input!(input as ItemFn);
+
+    let _beam = if cfg!(feature = "beam") {
+        quote! {} // TODO
+    } else {
+        quote! {}
+    };
 
     // See: <https://crates.io/crates/napi>
     // See: <https://crates.io/crates/napi-derive>
