@@ -1,7 +1,7 @@
 # See: https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [workspace.package]
-version = "0.0.2"
+version = "0.0.3"
 authors = ["Arto Bendiken"]
 edition = "2024"
 rust-version = "1.85"
@@ -20,19 +20,19 @@ members = ["lib/*"]
 resolver = "2"
 
 [workspace.dependencies]
-distrib = { version = "=0.0.2", default-features = true }
-distrib-build = { version = "=0.0.2", default-features = true }
-distrib-macros = { version = "=0.0.2", default-features = true }
+distrib = { version = "=0.0.3", default-features = true }
+distrib-build = { version = "=0.0.3", default-features = true }
+distrib-macros = { version = "=0.0.3", default-features = true }
 
 # Languages:
-distrib-beam = { version = "=0.0.2", default-features = true }
-distrib-dart = { version = "=0.0.2", default-features = true }
-distrib-gleam = { version = "=0.0.2", default-features = true }
-distrib-js = { version = "=0.0.2", default-features = true }
-distrib-python = { version = "=0.0.2", default-features = true }
-distrib-ruby = { version = "=0.0.2", default-features = true }
-distrib-rust = { version = "=0.0.2", default-features = true }
-distrib-wasm = { version = "=0.0.2", default-features = true }
+distrib-beam = { version = "=0.0.3", default-features = true }
+distrib-dart = { version = "=0.0.3", default-features = true }
+distrib-gleam = { version = "=0.0.3", default-features = true }
+distrib-js = { version = "=0.0.3", default-features = true }
+distrib-python = { version = "=0.0.3", default-features = true }
+distrib-ruby = { version = "=0.0.3", default-features = true }
+distrib-rust = { version = "=0.0.3", default-features = true }
+distrib-wasm = { version = "=0.0.3", default-features = true }
 
 # Languages - BEAM:
 otter = { version = "0.3.1", default-features = false, package = "otter-nif" }

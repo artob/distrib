@@ -3,10 +3,10 @@ revision = 3
 requires-python = ">=3.14"
 
 [options]
-exclude-newer = "2026-07-27T15:05:05.839241Z"
+exclude-newer = "2026-07-31T12:44:23.967203Z"
 exclude-newer-span = "P3D"
 
 [[package]]
 name = "distrib-sh"
-version = "0.0.2"
+version = "0.0.3"
 source = { editable = "." }

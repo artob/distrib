@@ -25,7 +25,7 @@ summary = "Distrib helps you distribute your software."
 default = ["all", "std"]
 all = ["parse"]
 alloc = []
-std = ["alloc"]
+std = ["alloc", "indexmap/std"]
 unstable = []
 
 # Features:
