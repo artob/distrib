@@ -28,6 +28,7 @@ alloc = [
     "distrib-macros?/alloc",
     "distrib-beam?/alloc",
     "distrib-dart?/alloc",
+    "distrib-gleam?/alloc",
     "distrib-js?/alloc",
     "distrib-python?/alloc",
     "distrib-ruby?/alloc",
@@ -42,6 +43,7 @@ std = [
     "distrib-macros?/std",
     "distrib-beam?/std",
     "distrib-dart?/std",
+    "distrib-gleam?/std",
     "distrib-js?/std",
     "distrib-python?/std",
     "distrib-ruby?/std",
@@ -56,6 +58,7 @@ export = ["macros"]
 macros = [
     "distrib-beam?/rustler",
     "distrib-dart?/dart-sys",
+    #"distrib-gleam?/",
     "distrib-js?/napi",
     "distrib-python?/pyo3",
     "distrib-ruby?/magnus",
@@ -69,6 +72,7 @@ interops = ["serde"]
 serde = [
     "distrib-beam?/serde",
     "distrib-dart?/serde",
+    "distrib-gleam?/serde",
     "distrib-js?/serde",
     "distrib-python?/serde",
     "distrib-ruby?/serde",
@@ -77,9 +81,10 @@ serde = [
 ]
 
 # Languages:
-languages = ["beam", "dart", "js", "python", "ruby", "rust", "wasm"]
+languages = ["beam", "dart", "gleam", "js", "python", "ruby", "rust", "wasm"]
 beam = ["distrib-macros?/beam", "dep:distrib-beam"]
 dart = ["distrib-macros?/dart", "dep:distrib-dart"]
+gleam = ["beam", "dep:distrib-gleam"]
 js = ["distrib-macros?/js", "dep:distrib-js"]
 python = ["distrib-macros?/python", "dep:distrib-python"]
 ruby = ["distrib-macros?/ruby", "dep:distrib-ruby"]
@@ -89,7 +94,6 @@ wasm = ["distrib-macros?/wasm", "dep:distrib-wasm"]
 # Language aliases:
 elixir = ["beam"]
 erlang = ["beam"]
-gleam = ["beam"]
 
 [dependencies]
 derive_more = { workspace = true, features = ["display", "from_str"] }
@@ -102,6 +106,7 @@ distrib-macros = { workspace = true, optional = true }
 # Languages:
 distrib-beam = { workspace = true, optional = true }
 distrib-dart = { workspace = true, optional = true }
+distrib-gleam = { workspace = true, optional = true }
 distrib-js = { workspace = true, optional = true }
 distrib-python = { workspace = true, optional = true }
 distrib-ruby = { workspace = true, optional = true }

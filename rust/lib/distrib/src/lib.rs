@@ -19,9 +19,17 @@ pub mod prelude {
 }
 pub use prelude::*;
 
+/// Support for BEAM (Elixir, Erlang, Gleam, etc) projects.
+#[cfg(feature = "beam")]
+pub use distrib_beam as beam;
+
 /// Support for Dart projects.
 #[cfg(feature = "dart")]
 pub use distrib_dart as dart;
+
+/// Support for Gleam projects.
+#[cfg(feature = "gleam")]
+pub use distrib_gleam as gleam;
 
 /// Support for JavaScript/TypeScript projects.
 #[cfg(feature = "js")]

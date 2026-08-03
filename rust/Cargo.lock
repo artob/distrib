@@ -392,6 +392,7 @@ dependencies = [
  "derive_more",
  "distrib-beam",
  "distrib-dart",
+ "distrib-gleam",
  "distrib-js",
  "distrib-macros",
  "distrib-python",
@@ -436,6 +437,17 @@ dependencies = [
  "serde_json",
  "serde_norway",
  "serde_with",
+ "thiserror 2.0.19",
+]
+
+[[package]]
+name = "distrib-gleam"
+version = "0.0.2"
+dependencies = [
+ "derive_more",
+ "distrib-beam",
+ "dogma 0.2.1",
+ "serde",
  "thiserror 2.0.19",
 ]
 

@@ -27,6 +27,7 @@ distrib-macros = { version = "=0.0.2", default-features = true }
 # Languages:
 distrib-beam = { version = "=0.0.2", default-features = true }
 distrib-dart = { version = "=0.0.2", default-features = true }
+distrib-gleam = { version = "=0.0.2", default-features = true }
 distrib-js = { version = "=0.0.2", default-features = true }
 distrib-python = { version = "=0.0.2", default-features = true }
 distrib-ruby = { version = "=0.0.2", default-features = true }
@@ -39,6 +40,8 @@ rustler = { version = "0.38", default-features = false }
 
 # Languages - Dart:
 dart-sys = { version = "4.1.5", default-features = false }
+
+# Languages - Gleam:
 
 # Languages - JS/TS:
 napi = { version = "3.4", default-features = false }
@@ -89,6 +92,7 @@ distrib-build = { path = "lib/distrib-build" }
 distrib-macros = { path = "lib/distrib-macros" }
 distrib-beam = { path = "lib/distrib-beam" }
 distrib-dart = { path = "lib/distrib-dart" }
+distrib-gleam = { path = "lib/distrib-gleam" }
 distrib-js = { path = "lib/distrib-js" }
 distrib-python = { path = "lib/distrib-python" }
 distrib-ruby = { path = "lib/distrib-ruby" }

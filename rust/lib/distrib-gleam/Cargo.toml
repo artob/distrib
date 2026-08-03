@@ -1,7 +1,7 @@
 # See: https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [package]
-name = "distrib-build"
+name = "distrib-gleam"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
@@ -18,38 +18,29 @@ publish.workspace = true
 
 # See: https://readmer.dev
 [package.metadata.readmer.project]
-title = "Distrib: Build"
+title = "Distrib: Gleam Support"
 summary = "Distrib helps you distribute your software."
 
 [features]
 default = ["all", "std"]
-all = ["languages"]
+all = []
 alloc = []
 std = ["alloc"]
 unstable = []
 
-# Languages:
-languages = ["beam", "dart", "gleam", "js", "python", "ruby", "rust", "wasm"]
-beam = []
-dart = []
-gleam = ["beam"]
-js = ["dep:napi-build"]
-python = ["dep:pyo3-build-config"]
-ruby = ["dep:rb-sys-build", "dep:rb-sys-env"]
-rust = []
-wasm = []
-
-# Language aliases:
-elixir = ["beam"]
-erlang = ["beam"]
+# Interoperability:
+otter = ["distrib-beam/otter"]
+rustler = ["distrib-beam/rustler"]
+serde = ["dep:serde"]
 
 [dependencies]
+derive_more = { workspace = true, features = ["display", "from_str"] }
+distrib-beam.workspace = true
+dogma.workspace = true
+thiserror.workspace = true
 
-# Languages:
-napi-build = { workspace = true, optional = true }
-pyo3-build-config = { workspace = true, optional = true }
-rb-sys-build = { workspace = true, optional = true }
-rb-sys-env = { workspace = true, optional = true }
+# Interoperability:
+serde = { workspace = true, optional = true }
 
 # Preview locally with: RUSTDOCFLAGS="--cfg docsrs" cargo +nightly doc --all-features
 [package.metadata.docs.rs]
