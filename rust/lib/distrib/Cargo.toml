@@ -23,7 +23,7 @@ summary = "Distrib helps you distribute your software."
 
 [features]
 default = ["all", "std"]
-all = ["interops", "languages"]
+all = ["interops", "languages", "runtimes"]
 alloc = [
     "distrib-macros?/alloc",
     "distrib-beam?/alloc",
@@ -81,19 +81,21 @@ serde = [
 ]
 
 # Languages:
-languages = ["beam", "dart", "gleam", "js", "python", "ruby", "rust", "wasm"]
-beam = ["distrib-macros?/beam", "dep:distrib-beam"]
-dart = ["distrib-macros?/dart", "dep:distrib-dart"]
-gleam = ["beam", "dep:distrib-gleam"]
-js = ["distrib-macros?/js", "dep:distrib-js"]
-python = ["distrib-macros?/python", "dep:distrib-python"]
-ruby = ["distrib-macros?/ruby", "dep:distrib-ruby"]
-rust = ["distrib-macros?/rust", "dep:distrib-rust"]
-wasm = ["distrib-macros?/wasm", "dep:distrib-wasm"]
-
-# Language aliases:
+languages = ["dart", "elixir", "erlang", "gleam", "js", "python", "ruby", "rust"]
+dart = ["dep:distrib-dart"]
 elixir = ["beam"]
 erlang = ["beam"]
+gleam = ["dep:distrib-gleam", "beam"]
+js = ["dep:distrib-js", "node"]
+python = ["dep:distrib-python", "distrib-macros?/pyo3"]
+ruby = ["dep:distrib-ruby", "distrib-macros?/magnus"]
+rust = ["dep:distrib-rust"]
+
+# Runtimes:
+runtimes = ["beam", "node", "wasm"]
+beam = ["dep:distrib-beam", "distrib-macros?/rustler"]
+node = ["distrib-macros?/napi"]
+wasm = ["dep:distrib-wasm", "distrib-macros?/wasm-bindgen"]
 
 [dependencies]
 derive_more = { workspace = true, features = ["display", "from_str"] }

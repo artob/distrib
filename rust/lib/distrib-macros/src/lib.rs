@@ -50,16 +50,10 @@ pub fn export(args: TokenStream, input: TokenStream) -> TokenStream {
 
     let input = syn::parse_macro_input!(input as ItemFn);
 
-    let _beam = if cfg!(feature = "beam") {
-        quote! {} // TODO
-    } else {
-        quote! {}
-    };
-
     // See: <https://crates.io/crates/napi>
     // See: <https://crates.io/crates/napi-derive>
     // See: <https://docs.rs/napi-derive/latest/napi_derive/attr.napi.html>
-    let napi = if cfg!(feature = "js") {
+    let napi = if cfg!(feature = "napi") {
         //let prefix = quote! { ::distrib::js::napi_derive };
         //let napi = quote! { #prefix::napi };
         //if let Some(name) = args.rename.as_ref().and_then(|r| r.js.clone()) {
@@ -75,7 +69,7 @@ pub fn export(args: TokenStream, input: TokenStream) -> TokenStream {
 
     // See: <https://crates.io/crates/pyo3>
     // See: <https://pyo3.rs/main/function.html>
-    let pyo3 = if cfg!(feature = "python") {
+    let pyo3 = if cfg!(feature = "pyo3") {
         let prefix = quote! { ::distrib::python::pyo3 };
         let prelude = quote! { #prefix::prelude };
         let pyfunction = quote! { #prelude::pyfunction };
@@ -93,7 +87,7 @@ pub fn export(args: TokenStream, input: TokenStream) -> TokenStream {
     // See: <https://docs.rs/wasm-bindgen/latest/wasm_bindgen/prelude/attr.wasm_bindgen.html>
     // See: <https://wasm-bindgen.github.io/wasm-bindgen/reference/attributes/on-rust-exports/index.html>
     // See: <https://github.com/wasm-bindgen/wasm-bindgen/blob/main/crates/macro/Cargo.toml>
-    let wasm_bindgen = if cfg!(feature = "wasm") {
+    let wasm_bindgen = if cfg!(feature = "wasm-bindgen") {
         let prefix = quote! { ::distrib::wasm::wasm_bindgen };
         let prelude = quote! { #prefix::prelude };
         let wasm_bindgen = quote! { #prelude::wasm_bindgen };

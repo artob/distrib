@@ -28,20 +28,14 @@ alloc = []
 std = ["alloc"]
 unstable = []
 
-# Languages:
-languages = ["beam", "dart", "gleam", "js", "python", "ruby", "rust", "wasm"]
-beam = []
-dart = []
-gleam = ["beam"]
-js = []
-python = []
-ruby = []
-rust = []
-wasm = []
-
-# Language aliases:
-elixir = ["beam"]
-erlang = ["beam"]
+# Features:
+magnus = []
+napi = []
+neon = []
+otter = []
+pyo3 = []
+rustler = []
+wasm-bindgen = []
 
 [dependencies]
 darling = ">=0.20.0, <0.24.0"
