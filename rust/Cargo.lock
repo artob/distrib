@@ -394,7 +394,10 @@ dependencies = [
  "distrib-dart",
  "distrib-gleam",
  "distrib-js",
+ "distrib-jsr",
  "distrib-macros",
+ "distrib-node",
+ "distrib-npm",
  "distrib-python",
  "distrib-ruby",
  "distrib-rust",
@@ -459,10 +462,20 @@ name = "distrib-js"
 version = "0.0.3"
 dependencies = [
  "derive_more",
+ "distrib-node",
+ "distrib-npm",
  "dogma 0.2.1",
- "napi",
- "napi-derive",
- "package_json_schema",
+ "serde",
+ "serde_json",
+ "thiserror 2.0.19",
+]
+
+[[package]]
+name = "distrib-jsr"
+version = "0.0.3"
+dependencies = [
+ "derive_more",
+ "dogma 0.2.1",
  "serde",
  "serde_json",
  "thiserror 2.0.19",
@@ -475,6 +488,33 @@ dependencies = [
  "darling",
  "quote",
  "syn 2.0.118",
+]
+
+[[package]]
+name = "distrib-node"
+version = "0.0.3"
+dependencies = [
+ "derive_more",
+ "dogma 0.2.1",
+ "napi",
+ "napi-derive",
+ "serde",
+ "serde_json",
+ "thiserror 2.0.19",
+]
+
+[[package]]
+name = "distrib-npm"
+version = "0.0.3"
+dependencies = [
+ "derive_more",
+ "dogma 0.2.1",
+ "napi",
+ "napi-derive",
+ "package_json_schema",
+ "serde",
+ "serde_json",
+ "thiserror 2.0.19",
 ]
 
 [[package]]

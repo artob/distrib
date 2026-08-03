@@ -1,7 +1,7 @@
 # See: https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [package]
-name = "distrib-js"
+name = "distrib-jsr"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
@@ -18,7 +18,7 @@ publish.workspace = true
 
 # See: https://readmer.dev
 [package.metadata.readmer.project]
-title = "Distrib: JavaScript Support"
+title = "Distrib: JSR.io Support"
 summary = "Distrib helps you distribute your software."
 
 [features]
@@ -33,8 +33,6 @@ serde = ["dep:serde", "dep:serde_json"]
 
 [dependencies]
 derive_more = { workspace = true, features = ["display", "from_str"] }
-distrib-node.workspace = true
-distrib-npm.workspace = true
 dogma.workspace = true
 thiserror.workspace = true
 

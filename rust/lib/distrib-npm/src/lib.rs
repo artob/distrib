@@ -13,6 +13,13 @@ extern crate alloc;
 #[cfg(feature = "std")]
 extern crate std;
 
-pub use distrib_node::*;
+mod error;
+pub use error::*;
 
-pub use distrib_npm::*;
+pub mod package;
+pub use package::*;
+
+#[cfg(feature = "std")]
+mod load;
+#[cfg(feature = "std")]
+pub use load::*;

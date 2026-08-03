@@ -23,62 +23,83 @@ summary = "Distrib helps you distribute your software."
 
 [features]
 default = ["all", "std"]
-all = ["interops", "languages", "runtimes"]
+all = ["interop", "packaging", "runtimes", "languages"]
 alloc = [
     "distrib-macros?/alloc",
+    # Packaging:
+    "distrib-jsr?/alloc",
+    "distrib-npm?/alloc",
+    # Runtimes:
     "distrib-beam?/alloc",
+    "distrib-node?/alloc",
+    "distrib-wasm?/alloc",
+    # Languages:
     "distrib-dart?/alloc",
     "distrib-gleam?/alloc",
     "distrib-js?/alloc",
     "distrib-python?/alloc",
     "distrib-ruby?/alloc",
     "distrib-rust?/alloc",
-    "distrib-wasm?/alloc",
+    # Miscellaneous:
     "dogma/alloc",
 ]
 cli = ["std", "clientele", "clientele/default", "clientele/tracing", "dep:clap"]
 std = [
     "alloc",
-    "derive_more/std",
     "distrib-macros?/std",
+    # Packaging:
+    "distrib-jsr?/std",
+    "distrib-npm?/std",
+    # Runtimes:
     "distrib-beam?/std",
+    "distrib-node?/std",
+    "distrib-wasm?/std",
+    # Languages:
     "distrib-dart?/std",
     "distrib-gleam?/std",
     "distrib-js?/std",
     "distrib-python?/std",
     "distrib-ruby?/std",
     "distrib-rust?/std",
-    "distrib-wasm?/std",
+    # Miscellaneous:
+    "derive_more/std",
     "dogma/std",
 ]
 unstable = []
 
 # Features:
 export = ["macros"]
-macros = [
-    "distrib-beam?/rustler",
-    "distrib-dart?/dart-sys",
-    #"distrib-gleam?/",
-    "distrib-js?/napi",
-    "distrib-python?/pyo3",
-    "distrib-ruby?/magnus",
-    #"distrib-rust?/",
-    "distrib-wasm?/wasm-bindgen",
-    "dep:distrib-macros",
-]
+macros = ["dep:distrib-macros"]
 
 # Interoperability:
-interops = ["serde"]
+interop = ["serde"]
 serde = [
+    # Packaging:
+    "distrib-jsr?/serde",
+    "distrib-npm?/serde",
+    # Runtimes:
     "distrib-beam?/serde",
+    "distrib-node?/serde",
+    "distrib-wasm?/serde",
+    # Languages:
     "distrib-dart?/serde",
     "distrib-gleam?/serde",
     "distrib-js?/serde",
     "distrib-python?/serde",
     "distrib-ruby?/serde",
     "distrib-rust?/serde",
-    "distrib-wasm?/serde",
 ]
+
+# Packaging:
+packaging = ["jsr", "npm"]
+jsr = ["dep:distrib-jsr"]
+npm = ["dep:distrib-npm"]
+
+# Runtimes:
+runtimes = ["beam", "node", "wasm"]
+beam = ["dep:distrib-beam", "distrib-macros?/rustler", "distrib-beam?/rustler"]
+node = ["dep:distrib-node", "distrib-macros?/napi", "distrib-node?/napi"]
+wasm = ["dep:distrib-wasm", "distrib-macros?/wasm-bindgen", "distrib-wasm?/wasm-bindgen"]
 
 # Languages:
 languages = ["dart", "elixir", "erlang", "gleam", "js", "python", "ruby", "rust"]
@@ -87,15 +108,9 @@ elixir = ["beam"]
 erlang = ["beam"]
 gleam = ["dep:distrib-gleam", "beam"]
 js = ["dep:distrib-js", "node"]
-python = ["dep:distrib-python", "distrib-macros?/pyo3"]
-ruby = ["dep:distrib-ruby", "distrib-macros?/magnus"]
+python = ["dep:distrib-python", "distrib-macros?/pyo3", "distrib-python?/pyo3"]
+ruby = ["dep:distrib-ruby", "distrib-macros?/magnus", "distrib-ruby?/magnus"]
 rust = ["dep:distrib-rust"]
-
-# Runtimes:
-runtimes = ["beam", "node", "wasm"]
-beam = ["dep:distrib-beam", "distrib-macros?/rustler"]
-node = ["distrib-macros?/napi"]
-wasm = ["dep:distrib-wasm", "distrib-macros?/wasm-bindgen"]
 
 [dependencies]
 derive_more = { workspace = true, features = ["display", "from_str"] }
@@ -105,15 +120,22 @@ thiserror.workspace = true
 # Features:
 distrib-macros = { workspace = true, optional = true }
 
-# Languages:
+# Packaging:
+distrib-jsr = { workspace = true, optional = true }
+distrib-npm = { workspace = true, optional = true }
+
+# Runtimes:
 distrib-beam = { workspace = true, optional = true }
+distrib-node = { workspace = true, optional = true }
+distrib-wasm = { workspace = true, optional = true }
+
+# Languages:
 distrib-dart = { workspace = true, optional = true }
 distrib-gleam = { workspace = true, optional = true }
 distrib-js = { workspace = true, optional = true }
 distrib-python = { workspace = true, optional = true }
 distrib-ruby = { workspace = true, optional = true }
 distrib-rust = { workspace = true, optional = true }
-distrib-wasm = { workspace = true, optional = true }
 
 # CLI:
 clap = { version = "4.5", default-features = false, optional = true }

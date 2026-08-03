@@ -24,19 +24,22 @@ distrib = { version = "=0.0.3", default-features = true }
 distrib-build = { version = "=0.0.3", default-features = true }
 distrib-macros = { version = "=0.0.3", default-features = true }
 
-# Languages:
+# Packaging:
+distrib-jsr = { version = "=0.0.3", default-features = true }
+distrib-npm = { version = "=0.0.3", default-features = true }
+
+# Runtimes:
 distrib-beam = { version = "=0.0.3", default-features = true }
+distrib-node = { version = "=0.0.3", default-features = true }
+distrib-wasm = { version = "=0.0.3", default-features = true }
+
+# Languages:
 distrib-dart = { version = "=0.0.3", default-features = true }
 distrib-gleam = { version = "=0.0.3", default-features = true }
 distrib-js = { version = "=0.0.3", default-features = true }
 distrib-python = { version = "=0.0.3", default-features = true }
 distrib-ruby = { version = "=0.0.3", default-features = true }
 distrib-rust = { version = "=0.0.3", default-features = true }
-distrib-wasm = { version = "=0.0.3", default-features = true }
-
-# Languages - BEAM:
-otter = { version = "0.3.1", default-features = false, package = "otter-nif" }
-rustler = { version = "0.38", default-features = false, features = ["nif_version_2_15"] }
 
 # Languages - Dart:
 dart-sys = { version = "4.1.5", default-features = false }
@@ -44,10 +47,6 @@ dart-sys = { version = "4.1.5", default-features = false }
 # Languages - Gleam:
 
 # Languages - JS/TS:
-napi = { version = "3.4", default-features = false }
-napi-build = { version = "2.2.4", default-features = false }
-napi-derive = { version = "3.3", default-features = false }
-neon = { version = "1.1.1", default-features = false }
 package_json_schema = { version = "0.3", default-features = false }
 
 # Languages - Python:
@@ -64,7 +63,17 @@ rb-sys-env = { version = "0.2.3", default-features = false }
 # Languages - Rust:
 cargo_toml = { version = "1.0", default-features = false }
 
-# Languages - WebAssembly:
+# Runtimes - BEAM:
+otter = { version = "0.3.1", default-features = false, package = "otter-nif" }
+rustler = { version = "0.38", default-features = false, features = ["nif_version_2_15"] }
+
+# Runtimes - Node.js:
+napi = { version = "3.4", default-features = false }
+napi-build = { version = "2.2.4", default-features = false }
+napi-derive = { version = "3.3", default-features = false }
+neon = { version = "1.1.1", default-features = false }
+
+# Runtimes - WebAssembly:
 wasm-bindgen = { version = "0.2.126", default-features = false }
 
 # Miscellaneous:
@@ -94,6 +103,9 @@ distrib-beam = { path = "lib/distrib-beam" }
 distrib-dart = { path = "lib/distrib-dart" }
 distrib-gleam = { path = "lib/distrib-gleam" }
 distrib-js = { path = "lib/distrib-js" }
+distrib-jsr = { path = "lib/distrib-jsr" }
+distrib-node = { path = "lib/distrib-node" }
+distrib-npm = { path = "lib/distrib-npm" }
 distrib-python = { path = "lib/distrib-python" }
 distrib-ruby = { path = "lib/distrib-ruby" }
 distrib-rust = { path = "lib/distrib-rust" }

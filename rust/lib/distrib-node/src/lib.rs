@@ -13,6 +13,10 @@ extern crate alloc;
 #[cfg(feature = "std")]
 extern crate std;
 
-pub use distrib_node::*;
+#[cfg(feature = "napi")]
+#[doc(hidden)]
+pub use napi;
 
-pub use distrib_npm::*;
+#[cfg(feature = "napi")]
+#[doc(hidden)]
+pub use napi_derive;
