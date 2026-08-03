@@ -1,10 +1,9 @@
 // This is free and unencumbered software released into the public domain.
 
 use alloc::{string::String, vec::Vec};
-use indexmap::IndexMap;
 
 #[cfg(all(feature = "alloc", feature = "serde"))]
-pub type Map<K, V = serde_json::Value> = IndexMap<K, V>;
+pub type Map<K, V = serde_json::Value> = indexmap::IndexMap<K, V>;
 
 /// See: <https://dart.dev/tools/pub/pubspec>
 #[cfg_attr(feature = "serde", serde_with::serde_as)]

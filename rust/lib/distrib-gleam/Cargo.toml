@@ -23,10 +23,13 @@ summary = "Distrib helps you distribute your software."
 
 [features]
 default = ["all", "std"]
-all = []
+all = ["parse"]
 alloc = []
 std = ["alloc"]
 unstable = []
+
+# Features:
+parse = ["dep:serde", "dep:serde_with", "dep:toml1"]
 
 # Interoperability:
 otter = ["distrib-beam/otter"]
@@ -37,10 +40,13 @@ serde = ["dep:serde"]
 derive_more = { workspace = true, features = ["display", "from_str"] }
 distrib-beam.workspace = true
 dogma.workspace = true
+indexmap.workspace = true
 thiserror.workspace = true
 
 # Interoperability:
 serde = { workspace = true, optional = true }
+serde_with = { workspace = true, optional = true }
+toml1 = { workspace = true, optional = true, features = ["parse", "serde"] }
 
 # Preview locally with: RUSTDOCFLAGS="--cfg docsrs" cargo +nightly doc --all-features
 [package.metadata.docs.rs]
