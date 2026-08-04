@@ -25,7 +25,7 @@ summary = "Distrib helps you distribute your software."
 default = ["all", "std"]
 all = []
 alloc = []
-std = ["alloc"]
+std = ["alloc", "dep:camino"]
 unstable = []
 
 # Interoperability:
@@ -35,6 +35,8 @@ serde = ["dep:serde"]
 derive_more = { workspace = true, features = ["display", "from_str"] }
 dogma.workspace = true
 thiserror.workspace = true
+
+camino = { workspace = true, optional = true }
 
 # Interoperability:
 serde = { workspace = true, optional = true }

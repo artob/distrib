@@ -13,6 +13,9 @@ extern crate alloc;
 #[cfg(feature = "std")]
 extern crate std;
 
+#[cfg(feature = "std")]
+pub use camino::{Utf8Path, Utf8PathBuf};
+
 mod build_arguments;
 pub use build_arguments::*;
 
