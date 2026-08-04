@@ -3,6 +3,7 @@
 use alloc::boxed::Box;
 use core::error::Error;
 use distrib_common::{Build, Utf8PathBuf};
+use std::process::Command;
 
 pub const NPM_COMMAND: &str = "npm";
 
@@ -21,10 +22,29 @@ impl From<Utf8PathBuf> for NpmProgram {
     }
 }
 
+impl<T> From<&T> for NpmProgram
+where
+    T: Clone + Into<Self>,
+{
+    fn from(t: &T) -> Self {
+        t.clone().into()
+    }
+}
+
+impl From<NpmProgram> for Command {
+    fn from(input: NpmProgram) -> Self {
+        Command::new(input.0)
+    }
+}
+
 impl NpmProgram {}
 
 impl Build for NpmProgram {
     fn build(&self) -> Result<(), Box<dyn Error>> {
-        todo!() // TODO
+        Command::from(self.clone())
+            .args(["run", "build"])
+            .status()
+            .map_err(|err| Box::new(err))?;
+        Ok(())
     }
 }

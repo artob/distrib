@@ -3,6 +3,7 @@
 use alloc::boxed::Box;
 use core::error::Error;
 use distrib_common::{Build, Utf8PathBuf};
+use std::process::Command;
 
 pub const CARGO_COMMAND: &str = "cargo";
 
@@ -21,10 +22,29 @@ impl From<Utf8PathBuf> for CargoProgram {
     }
 }
 
+impl<T> From<&T> for CargoProgram
+where
+    T: Clone + Into<Self>,
+{
+    fn from(t: &T) -> Self {
+        t.clone().into()
+    }
+}
+
+impl From<CargoProgram> for Command {
+    fn from(input: CargoProgram) -> Self {
+        Command::new(input.0)
+    }
+}
+
 impl CargoProgram {}
 
 impl Build for CargoProgram {
     fn build(&self) -> Result<(), Box<dyn Error>> {
-        todo!() // TODO
+        Command::from(self.clone())
+            .args(["build"])
+            .status()
+            .map_err(|err| Box::new(err))?;
+        Ok(())
     }
 }

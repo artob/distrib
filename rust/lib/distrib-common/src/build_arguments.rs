@@ -22,6 +22,7 @@ impl BuildArguments {
 
     pub fn to_vec(&self) -> Option<Vec<String>> {
         use PackageManager::*;
+        // TODO: reimplement this using `Build::build()`
         Some(match self.0 {
             Cargo => vec!["build".into()],
             Jsr | Npm => vec!["run".into(), "build".into()],

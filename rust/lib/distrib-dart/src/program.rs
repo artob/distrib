@@ -3,6 +3,7 @@
 use alloc::boxed::Box;
 use core::error::Error;
 use distrib_common::{Build, Utf8PathBuf};
+use std::process::Command;
 
 pub const DART_COMMAND: &str = "dart";
 
@@ -21,10 +22,29 @@ impl From<Utf8PathBuf> for DartProgram {
     }
 }
 
+impl<T> From<&T> for DartProgram
+where
+    T: Clone + Into<Self>,
+{
+    fn from(t: &T) -> Self {
+        t.clone().into()
+    }
+}
+
+impl From<DartProgram> for Command {
+    fn from(input: DartProgram) -> Self {
+        Command::new(input.0)
+    }
+}
+
 impl DartProgram {}
 
 impl Build for DartProgram {
     fn build(&self) -> Result<(), Box<dyn Error>> {
-        todo!() // TODO
+        Command::from(self.clone())
+            .args(["build", "cli"])
+            .status()
+            .map_err(|err| Box::new(err))?;
+        Ok(())
     }
 }

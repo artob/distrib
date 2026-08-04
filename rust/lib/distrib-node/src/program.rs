@@ -3,6 +3,7 @@
 use alloc::boxed::Box;
 use core::error::Error;
 use distrib_common::{Build, Utf8PathBuf};
+use std::process::Command;
 
 pub const NODE_COMMAND: &str = "node";
 
@@ -21,10 +22,29 @@ impl From<Utf8PathBuf> for NodeProgram {
     }
 }
 
+impl<T> From<&T> for NodeProgram
+where
+    T: Clone + Into<Self>,
+{
+    fn from(t: &T) -> Self {
+        t.clone().into()
+    }
+}
+
+impl From<NodeProgram> for Command {
+    fn from(input: NodeProgram) -> Self {
+        Command::new(input.0)
+    }
+}
+
 impl NodeProgram {}
 
 impl Build for NodeProgram {
     fn build(&self) -> Result<(), Box<dyn Error>> {
-        todo!() // TODO
+        Command::from(self.clone())
+            .args(["--"])
+            .status()
+            .map_err(|err| Box::new(err))?;
+        Ok(())
     }
 }
