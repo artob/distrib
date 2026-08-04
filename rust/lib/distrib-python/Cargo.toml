@@ -33,6 +33,8 @@ pyo3 = ["dep:pyo3"]
 serde = ["dep:serde", "dep:serde_json"]
 
 [dependencies]
+distrib-common.workspace = true
+
 derive_more = { workspace = true, features = ["display", "from_str"] }
 dogma.workspace = true
 pyproject-toml.workspace = true

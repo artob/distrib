@@ -32,6 +32,8 @@ unstable = []
 serde = ["dep:serde", "dep:serde_json"]
 
 [dependencies]
+distrib-common.workspace = true
+
 cargo_toml.workspace = true
 derive_more = { workspace = true, features = ["display", "from_str"] }
 dogma.workspace = true

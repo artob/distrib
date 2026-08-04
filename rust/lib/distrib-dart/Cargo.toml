@@ -33,6 +33,8 @@ dart-sys = ["dep:dart-sys"]
 serde = ["indexmap/serde", "dep:serde", "dep:serde_json", "dep:serde_with"]
 
 [dependencies]
+distrib-common.workspace = true
+
 derive_more = { workspace = true, features = ["display", "from_str"] }
 dogma.workspace = true
 indexmap.workspace = true

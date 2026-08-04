@@ -44,6 +44,7 @@ elixir = ["beam"]
 erlang = ["beam"]
 
 [dependencies]
+distrib-common.workspace = true
 
 # Languages:
 napi-build = { workspace = true, optional = true }

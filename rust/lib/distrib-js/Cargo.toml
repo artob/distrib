@@ -32,9 +32,11 @@ unstable = []
 serde = ["dep:serde", "dep:serde_json"]
 
 [dependencies]
-derive_more = { workspace = true, features = ["display", "from_str"] }
+distrib-common.workspace = true
 distrib-node.workspace = true
 distrib-npm.workspace = true
+
+derive_more = { workspace = true, features = ["display", "from_str"] }
 dogma.workspace = true
 thiserror.workspace = true
 

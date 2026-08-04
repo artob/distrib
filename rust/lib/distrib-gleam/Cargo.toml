@@ -37,8 +37,10 @@ rustler = ["distrib-beam/rustler"]
 serde = ["dep:serde"]
 
 [dependencies]
-derive_more = { workspace = true, features = ["display", "from_str"] }
 distrib-beam.workspace = true
+distrib-common.workspace = true
+
+derive_more = { workspace = true, features = ["display", "from_str"] }
 dogma.workspace = true
 indexmap.workspace = true
 thiserror.workspace = true
