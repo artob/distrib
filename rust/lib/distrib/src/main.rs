@@ -6,8 +6,9 @@ use clientele::{
     crates::camino::Utf8PathBuf,
     crates::clap::{Parser, Subcommand},
 };
+use distrib::{PackageManager, PackageRegistry};
 use thiserror::Error;
-use tracing::{error, info, warn};
+use tracing::error;
 
 /// Distrib helps you distribute your software.
 #[derive(Debug, Parser)]
@@ -32,6 +33,26 @@ enum Command {
         /// The output format to use.
         #[clap(short, long, default_value = "json")]
         output: String,
+    },
+
+    /// Build the current package.
+    #[cfg(feature = "unstable")]
+    Build {
+        /// The package manager to build with [default: auto].
+        #[clap(short, long)]
+        with: Option<PackageManager>,
+    },
+
+    /// Publish the current package.
+    #[cfg(feature = "unstable")]
+    Publish {
+        /// The package registry to publish to [default: auto].
+        #[clap(short, long)]
+        to: Option<PackageRegistry>,
+
+        /// The package manager to build with [default: auto].
+        #[clap(short, long)]
+        with: Option<PackageManager>,
     },
 }
 
@@ -134,7 +155,7 @@ pub fn run() -> Result<(), ProgramError> {
             .init();
     }
 
-    let mut result = Ok(());
+    let result = Ok(());
 
     match options.command.unwrap_or_default() {
         Command::Inspect { project: _, output } => {
@@ -148,6 +169,19 @@ pub fn run() -> Result<(), ProgramError> {
                     return Err(UnknownOutputFormat(output));
                 },
             }
+        },
+
+        #[cfg(feature = "unstable")]
+        Command::Build { with } => {
+            // TODO: implement `distrib build`
+            std::dbg!(with);
+        },
+
+        #[cfg(feature = "unstable")]
+        Command::Publish { to, with } => {
+            // TODO: implement `distrib publish`
+            std::dbg!(to);
+            std::dbg!(with);
         },
     };
 
