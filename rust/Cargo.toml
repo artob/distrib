@@ -22,6 +22,7 @@ resolver = "2"
 [workspace.dependencies]
 distrib = { version = "=0.0.3", default-features = true }
 distrib-build = { version = "=0.0.3", default-features = true }
+distrib-common = { version = "=0.0.3", default-features = true }
 distrib-macros = { version = "=0.0.3", default-features = true }
 
 # Packaging:
@@ -98,6 +99,7 @@ lto = "thin"
 [patch.crates-io]
 distrib = { path = "lib/distrib" }
 distrib-build = { path = "lib/distrib-build" }
+distrib-common = { path = "lib/distrib-common" }
 distrib-macros = { path = "lib/distrib-macros" }
 distrib-beam = { path = "lib/distrib-beam" }
 distrib-dart = { path = "lib/distrib-dart" }

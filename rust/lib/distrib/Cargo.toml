@@ -25,6 +25,7 @@ summary = "Distrib helps you distribute your software."
 default = ["all", "std"]
 all = ["interop", "packaging", "runtimes", "languages"]
 alloc = [
+    "distrib-common/alloc",
     "distrib-macros?/alloc",
     # Packaging:
     "distrib-jsr?/alloc",
@@ -46,6 +47,7 @@ alloc = [
 cli = ["std", "clientele", "clientele/default", "clientele/tracing", "dep:clap", "dep:tracing", "dep:tracing-subscriber"]
 std = [
     "alloc",
+    "distrib-common/std",
     "distrib-macros?/std",
     # Packaging:
     "distrib-jsr?/std",
@@ -74,6 +76,7 @@ macros = ["dep:distrib-macros"]
 # Interoperability:
 interop = ["serde"]
 serde = [
+    "distrib-common/serde",
     # Packaging:
     "distrib-jsr?/serde",
     "distrib-npm?/serde",
@@ -118,6 +121,7 @@ dogma.workspace = true
 thiserror.workspace = true
 
 # Features:
+distrib-common.workspace = true
 distrib-macros = { workspace = true, optional = true }
 
 # Packaging:

@@ -19,6 +19,8 @@ pub mod prelude {
 }
 pub use prelude::*;
 
+pub use distrib_common::*;
+
 /// Support for the BEAM runtime (Elixir, Erlang, Gleam, etc).
 #[cfg(feature = "beam")]
 pub use distrib_beam as beam;
