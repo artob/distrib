@@ -414,6 +414,7 @@ name = "distrib-beam"
 version = "0.0.3"
 dependencies = [
  "derive_more",
+ "distrib-common",
  "dogma 0.2.1",
  "otter-nif",
  "rustler",
@@ -425,6 +426,7 @@ dependencies = [
 name = "distrib-build"
 version = "0.0.3"
 dependencies = [
+ "distrib-common",
  "napi-build",
  "pyo3-build-config",
  "rb-sys-build",
@@ -435,6 +437,7 @@ dependencies = [
 name = "distrib-common"
 version = "0.0.3"
 dependencies = [
+ "camino",
  "derive_more",
  "dogma 0.2.1",
  "serde",
@@ -447,6 +450,7 @@ version = "0.0.3"
 dependencies = [
  "dart-sys",
  "derive_more",
+ "distrib-common",
  "dogma 0.2.1",
  "indexmap",
  "serde",
@@ -462,6 +466,7 @@ version = "0.0.3"
 dependencies = [
  "derive_more",
  "distrib-beam",
+ "distrib-common",
  "dogma 0.2.1",
  "indexmap",
  "serde",
@@ -475,6 +480,7 @@ name = "distrib-js"
 version = "0.0.3"
 dependencies = [
  "derive_more",
+ "distrib-common",
  "distrib-node",
  "distrib-npm",
  "dogma 0.2.1",
@@ -488,6 +494,7 @@ name = "distrib-jsr"
 version = "0.0.3"
 dependencies = [
  "derive_more",
+ "distrib-common",
  "dogma 0.2.1",
  "serde",
  "serde_json",
@@ -508,6 +515,7 @@ name = "distrib-node"
 version = "0.0.3"
 dependencies = [
  "derive_more",
+ "distrib-common",
  "dogma 0.2.1",
  "napi",
  "napi-derive",
@@ -521,6 +529,7 @@ name = "distrib-npm"
 version = "0.0.3"
 dependencies = [
  "derive_more",
+ "distrib-common",
  "dogma 0.2.1",
  "napi",
  "napi-derive",
@@ -535,6 +544,7 @@ name = "distrib-python"
 version = "0.0.3"
 dependencies = [
  "derive_more",
+ "distrib-common",
  "dogma 0.2.1",
  "pyo3",
  "pyproject-toml",
@@ -549,6 +559,7 @@ name = "distrib-ruby"
 version = "0.0.3"
 dependencies = [
  "derive_more",
+ "distrib-common",
  "dogma 0.2.1",
  "indexmap",
  "magnus",
@@ -565,6 +576,7 @@ version = "0.0.3"
 dependencies = [
  "cargo_toml",
  "derive_more",
+ "distrib-common",
  "dogma 0.2.1",
  "serde",
  "serde_json",
@@ -577,6 +589,7 @@ name = "distrib-wasm"
 version = "0.0.3"
 dependencies = [
  "derive_more",
+ "distrib-common",
  "dogma 0.2.1",
  "serde",
  "thiserror 2.0.19",

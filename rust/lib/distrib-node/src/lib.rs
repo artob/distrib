@@ -20,3 +20,8 @@ pub use napi;
 #[cfg(feature = "napi")]
 #[doc(hidden)]
 pub use napi_derive;
+
+#[cfg(feature = "std")]
+mod program;
+#[cfg(feature = "std")]
+pub use program::*;

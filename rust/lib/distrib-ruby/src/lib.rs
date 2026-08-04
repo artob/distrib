@@ -27,3 +27,8 @@ pub use gemspec::*;
 mod load;
 #[cfg(all(feature = "std", feature = "serde"))]
 pub use load::*;
+
+#[cfg(feature = "std")]
+mod program;
+#[cfg(feature = "std")]
+pub use program::*;

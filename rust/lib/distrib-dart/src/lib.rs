@@ -20,10 +20,15 @@ pub use dart_sys;
 mod error;
 pub use error::*;
 
-pub mod pubspec;
-pub use pubspec::Pubspec;
-
 #[cfg(all(feature = "std", feature = "serde"))]
 mod load;
 #[cfg(all(feature = "std", feature = "serde"))]
 pub use load::*;
+
+#[cfg(feature = "std")]
+mod program;
+#[cfg(feature = "std")]
+pub use program::*;
+
+pub mod pubspec;
+pub use pubspec::Pubspec;

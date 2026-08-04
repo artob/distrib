@@ -16,10 +16,15 @@ extern crate std;
 mod error;
 pub use error::*;
 
-pub mod package;
-pub use package::*;
-
 #[cfg(feature = "std")]
 mod load;
 #[cfg(feature = "std")]
 pub use load::*;
+
+pub mod package;
+pub use package::*;
+
+#[cfg(feature = "std")]
+mod program;
+#[cfg(feature = "std")]
+pub use program::*;

@@ -12,3 +12,8 @@ extern crate alloc;
 
 #[cfg(feature = "std")]
 extern crate std;
+
+#[cfg(feature = "std")]
+mod program;
+#[cfg(feature = "std")]
+pub use program::*;

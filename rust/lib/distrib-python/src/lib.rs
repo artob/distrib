@@ -20,10 +20,15 @@ pub use pyo3;
 mod error;
 pub use error::*;
 
-pub mod pyproject;
-pub use pyproject::*;
-
 #[cfg(feature = "std")]
 mod load;
 #[cfg(feature = "std")]
 pub use load::*;
+
+#[cfg(feature = "std")]
+mod program;
+#[cfg(feature = "std")]
+pub use program::*;
+
+pub mod pyproject;
+pub use pyproject::*;

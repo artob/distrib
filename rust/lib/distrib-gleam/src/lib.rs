@@ -18,12 +18,17 @@ pub use distrib_beam::*;
 mod error;
 pub use error::*;
 
+#[cfg(all(feature = "std", feature = "serde"))]
+mod load;
+#[cfg(all(feature = "std", feature = "serde"))]
+pub use load::*;
+
 #[cfg(all(feature = "parse"))]
 pub mod package;
 #[cfg(all(feature = "parse"))]
 pub use package::*;
 
-#[cfg(all(feature = "std", feature = "serde"))]
-mod load;
-#[cfg(all(feature = "std", feature = "serde"))]
-pub use load::*;
+#[cfg(feature = "std")]
+mod program;
+#[cfg(feature = "std")]
+pub use program::*;
