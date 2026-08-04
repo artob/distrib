@@ -49,11 +49,6 @@ pub enum PackageManager {
     #[cfg(feature = "unstable")]
     Gradle,
 
-    /// The Hex.pm package manager for Elixir, Erlang, and Gleam.
-    ///
-    /// See: <https://hex.pm/>
-    Hex,
-
     /// The JSR.io package manager for TypeScript and ECMAScript.
     ///
     /// See: <https://jsr.io/>
@@ -82,6 +77,11 @@ pub enum PackageManager {
     /// See: <https://maven.apache.org/>
     #[cfg(feature = "unstable")]
     Maven,
+
+    /// The Hex.pm package manager for Elixir, Erlang, and Gleam.
+    ///
+    /// See: <https://hex.pm/>
+    Mix,
 
     /// The Nimble package manager for Nim.
     ///
@@ -144,4 +144,22 @@ pub enum PackageManager {
     /// See: <https://vcpkg.io/>
     #[cfg(feature = "unstable")]
     Vcpkg,
+}
+
+impl PackageManager {
+    pub fn program(&self) -> Option<&[&str]> {
+        use PackageManager::*;
+        Some(match self {
+            Cargo => &["cargo"],
+            Jsr => &["jsr", "npx jsr"],
+            Mix => &["mix"],
+            Npm => &["npm"],
+            Pub => &["dart"],
+            PyPi => &["uv"],
+            #[cfg(feature = "unstable")]
+            Raco => &["raco"],
+            RubyGems => &["gem", "bundle exec gem"],
+            _ => return None,
+        })
+    }
 }

@@ -6,7 +6,8 @@ use clientele::{
     crates::camino::Utf8PathBuf,
     crates::clap::{Parser, Subcommand},
 };
-use distrib::{PackageManager, PackageRegistry};
+use distrib::{BuildArguments, PackageManager, PackageRegistry};
+use std::vec;
 use thiserror::Error;
 use tracing::error;
 
@@ -36,7 +37,6 @@ enum Command {
     },
 
     /// Build the current package.
-    #[cfg(feature = "unstable")]
     Build {
         /// The package manager to build with [default: auto].
         #[clap(short, long)]
@@ -69,6 +69,9 @@ impl Default for Command {
 pub enum ProgramError {
     #[error("unknown --output format: {0}")]
     UnknownOutputFormat(String),
+
+    #[error("unknown --with tool: {0}")]
+    UnknownWithTool(PackageManager),
 
     #[error(transparent)]
     Io(#[from] std::io::Error),
@@ -171,14 +174,34 @@ pub fn run() -> Result<(), ProgramError> {
             }
         },
 
-        #[cfg(feature = "unstable")]
         Command::Build { with } => {
-            // TODO: implement `distrib build`
-            std::dbg!(with);
+            let with = with.unwrap_or(PackageManager::Cargo); // TODO: auto
+            let Some(programs) = with.program() else {
+                return Err(UnknownWithTool(with));
+            };
+            for &program in programs {
+                let program: String = program.into();
+                let args = BuildArguments::from(with.clone())
+                    .to_vec()
+                    .unwrap_or_default();
+                if true {
+                    let mut cmdline: Vec<String> = vec![program.clone()];
+                    for arg in &args {
+                        cmdline.push(arg.into());
+                    }
+                    std::dbg!(cmdline);
+                }
+                std::process::Command::new(program)
+                    .args(args)
+                    .status()
+                    .unwrap();
+            }
         },
 
         #[cfg(feature = "unstable")]
         Command::Publish { to, with } => {
+            let to = to.unwrap_or(PackageRegistry::Crates); // TODO: auto
+            let with = with.unwrap_or(PackageManager::Cargo); // TODO: auto
             // TODO: implement `distrib publish`
             std::dbg!(to);
             std::dbg!(with);
