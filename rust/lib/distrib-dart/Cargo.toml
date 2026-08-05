@@ -29,6 +29,7 @@ std = ["alloc", "indexmap/std"]
 unstable = []
 
 # Features:
+export = ["dart-sys"]
 tracing = ["dep:tracing"]
 
 # Interoperability:

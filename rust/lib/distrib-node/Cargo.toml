@@ -29,6 +29,7 @@ std = ["alloc"]
 unstable = []
 
 # Features:
+export = ["napi"]
 tracing = ["dep:tracing"]
 
 # Interoperability:

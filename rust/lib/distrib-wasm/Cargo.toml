@@ -29,6 +29,7 @@ std = ["alloc"]
 unstable = []
 
 # Features:
+export = ["wasm-bindgen"]
 tracing = ["dep:tracing"]
 
 # Interoperability:

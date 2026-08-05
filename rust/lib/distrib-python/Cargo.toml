@@ -28,12 +28,13 @@ alloc = []
 std = ["alloc"]
 unstable = []
 
+# Features:
+export = ["pyo3"]
+tracing = ["dep:tracing"]
+
 # Interoperability:
 pyo3 = ["dep:pyo3"]
 serde = ["dep:serde", "dep:serde_json"]
-
-# Features:
-tracing = ["dep:tracing"]
 
 [dependencies]
 distrib-common.workspace = true

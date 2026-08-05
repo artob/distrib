@@ -29,6 +29,7 @@ std = ["alloc"]
 unstable = []
 
 # Features:
+export = ["distrib-node/export"]
 tracing = ["dep:tracing"]
 
 # Interoperability:

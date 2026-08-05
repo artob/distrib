@@ -29,6 +29,7 @@ std = ["alloc"]
 unstable = []
 
 # Features:
+export = ["rustler"]
 tracing = ["dep:tracing"]
 
 # Interoperability:

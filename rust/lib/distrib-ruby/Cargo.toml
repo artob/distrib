@@ -29,6 +29,7 @@ std = ["alloc", "indexmap/std"]
 unstable = []
 
 # Features:
+export = ["magnus"]
 tracing = ["dep:tracing"]
 
 # Interoperability:

@@ -70,7 +70,20 @@ std = [
 unstable = []
 
 # Features:
-export = ["macros"]
+export = [
+    "macros",
+    # Runtimes:
+    "distrib-beam?/export",
+    "distrib-node?/export",
+    "distrib-wasm?/export",
+    # Languages:
+    "distrib-dart?/export",
+    "distrib-gleam?/export",
+    "distrib-js?/export",
+    "distrib-python?/export",
+    "distrib-ruby?/export",
+    "distrib-rust?/export",
+]
 macros = ["dep:distrib-macros"]
 tracing = [
     "dep:tracing",
@@ -118,9 +131,9 @@ npm = ["dep:distrib-npm"]
 
 # Runtimes:
 runtimes = ["beam", "node", "wasm"]
-beam = ["dep:distrib-beam", "distrib-macros?/rustler", "distrib-beam?/rustler"]
-node = ["dep:distrib-node", "distrib-macros?/napi", "distrib-node?/napi"]
-wasm = ["dep:distrib-wasm", "distrib-macros?/wasm-bindgen", "distrib-wasm?/wasm-bindgen"]
+beam = ["dep:distrib-beam"]
+node = ["dep:distrib-node"]
+wasm = ["dep:distrib-wasm"]
 
 # Languages:
 languages = ["dart", "elixir", "erlang", "gleam", "js", "python", "ruby", "rust"]
@@ -129,8 +142,8 @@ elixir = ["beam"]
 erlang = ["beam"]
 gleam = ["dep:distrib-gleam", "beam"]
 js = ["dep:distrib-js", "node"]
-python = ["dep:distrib-python", "distrib-macros?/pyo3", "distrib-python?/pyo3"]
-ruby = ["dep:distrib-ruby", "distrib-macros?/magnus", "distrib-ruby?/magnus"]
+python = ["dep:distrib-python"]
+ruby = ["dep:distrib-ruby"]
 rust = ["dep:distrib-rust"]
 
 [dependencies]

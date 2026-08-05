@@ -29,6 +29,7 @@ std = ["alloc", "indexmap/std"]
 unstable = []
 
 # Features:
+export = ["distrib-beam/export"]
 parse = ["dep:serde", "dep:serde_with", "dep:toml1"]
 tracing = ["dep:tracing"]
 
