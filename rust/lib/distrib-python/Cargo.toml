@@ -32,6 +32,9 @@ unstable = []
 pyo3 = ["dep:pyo3"]
 serde = ["dep:serde", "dep:serde_json"]
 
+# Features:
+tracing = ["dep:tracing"]
+
 [dependencies]
 distrib-common.workspace = true
 
@@ -40,6 +43,9 @@ dogma.workspace = true
 pyproject-toml.workspace = true
 thiserror.workspace = true
 toml0.workspace = true
+
+# Features:
+tracing = { workspace = true, optional = true }
 
 # Interoperability:
 pyo3 = { workspace = true, optional = true }

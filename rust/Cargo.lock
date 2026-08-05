@@ -420,6 +420,7 @@ dependencies = [
  "rustler",
  "serde",
  "thiserror 2.0.19",
+ "tracing",
 ]
 
 [[package]]
@@ -442,6 +443,7 @@ dependencies = [
  "dogma 0.2.1",
  "serde",
  "thiserror 2.0.19",
+ "tracing",
 ]
 
 [[package]]
@@ -458,6 +460,7 @@ dependencies = [
  "serde_norway",
  "serde_with",
  "thiserror 2.0.19",
+ "tracing",
 ]
 
 [[package]]
@@ -473,6 +476,7 @@ dependencies = [
  "serde_with",
  "thiserror 2.0.19",
  "toml 1.1.3+spec-1.1.0",
+ "tracing",
 ]
 
 [[package]]
@@ -487,6 +491,7 @@ dependencies = [
  "serde",
  "serde_json",
  "thiserror 2.0.19",
+ "tracing",
 ]
 
 [[package]]
@@ -499,6 +504,7 @@ dependencies = [
  "serde",
  "serde_json",
  "thiserror 2.0.19",
+ "tracing",
 ]
 
 [[package]]
@@ -522,6 +528,7 @@ dependencies = [
  "serde",
  "serde_json",
  "thiserror 2.0.19",
+ "tracing",
 ]
 
 [[package]]
@@ -537,6 +544,7 @@ dependencies = [
  "serde",
  "serde_json",
  "thiserror 2.0.19",
+ "tracing",
 ]
 
 [[package]]
@@ -552,6 +560,7 @@ dependencies = [
  "serde_json",
  "thiserror 2.0.19",
  "toml 0.9.12+spec-1.1.0",
+ "tracing",
 ]
 
 [[package]]
@@ -568,6 +577,7 @@ dependencies = [
  "serde_norway",
  "serde_with",
  "thiserror 2.0.19",
+ "tracing",
 ]
 
 [[package]]
@@ -582,6 +592,7 @@ dependencies = [
  "serde_json",
  "thiserror 2.0.19",
  "toml 1.1.3+spec-1.1.0",
+ "tracing",
 ]
 
 [[package]]
@@ -593,6 +604,7 @@ dependencies = [
  "dogma 0.2.1",
  "serde",
  "thiserror 2.0.19",
+ "tracing",
  "wasm-bindgen",
 ]
 

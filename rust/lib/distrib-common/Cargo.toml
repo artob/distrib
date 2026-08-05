@@ -28,6 +28,9 @@ alloc = []
 std = ["alloc", "dep:camino"]
 unstable = []
 
+# Features:
+tracing = ["dep:tracing"]
+
 # Interoperability:
 serde = ["dep:serde"]
 
@@ -37,6 +40,9 @@ dogma.workspace = true
 thiserror.workspace = true
 
 camino = { workspace = true, optional = true }
+
+# Features:
+tracing = { workspace = true, optional = true }
 
 # Interoperability:
 serde = { workspace = true, optional = true }

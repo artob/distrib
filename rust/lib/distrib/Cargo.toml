@@ -72,6 +72,24 @@ unstable = []
 # Features:
 export = ["macros"]
 macros = ["dep:distrib-macros"]
+tracing = [
+    "dep:tracing",
+    "distrib-common/tracing",
+    # Packaging:
+    "distrib-jsr?/tracing",
+    "distrib-npm?/tracing",
+    # Runtimes:
+    "distrib-beam?/tracing",
+    "distrib-node?/tracing",
+    "distrib-wasm?/tracing",
+    # Languages:
+    "distrib-dart?/tracing",
+    "distrib-gleam?/tracing",
+    "distrib-js?/tracing",
+    "distrib-python?/tracing",
+    "distrib-ruby?/tracing",
+    "distrib-rust?/tracing",
+]
 
 # Interoperability:
 interop = ["serde"]
@@ -123,6 +141,7 @@ thiserror.workspace = true
 # Features:
 distrib-common.workspace = true
 distrib-macros = { workspace = true, optional = true }
+tracing = { workspace = true, optional = true }
 
 # Packaging:
 distrib-jsr = { workspace = true, optional = true }
@@ -142,10 +161,9 @@ distrib-ruby = { workspace = true, optional = true }
 distrib-rust = { workspace = true, optional = true }
 
 # CLI:
-clap = { version = "4.5", default-features = false, optional = true }
-clientele = { version = "0.3.8", features = [], optional = true }
-tracing = { version = "0.1", default-features = false, optional = true }
-tracing-subscriber = { version = "0.3", default-features = false, features = ["env-filter", "fmt", "std"], optional = true }
+clap = { workspace = true, optional = true }
+clientele = { workspace = true, optional = true }
+tracing-subscriber = { workspace = true, optional = true }
 
 [[bin]]
 name = "distrib"

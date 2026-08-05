@@ -28,6 +28,9 @@ alloc = []
 std = ["alloc"]
 unstable = []
 
+# Features:
+tracing = ["dep:tracing"]
+
 # Interoperability:
 napi = ["dep:napi", "dep:napi-derive"]
 serde = ["dep:serde", "dep:serde_json"]
@@ -38,6 +41,9 @@ distrib-common.workspace = true
 derive_more = { workspace = true, features = ["display", "from_str"] }
 dogma.workspace = true
 thiserror.workspace = true
+
+# Features:
+tracing = { workspace = true, optional = true }
 
 # Interoperability:
 napi = { workspace = true, optional = true }

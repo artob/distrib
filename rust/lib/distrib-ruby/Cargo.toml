@@ -28,6 +28,9 @@ alloc = []
 std = ["alloc", "indexmap/std"]
 unstable = []
 
+# Features:
+tracing = ["dep:tracing"]
+
 # Interoperability:
 magnus = ["dep:magnus"]
 serde = ["indexmap/serde", "dep:serde", "dep:serde_json", "dep:serde_with"]
@@ -40,6 +43,9 @@ dogma.workspace = true
 indexmap.workspace = true
 serde_norway.workspace = true
 thiserror.workspace = true
+
+# Features:
+tracing = { workspace = true, optional = true }
 
 # Interoperability:
 magnus = { workspace = true, optional = true }
