@@ -6,7 +6,9 @@ impl TryFrom<distrib_rust::Manifest> for Package {
     fn try_from(input: distrib_rust::Manifest) -> Result<Self, Self::Error> {
         use distrib_rust::{Edition, Value};
         assert!(!input.needs_workspace_inheritance());
-        let package = input.package.unwrap();
+        let package = input.package.ok_or_else(|| {
+            distrib_rust::LoadManifestError::Other("package field is missing".into())
+        })?;
         let rust_edition = package.edition.unwrap();
         let rust_version = package.rust_version.map(|x| x.unwrap()).unwrap_or_else(|| {
             match rust_edition {

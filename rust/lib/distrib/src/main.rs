@@ -6,7 +6,7 @@ use clientele::{
     crates::camino::Utf8PathBuf,
     crates::clap::{Parser, Subcommand},
 };
-use distrib::{PackageManager, PackageRegistry, Tool};
+use distrib::{Package, PackageManager, PackageRegistry, Tool};
 use thiserror::Error;
 use tracing::error;
 
@@ -27,8 +27,9 @@ enum Command {
     /// Inspect the current package's metadata.
     #[clap(aliases = ["describe"])]
     Inspect {
-        /// The project directory to use [default: $PWD].
-        project: Option<Utf8PathBuf>,
+        /// The working directory to use.
+        #[clap(short = 'C', long, default_value = ".")]
+        cwd: Option<Utf8PathBuf>,
 
         /// The output format to use.
         #[clap(short, long, default_value = "json")]
@@ -65,7 +66,7 @@ enum Command {
 impl Default for Command {
     fn default() -> Self {
         Self::Inspect {
-            project: None,
+            cwd: None,
             output: "json".to_string(),
         }
     }
@@ -167,12 +168,15 @@ pub fn run() -> Result<(), ProgramError> {
     let result = Ok(());
 
     match options.command.unwrap_or_default() {
-        Command::Inspect { project: _, output } => {
-            // TODO: implement `distrib inspect`
-
+        Command::Inspect { cwd, output } => {
+            let cwd = cwd.unwrap_or(".".into());
+            let package = Package::locate(&cwd).unwrap();
             match output.as_str() {
                 "json" => {
-                    // TODO: implement JSON output
+                    println!(
+                        "{}",
+                        serde_json::to_string_pretty(&package).map_err(|e| Other(e.into()))?
+                    );
                 },
                 _ => {
                     return Err(UnknownOutputFormat(output));
