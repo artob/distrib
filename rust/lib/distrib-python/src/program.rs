@@ -1,6 +1,6 @@
 // This is free and unencumbered software released into the public domain.
 
-use alloc::boxed::Box;
+use alloc::{boxed::Box, string::String, vec::Vec};
 use core::error::Error;
 use distrib_common::{Build, Utf8PathBuf};
 use std::process::Command;
@@ -41,10 +41,13 @@ impl PipProgram {}
 
 impl Build for PipProgram {
     fn build(&self) -> Result<(), Box<dyn Error>> {
-        Command::from(self.clone())
-            .args(["build"])
-            .status()
-            .map_err(|err| Box::new(err))?;
+        let mut cmd = Command::from(self.clone());
+        cmd.args(["build"]);
+
+        #[cfg(feature = "tracing")]
+        tracing::info!("Executing {:?}", cmd);
+
+        cmd.status().map_err(|err| Box::new(err))?;
         Ok(())
     }
 }

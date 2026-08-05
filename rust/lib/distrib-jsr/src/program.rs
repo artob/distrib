@@ -1,11 +1,11 @@
 // This is free and unencumbered software released into the public domain.
 
-use alloc::boxed::Box;
+use alloc::{boxed::Box, string::String, vec::Vec};
 use core::error::Error;
 use distrib_common::{Build, Utf8PathBuf};
 use std::process::Command;
 
-pub const JSR_COMMAND: &str = "npx jsr";
+pub const JSR_COMMAND: &str = "jsr";
 
 #[derive(Clone, Debug, Eq, Hash, PartialEq)]
 pub struct JsrProgram(Utf8PathBuf);
@@ -41,10 +41,13 @@ impl JsrProgram {}
 
 impl Build for JsrProgram {
     fn build(&self) -> Result<(), Box<dyn Error>> {
-        Command::from(self.clone())
-            .args(["run", "build"])
-            .status()
-            .map_err(|err| Box::new(err))?;
+        let mut cmd = Command::new("npx");
+        cmd.args(["jsr", "run", "build"]);
+
+        #[cfg(feature = "tracing")]
+        tracing::info!("Executing {:?}", cmd);
+
+        cmd.status().map_err(|err| Box::new(err))?;
         Ok(())
     }
 }

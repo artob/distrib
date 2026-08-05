@@ -146,20 +146,4 @@ pub enum PackageManager {
     Vcpkg,
 }
 
-impl PackageManager {
-    pub fn program(&self) -> Option<&[&str]> {
-        use PackageManager::*;
-        Some(match self {
-            Cargo => &["cargo"],
-            Jsr => &["jsr", "npx jsr"],
-            Mix => &["mix"],
-            Npm => &["npm"],
-            Pub => &["dart"],
-            PyPi => &["uv"],
-            #[cfg(feature = "unstable")]
-            Raco => &["raco"],
-            RubyGems => &["gem", "bundle exec gem"],
-            _ => return None,
-        })
-    }
-}
+impl PackageManager {}

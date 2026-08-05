@@ -6,8 +6,7 @@ use clientele::{
     crates::camino::Utf8PathBuf,
     crates::clap::{Parser, Subcommand},
 };
-use distrib::{BuildArguments, PackageManager, PackageRegistry};
-use std::vec;
+use distrib::{Build, PackageManager, PackageRegistry};
 use thiserror::Error;
 use tracing::error;
 
@@ -175,27 +174,26 @@ pub fn run() -> Result<(), ProgramError> {
         },
 
         Command::Build { with } => {
+            use distrib::PackageManager::*;
             let with = with.unwrap_or(PackageManager::Cargo); // TODO: auto
-            let Some(programs) = with.program() else {
-                return Err(UnknownWithTool(with));
+            let program: Box<dyn Build> = match with {
+                #[cfg(feature = "rust")]
+                Cargo => Box::new(distrib_rust::CargoProgram::default()),
+                #[cfg(feature = "jsr")]
+                Jsr => Box::new(distrib_jsr::JsrProgram::default()),
+                //#[cfg(feature = "mix")]
+                //Mix => Some(Box::new(distrib_rust::MixProgram::default())),
+                #[cfg(feature = "npm")]
+                Npm => Box::new(distrib_npm::NpmProgram::default()),
+                #[cfg(feature = "dart")]
+                Pub => Box::new(distrib_dart::DartProgram::default()),
+                #[cfg(feature = "python")]
+                PyPi => Box::new(distrib_python::PipProgram::default()),
+                #[cfg(feature = "ruby")]
+                RubyGems => Box::new(distrib_ruby::GemProgram::default()),
+                _ => return Err(UnknownWithTool(with)),
             };
-            for &program in programs {
-                let program: String = program.into();
-                let args = BuildArguments::from(with.clone())
-                    .to_vec()
-                    .unwrap_or_default();
-                if true {
-                    let mut cmdline: Vec<String> = vec![program.clone()];
-                    for arg in &args {
-                        cmdline.push(arg.into());
-                    }
-                    std::dbg!(cmdline);
-                }
-                std::process::Command::new(program)
-                    .args(args)
-                    .status()
-                    .unwrap();
-            }
+            let _ = program.build()?;
         },
 
         #[cfg(feature = "unstable")]
