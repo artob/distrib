@@ -1,5 +1,12 @@
 // This is free and unencumbered software released into the public domain.
 
-use super::{Build, Clean};
+pub trait Tool: Clean + Build + Publish {}
 
-pub trait Tool: Clean + Build {}
+mod build;
+pub use build::*;
+
+mod clean;
+pub use clean::*;
+
+mod publish;
+pub use publish::*;

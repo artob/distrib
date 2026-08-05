@@ -2,7 +2,7 @@
 
 use alloc::{boxed::Box, string::String, vec::Vec};
 use core::error::Error;
-use distrib_common::{Build, Clean, Tool, Utf8PathBuf};
+use distrib_common::{Build, Clean, PackageRegistry, Publish, Tool, Utf8PathBuf};
 use std::process::Command;
 
 pub const CARGO_COMMAND: &str = "cargo";
@@ -64,5 +64,11 @@ impl Build for CargoProgram {
 
         cmd.status().map_err(|err| Box::new(err))?;
         Ok(())
+    }
+}
+
+impl Publish for CargoProgram {
+    fn publish(&self, _registry: Option<PackageRegistry>) -> Result<(), Box<dyn Error>> {
+        todo!() // TODO
     }
 }

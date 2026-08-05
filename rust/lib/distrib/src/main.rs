@@ -6,7 +6,7 @@ use clientele::{
     crates::camino::Utf8PathBuf,
     crates::clap::{Parser, Subcommand},
 };
-use distrib::{Build, PackageManager, PackageRegistry, Tool};
+use distrib::{PackageManager, PackageRegistry, Tool};
 use thiserror::Error;
 use tracing::error;
 
@@ -35,7 +35,7 @@ enum Command {
         output: String,
     },
 
-    /// Clean the current package.
+    /// Remove the current package's build artifacts.
     Clean {
         /// The package manager to clean with [default: auto].
         #[clap(short, long)]
@@ -44,21 +44,21 @@ enum Command {
 
     /// Build the current package.
     Build {
+        // TODO: --for PackageEcosystem
         /// The package manager to build with [default: auto].
         #[clap(short, long)]
         with: Option<PackageManager>,
     },
 
-    /// Publish the current package.
-    #[cfg(feature = "unstable")]
+    /// Publish the current package to a package registry.
     Publish {
-        /// The package registry to publish to [default: auto].
-        #[clap(short, long)]
-        to: Option<PackageRegistry>,
-
         /// The package manager to build with [default: auto].
         #[clap(short, long)]
         with: Option<PackageManager>,
+
+        /// The package registry to publish to [default: auto].
+        #[clap(short, long)]
+        to: Option<PackageRegistry>,
     },
 }
 
@@ -192,13 +192,11 @@ pub fn run() -> Result<(), ProgramError> {
             let _ = program.build()?;
         },
 
-        #[cfg(feature = "unstable")]
-        Command::Publish { to, with } => {
-            let to = to.unwrap_or(PackageRegistry::Crates); // TODO: auto
+        Command::Publish { with, to } => {
             let with = with.unwrap_or(PackageManager::Cargo); // TODO: auto
-            // TODO: implement `distrib publish`
-            std::dbg!(to);
-            std::dbg!(with);
+            let to = to.unwrap_or(PackageRegistry::Crates); // TODO: auto
+            let program = tool_for(with)?;
+            let _ = program.publish(Some(to))?;
         },
     };
 
