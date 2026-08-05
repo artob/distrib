@@ -6,7 +6,7 @@ use clientele::{
     crates::camino::Utf8PathBuf,
     crates::clap::{Parser, Subcommand},
 };
-use distrib::{Build, PackageManager, PackageRegistry};
+use distrib::{Build, PackageManager, PackageRegistry, Tool};
 use thiserror::Error;
 use tracing::error;
 
@@ -33,6 +33,13 @@ enum Command {
         /// The output format to use.
         #[clap(short, long, default_value = "json")]
         output: String,
+    },
+
+    /// Clean the current package.
+    Clean {
+        /// The package manager to clean with [default: auto].
+        #[clap(short, long)]
+        with: Option<PackageManager>,
     },
 
     /// Build the current package.
@@ -173,26 +180,15 @@ pub fn run() -> Result<(), ProgramError> {
             }
         },
 
-        Command::Build { with } => {
-            use distrib::PackageManager::*;
+        Command::Clean { with } => {
             let with = with.unwrap_or(PackageManager::Cargo); // TODO: auto
-            let program: Box<dyn Build> = match with {
-                #[cfg(feature = "rust")]
-                Cargo => Box::new(distrib_rust::CargoProgram::default()),
-                #[cfg(feature = "jsr")]
-                Jsr => Box::new(distrib_jsr::JsrProgram::default()),
-                //#[cfg(feature = "mix")]
-                //Mix => Some(Box::new(distrib_rust::MixProgram::default())),
-                #[cfg(feature = "npm")]
-                Npm => Box::new(distrib_npm::NpmProgram::default()),
-                #[cfg(feature = "dart")]
-                Pub => Box::new(distrib_dart::DartProgram::default()),
-                #[cfg(feature = "python")]
-                PyPi => Box::new(distrib_python::PipProgram::default()),
-                #[cfg(feature = "ruby")]
-                RubyGems => Box::new(distrib_ruby::GemProgram::default()),
-                _ => return Err(UnknownWithTool(with)),
-            };
+            let program = tool_for(with)?;
+            let _ = program.clean()?;
+        },
+
+        Command::Build { with } => {
+            let with = with.unwrap_or(PackageManager::Cargo); // TODO: auto
+            let program = tool_for(with)?;
             let _ = program.build()?;
         },
 
@@ -207,4 +203,25 @@ pub fn run() -> Result<(), ProgramError> {
     };
 
     result
+}
+
+fn tool_for(input: PackageManager) -> Result<Box<dyn Tool>, ProgramError> {
+    use distrib::PackageManager::*;
+    Ok(match input {
+        #[cfg(feature = "rust")]
+        Cargo => Box::new(distrib_rust::CargoProgram::default()),
+        #[cfg(feature = "jsr")]
+        Jsr => Box::new(distrib_jsr::JsrProgram::default()),
+        //#[cfg(feature = "mix")]
+        //Mix => Some(Box::new(distrib_rust::MixProgram::default())),
+        #[cfg(feature = "npm")]
+        Npm => Box::new(distrib_npm::NpmProgram::default()),
+        #[cfg(feature = "dart")]
+        Pub => Box::new(distrib_dart::DartProgram::default()),
+        #[cfg(feature = "python")]
+        PyPi => Box::new(distrib_python::PipProgram::default()),
+        #[cfg(feature = "ruby")]
+        RubyGems => Box::new(distrib_ruby::GemProgram::default()),
+        _ => return Err(ProgramError::UnknownWithTool(input)),
+    })
 }

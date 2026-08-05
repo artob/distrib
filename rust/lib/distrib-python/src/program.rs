@@ -2,7 +2,7 @@
 
 use alloc::{boxed::Box, string::String, vec::Vec};
 use core::error::Error;
-use distrib_common::{Build, Utf8PathBuf};
+use distrib_common::{Build, Clean, Tool, Utf8PathBuf};
 use std::process::Command;
 
 pub const PIP_COMMAND: &str = "pip";
@@ -38,6 +38,14 @@ impl From<PipProgram> for Command {
 }
 
 impl PipProgram {}
+
+impl Tool for PipProgram {}
+
+impl Clean for PipProgram {
+    fn clean(&self) -> Result<(), Box<dyn Error>> {
+        Ok(())
+    }
+}
 
 impl Build for PipProgram {
     fn build(&self) -> Result<(), Box<dyn Error>> {

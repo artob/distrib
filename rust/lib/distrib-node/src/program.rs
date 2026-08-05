@@ -2,7 +2,7 @@
 
 use alloc::{boxed::Box, string::String, vec::Vec};
 use core::error::Error;
-use distrib_common::{Build, Utf8PathBuf};
+use distrib_common::{Build, Clean, Tool, Utf8PathBuf};
 use std::process::Command;
 
 pub const NODE_COMMAND: &str = "node";
@@ -38,16 +38,3 @@ impl From<NodeProgram> for Command {
 }
 
 impl NodeProgram {}
-
-impl Build for NodeProgram {
-    fn build(&self) -> Result<(), Box<dyn Error>> {
-        let mut cmd = Command::from(self.clone());
-        cmd.args(["--"]);
-
-        #[cfg(feature = "tracing")]
-        tracing::info!("Executing {:?}", cmd);
-
-        cmd.status().map_err(|err| Box::new(err))?;
-        Ok(())
-    }
-}

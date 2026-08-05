@@ -2,7 +2,7 @@
 
 use alloc::{boxed::Box, string::String, vec::Vec};
 use core::error::Error;
-use distrib_common::{Build, Utf8PathBuf};
+use distrib_common::{Build, Clean, Tool, Utf8PathBuf};
 use std::process::Command;
 
 pub const NPM_COMMAND: &str = "npm";
@@ -38,6 +38,14 @@ impl From<NpmProgram> for Command {
 }
 
 impl NpmProgram {}
+
+impl Tool for NpmProgram {}
+
+impl Clean for NpmProgram {
+    fn clean(&self) -> Result<(), Box<dyn Error>> {
+        Ok(())
+    }
+}
 
 impl Build for NpmProgram {
     fn build(&self) -> Result<(), Box<dyn Error>> {

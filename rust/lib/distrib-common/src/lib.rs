@@ -19,6 +19,9 @@ pub use camino::{Utf8Path, Utf8PathBuf};
 mod build;
 pub use build::*;
 
+mod clean;
+pub use clean::*;
+
 mod language;
 pub use language::*;
 
@@ -30,3 +33,6 @@ pub use package_registry::*;
 
 mod runtime;
 pub use runtime::*;
+
+mod tool;
+pub use tool::*;

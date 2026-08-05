@@ -2,7 +2,7 @@
 
 use alloc::{boxed::Box, string::String, vec::Vec};
 use core::error::Error;
-use distrib_common::{Build, Utf8PathBuf};
+use distrib_common::{Build, Clean, Tool, Utf8PathBuf};
 use std::process::Command;
 
 pub const JSR_COMMAND: &str = "jsr";
@@ -38,6 +38,14 @@ impl From<JsrProgram> for Command {
 }
 
 impl JsrProgram {}
+
+impl Tool for JsrProgram {}
+
+impl Clean for JsrProgram {
+    fn clean(&self) -> Result<(), Box<dyn Error>> {
+        Ok(())
+    }
+}
 
 impl Build for JsrProgram {
     fn build(&self) -> Result<(), Box<dyn Error>> {

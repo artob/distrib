@@ -2,7 +2,7 @@
 
 use alloc::{boxed::Box, string::String, vec::Vec};
 use core::error::Error;
-use distrib_common::{Build, Utf8PathBuf};
+use distrib_common::{Build, Clean, Tool, Utf8PathBuf};
 use std::{ffi::OsString, process::Command};
 
 pub const DART_COMMAND: &str = "dart";
@@ -38,6 +38,14 @@ impl From<DartProgram> for Command {
 }
 
 impl DartProgram {}
+
+impl Tool for DartProgram {}
+
+impl Clean for DartProgram {
+    fn clean(&self) -> Result<(), Box<dyn Error>> {
+        Ok(())
+    }
+}
 
 impl Build for DartProgram {
     fn build(&self) -> Result<(), Box<dyn Error>> {
