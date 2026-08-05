@@ -43,6 +43,7 @@ alloc = [
     "distrib-rust?/alloc",
     # Miscellaneous:
     "dogma/alloc",
+    "itertools/use_alloc",
 ]
 cli = ["std", "clientele", "clientele/default", "clientele/tracing", "dep:clap", "dep:tracing", "dep:tracing-subscriber"]
 std = [
@@ -107,6 +108,7 @@ tracing = [
 # Interoperability:
 interop = ["serde"]
 serde = [
+    "dep:serde",
     "distrib-common/serde",
     # Packaging:
     "distrib-jsr?/serde",
@@ -149,12 +151,16 @@ rust = ["dep:distrib-rust"]
 [dependencies]
 derive_more = { workspace = true, features = ["display", "from_str"] }
 dogma.workspace = true
+itertools.workspace = true
 thiserror.workspace = true
 
 # Features:
 distrib-common.workspace = true
 distrib-macros = { workspace = true, optional = true }
 tracing = { workspace = true, optional = true }
+
+# Interoperability:
+serde = { workspace = true, optional = true }
 
 # Packaging:
 distrib-jsr = { workspace = true, optional = true }
