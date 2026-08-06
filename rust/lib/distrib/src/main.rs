@@ -7,6 +7,7 @@ use clientele::{
     crates::clap::{Parser, Subcommand},
 };
 use distrib::{Package, PackageManager, PackageRegistry, Tool};
+use std::env::set_current_dir;
 use thiserror::Error;
 use tracing::error;
 
@@ -18,6 +19,10 @@ struct Options {
     #[clap(flatten)]
     flags: StandardOptions,
 
+    /// The working directory to use.
+    #[clap(short = 'C', long, default_value = ".", global = true)]
+    cwd: Option<Utf8PathBuf>,
+
     #[command(subcommand)]
     command: Option<Command>,
 }
@@ -27,10 +32,6 @@ enum Command {
     /// Inspect the current package's metadata.
     #[clap(aliases = ["describe"])]
     Inspect {
-        /// The working directory to use.
-        #[clap(short = 'C', long, default_value = ".")]
-        cwd: Option<Utf8PathBuf>,
-
         /// The output format to use.
         #[clap(short, long, default_value = "json")]
         output: String,
@@ -66,7 +67,6 @@ enum Command {
 impl Default for Command {
     fn default() -> Self {
         Self::Inspect {
-            cwd: None,
             output: "json".to_string(),
         }
     }
@@ -167,10 +167,13 @@ pub fn run() -> Result<(), ProgramError> {
 
     let result = Ok(());
 
+    if let Some(cwd) = options.cwd {
+        set_current_dir(&cwd)?;
+    };
+
     match options.command.unwrap_or_default() {
-        Command::Inspect { cwd, output } => {
-            let cwd = cwd.unwrap_or(".".into());
-            let package = Package::locate(&cwd).unwrap();
+        Command::Inspect { output } => {
+            let package = Package::locate(".").unwrap();
             match output.as_str() {
                 "json" => {
                     println!(

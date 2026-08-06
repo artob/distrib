@@ -8,6 +8,10 @@ use derive_more::{Display, FromStr};
 /// See: <https://www.tiobe.com/tiobe-index/>
 #[derive(Clone, Debug, Display, Default, Eq, FromStr, Hash, Ord, PartialEq, PartialOrd)]
 #[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
+#[cfg_attr(
+    feature = "serde",
+    serde(rename_all(serialize = "lowercase", deserialize = "lowercase"))
+)]
 #[non_exhaustive]
 pub enum Language {
     /// The Ada language.
