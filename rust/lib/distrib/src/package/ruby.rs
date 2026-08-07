@@ -10,6 +10,7 @@ impl TryFrom<distrib_ruby::Gemspec> for Package {
             .and_then(|r| r.requirements.into_iter().next())
             .map(|e| e.1.version.clone());
         Ok(Self {
+            kind: PackageKind::Ruby,
             language: Language::Ruby,
             languages: vec![Language::Ruby],
             name: input.name,

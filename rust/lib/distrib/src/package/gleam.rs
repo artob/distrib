@@ -5,6 +5,7 @@ impl TryFrom<distrib_gleam::PackageConfig> for Package {
 
     fn try_from(input: distrib_gleam::PackageConfig) -> Result<Self, Self::Error> {
         Ok(Self {
+            kind: PackageKind::Gleam,
             language: Language::Gleam,
             languages: vec![Language::Gleam],
             name: input.name,

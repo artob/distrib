@@ -21,6 +21,7 @@ impl TryFrom<distrib_rust::Manifest> for Package {
             .into()
         });
         Ok(Self {
+            kind: PackageKind::Cargo,
             language: Language::Rust,
             languages: vec![Language::Rust],
             name: package.name,

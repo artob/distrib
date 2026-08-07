@@ -81,6 +81,7 @@ wasm-bindgen = { version = "0.2.126", default-features = false }
 camino = { version = "1.2", default-features = false }
 derive_more = { version = "2", default-features = false }
 dogma = { version = "0.2.1", default-features = false }
+glob = { version = "0.3", default-features = false }
 indexmap = { version = "2.14", default-features = false }
 itertools = { version = "0.15", default-features = false }
 serde_norway = { version = "0.9", default-features = false }

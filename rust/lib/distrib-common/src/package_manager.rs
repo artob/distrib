@@ -43,6 +43,11 @@ pub enum PackageManager {
     #[cfg(feature = "unstable")]
     Cpan,
 
+    /// The Gleam package manager.
+    ///
+    /// See: <https://gleam.run/>
+    Gleam,
+
     /// The Gradle package manager for Java/JVM.
     ///
     /// See: <https://gradle.org/>

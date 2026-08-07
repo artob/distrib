@@ -151,6 +151,7 @@ rust = ["dep:distrib-rust"]
 [dependencies]
 derive_more = { workspace = true, features = ["display", "from_str"] }
 dogma.workspace = true
+glob.workspace = true
 itertools.workspace = true
 thiserror.workspace = true
 

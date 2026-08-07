@@ -6,6 +6,7 @@ impl TryFrom<distrib_js::PackageJson> for Package {
     fn try_from(input: distrib_js::PackageJson) -> Result<Self, Self::Error> {
         use distrib_js::{Person, PersonObject, Repository};
         Ok(Self {
+            kind: PackageKind::Npm,
             language: Language::JavaScript,
             languages: vec![Language::JavaScript],
             name: input.name.unwrap_or_default(),

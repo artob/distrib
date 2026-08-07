@@ -4,17 +4,21 @@ use super::LoadError;
 use crate::Utf8Path;
 use alloc::{
     borrow::Cow,
+    boxed::Box,
     format,
     string::{String, ToString},
     vec,
     vec::Vec,
 };
-use distrib_common::Language;
+use distrib_common::{Language, PackageKind, PackageManager, PackageRegistry};
 //use serde_json::{Map, Value, json};
 
 #[derive(Clone, Debug, Default)]
 #[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 pub struct Package {
+    /// The package kind.
+    pub kind: PackageKind,
+
     /// The primary language.
     pub language: Language,
 
@@ -71,61 +75,67 @@ impl Package {
         ] {
             let file_path = dir_path.join(file_name);
             if file_path.exists() {
-                return Self::load(file_path);
+                return Self::load(file_path, None);
             }
         }
         Err(LoadError::NoPackageFound(dir_path.into()))
     }
 
-    pub fn load(file_path: impl AsRef<Utf8Path>) -> Result<Self, LoadError> {
+    pub fn load(
+        file_path: impl AsRef<Utf8Path>,
+        package_kind: Option<PackageKind>,
+    ) -> Result<Self, LoadError> {
+        use PackageKind::*;
         let file_path = file_path.as_ref();
-        Ok(match file_path.file_name() {
-            #[cfg(feature = "ruby")]
-            Some(".gemspec.yaml") => distrib_ruby::load_gemspec(file_path)?.try_into()?, // TODO
-
+        let package_kind = match package_kind {
+            Some(kind) => kind,
+            None => {
+                PackageKind::try_from(file_path).map_err(|err| LoadError::Other(Box::new(err)))?
+            },
+        };
+        Ok(match package_kind {
             #[cfg(feature = "rust")]
-            Some("Cargo.toml") => distrib_rust::load_cargo_toml(file_path)?.try_into()?,
-
+            Cargo => distrib_rust::load_cargo_toml(file_path)?.try_into()?,
             #[cfg(feature = "gleam")]
-            Some("gleam.toml") => distrib_gleam::load_package_config(file_path)?.try_into()?,
-
+            Gleam => distrib_gleam::load_package_config(file_path)?.try_into()?,
+            // #[cfg(feature = "jsr")]
+            // Jsr => distrib_jsr::load_package_json(file_path)?.try_into()?,
             #[cfg(feature = "js")]
-            Some("package.json") => distrib_js::load_package_json(file_path)?.try_into()?,
-
+            Npm => distrib_js::load_package_json(file_path)?.try_into()?,
             #[cfg(feature = "dart")]
-            Some("pubspec.yaml") => distrib_dart::load_pubspec(file_path)?.try_into()?,
-
+            Pub => distrib_dart::load_pubspec(file_path)?.try_into()?,
             #[cfg(feature = "python")]
-            Some("pyproject.toml") => distrib_python::load_pyproject_toml(file_path)?.try_into()?,
-
+            Python => distrib_python::load_pyproject_toml(file_path)?.try_into()?,
+            #[cfg(feature = "ruby")]
+            Ruby => distrib_ruby::load_gemspec(file_path)?.try_into()?,
             _ => {
                 return Err(LoadError::UnknownPackageFormat(file_path.into()));
             },
         })
     }
 
-    // pub fn to_json(&self) -> serde_json::Value {
-    //     self.clone().into_json()
-    // }
+    pub fn registry(&self) -> Option<PackageRegistry> {
+        Some(PackageRegistry::Crates)
+    }
 
-    // pub fn into_json(self) -> serde_json::Value {
-    //     // Make sure to keep this in sync with `package.csv`!
-    //     serde_json::json!({
-    //         "language": self.language,
-    //         "name": self.name,
-    //         "version": self.version,
-    //         "author": &self.authors.first(),
-    //         "authors": self.authors,
-    //         "description": self.description,
-    //         "homepage": self.homepage,
-    //         "keywords": self.keywords,
-    //         "categories": self.categories,
-    //         "license": self.licenses.first(),
-    //         "licenses": self.licenses,
-    //         "repository": self.repository,
-    //         "metadata": self.metadata,
-    //     })
-    // }
+    pub fn tool(&self) -> Option<PackageManager> {
+        use PackageKind::*;
+        Some(match self.kind {
+            #[cfg(feature = "rust")]
+            Cargo => PackageManager::Cargo,
+            #[cfg(feature = "gleam")]
+            Gleam => PackageManager::Gleam,
+            #[cfg(feature = "js")]
+            Npm => PackageManager::Npm,
+            #[cfg(feature = "dart")]
+            Pub => PackageManager::Pub,
+            #[cfg(feature = "python")]
+            Python => PackageManager::PyPi, // TODO
+            #[cfg(feature = "ruby")]
+            Ruby => PackageManager::RubyGems,
+            _ => return None,
+        })
+    }
 }
 
 #[cfg(feature = "dart")]

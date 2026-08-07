@@ -19,6 +19,9 @@ pub use camino::{Utf8Path, Utf8PathBuf};
 mod language;
 pub use language::*;
 
+mod package_kind;
+pub use package_kind::*;
+
 mod package_manager;
 pub use package_manager::*;
 

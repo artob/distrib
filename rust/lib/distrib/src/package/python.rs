@@ -12,6 +12,7 @@ impl TryFrom<distrib_python::PyprojectToml> for Package {
             .and_then(|vs| vs.into_iter().next())
             .map(|v| v.version().only_release().to_string());
         Ok(Self {
+            kind: PackageKind::Python,
             language: Language::Python,
             languages: vec![Language::Python],
             name: project.name,

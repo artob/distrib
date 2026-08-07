@@ -6,10 +6,11 @@ use clientele::{
     crates::camino::Utf8PathBuf,
     crates::clap::{Parser, Subcommand},
 };
-use distrib::{Package, PackageManager, PackageRegistry, Tool};
+use distrib::{LoadError, Package, PackageKind, PackageManager, PackageRegistry, Tool};
+use glob::glob;
 use std::env::set_current_dir;
 use thiserror::Error;
-use tracing::error;
+use tracing::{debug, error, info, warn};
 
 /// Distrib helps you distribute your software.
 #[derive(Debug, Parser)]
@@ -77,8 +78,17 @@ pub enum ProgramError {
     #[error("unknown --output format: {0}")]
     UnknownOutputFormat(String),
 
+    #[error("missing --with tool (auto-detection failed)")]
+    MissingWithTool,
+
     #[error("unknown --with tool: {0}")]
     UnknownWithTool(PackageManager),
+
+    #[error("missing --to registry (auto-detection failed)")]
+    MissingToRegistry,
+
+    #[error(transparent)]
+    LoadPackage(#[from] LoadError),
 
     #[error(transparent)]
     Io(#[from] std::io::Error),
@@ -168,13 +178,43 @@ pub fn run() -> Result<(), ProgramError> {
     let result = Ok(());
 
     if let Some(cwd) = options.cwd {
+        debug!("Changing the current directory to `{}`...", cwd);
         set_current_dir(&cwd)?;
+        info!("Changed the current directory to `{}`.", cwd);
     };
 
-    match options.command.unwrap_or_default() {
-        Command::Inspect { output } => {
-            let package = Package::locate(".").unwrap();
-            match output.as_str() {
+    let mut packages: Vec<Package> = vec![];
+    for package_kind in PackageKind::ALL {
+        let manifest_name = package_kind.manifest_name();
+        for manifest_path in glob(manifest_name).unwrap().filter_map(Result::ok) {
+            let manifest_path = Utf8PathBuf::try_from(manifest_path).unwrap();
+            debug!(
+                "Loading the {} manifest `{}`...",
+                package_kind, manifest_path
+            );
+            match Package::load(&manifest_path, Some(package_kind.clone())) {
+                Ok(package) => {
+                    packages.push(package);
+                    info!("Loaded the {} manifest `{}`.", package_kind, manifest_path);
+                },
+                Err(err) => {
+                    warn!(
+                        "Failed to load the {} manifest `{}`: {}",
+                        package_kind, manifest_path, err
+                    );
+                },
+            }
+        }
+    }
+
+    if packages.is_empty() {
+        return Err(Other("no packages found".into()));
+    }
+
+    let command = options.command.unwrap_or_default();
+    for package in packages {
+        match command {
+            Command::Inspect { ref output } => match output.as_str() {
                 "json" => {
                     println!(
                         "{}",
@@ -182,30 +222,42 @@ pub fn run() -> Result<(), ProgramError> {
                     );
                 },
                 _ => {
-                    return Err(UnknownOutputFormat(output));
+                    return Err(UnknownOutputFormat(output.clone()));
                 },
-            }
-        },
+            },
 
-        Command::Clean { with } => {
-            let with = with.unwrap_or(PackageManager::Cargo); // TODO: auto
-            let program = tool_for(with)?;
-            let _ = program.clean()?;
-        },
+            Command::Clean { ref with } => {
+                let with = with
+                    .clone()
+                    .or_else(|| package.tool())
+                    .ok_or(MissingWithTool)?;
+                let program = tool_for(with)?;
+                let _ = program.clean()?;
+            },
 
-        Command::Build { with } => {
-            let with = with.unwrap_or(PackageManager::Cargo); // TODO: auto
-            let program = tool_for(with)?;
-            let _ = program.build()?;
-        },
+            Command::Build { ref with } => {
+                let with = with
+                    .clone()
+                    .or_else(|| package.tool())
+                    .ok_or(MissingWithTool)?;
+                let program = tool_for(with)?;
+                let _ = program.build()?;
+            },
 
-        Command::Publish { with, to } => {
-            let with = with.unwrap_or(PackageManager::Cargo); // TODO: auto
-            let to = to.unwrap_or(PackageRegistry::Crates); // TODO: auto
-            let program = tool_for(with)?;
-            let _ = program.publish(Some(to))?;
-        },
-    };
+            Command::Publish { ref with, ref to } => {
+                let with = with
+                    .clone()
+                    .or_else(|| package.tool())
+                    .ok_or(MissingWithTool)?;
+                let to = to
+                    .clone()
+                    .or_else(|| package.registry())
+                    .ok_or(MissingToRegistry)?;
+                let program = tool_for(with)?;
+                let _ = program.publish(Some(to))?;
+            },
+        }
+    }
 
     result
 }

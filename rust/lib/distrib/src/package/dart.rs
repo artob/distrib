@@ -9,6 +9,7 @@ impl TryFrom<distrib_dart::Pubspec> for Package {
             .environment
             .map(|e| e.sdk.replace('^', "").split('.').take(2).join(".")); // FIXME
         Ok(Self {
+            kind: PackageKind::Pub,
             language: Language::Dart,
             languages: vec![Language::Dart],
             name: input.name,
