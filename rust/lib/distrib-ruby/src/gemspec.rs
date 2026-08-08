@@ -20,7 +20,7 @@ pub type Map<K, V = serde_json::Value> = IndexMap<K, V>;
 #[cfg_attr(feature = "serde", serde_with::serde_as)]
 #[derive(Clone, Debug, Default, Eq, Hash, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
-#[cfg_attr(feature = "serde", serde(default, tag = "@type"))]
+#[cfg_attr(feature = "serde", serde(default))]
 pub struct Specification<T = Metadata> {
     /// See: <https://guides.rubygems.org/specification-reference/#authors=>
     #[cfg_attr(feature = "serde", serde(alias = "author"))]
@@ -129,6 +129,13 @@ pub struct Specification<T = Metadata> {
 
     /// See: <https://guides.rubygems.org/specification-reference/#version>
     pub version: Version,
+}
+
+#[cfg(all(feature = "serde"))]
+impl<T: serde::Serialize> Specification<T> {
+    pub fn try_to_string(&self) -> Result<String, serde_norway::Error> {
+        serde_norway::to_string(self)
+    }
 }
 
 /// !ruby/object:Gem::Dependency

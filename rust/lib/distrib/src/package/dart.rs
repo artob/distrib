@@ -25,3 +25,30 @@ impl TryFrom<distrib_dart::Pubspec> for Package {
         })
     }
 }
+
+impl From<Package> for distrib_dart::Pubspec {
+    fn from(input: Package) -> Self {
+        Self {
+            name: input.name,
+            version: Some(input.version),
+            description: input.description,
+            homepage: input.homepage,
+            repository: input.repository,
+            issue_tracker: None,
+            documentation: None,
+            dependencies: None,
+            dev_dependencies: None, // TODO: distrib
+            dependency_overrides: None,
+            environment: None,
+            executables: None,
+            platforms: None,
+            publish_to: None,
+            funding: None,
+            false_secrets: None,
+            screenshots: None,
+            topics: None,
+            ignored_advisories: None,
+            hooks: None,
+        }
+    }
+}

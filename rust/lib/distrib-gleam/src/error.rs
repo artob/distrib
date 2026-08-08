@@ -8,13 +8,10 @@ use thiserror::Error;
 
 #[derive(Debug, Error)]
 pub enum LoadPackageError {
+    #[cfg(feature = "std")]
+    #[error(transparent)]
+    Io(#[from] std::io::Error),
+
     #[error(transparent)]
     Other(#[from] Box<dyn core::error::Error>),
-}
-
-#[cfg(feature = "std")]
-impl From<std::io::Error> for LoadPackageError {
-    fn from(error: std::io::Error) -> Self {
-        Self::Other(error.into())
-    }
 }

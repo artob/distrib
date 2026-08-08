@@ -34,16 +34,17 @@ tracing = ["dep:tracing"]
 
 # Interoperability:
 pyo3 = ["dep:pyo3"]
-serde = ["dep:serde", "dep:serde_json"]
+serde = ["dep:serde", "dep:serde_json", "toml0/serde"]
 
 [dependencies]
 distrib-common.workspace = true
 
 derive_more = { workspace = true, features = ["display", "from_str"] }
 dogma.workspace = true
+pep440_rs.workspace = true
 pyproject-toml.workspace = true
 thiserror.workspace = true
-toml0.workspace = true
+toml0 = { workspace = true, features = ["display"] }
 
 # Features:
 tracing = { workspace = true, optional = true }

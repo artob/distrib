@@ -37,3 +37,34 @@ impl TryFrom<distrib_python::PyprojectToml> for Package {
         })
     }
 }
+
+impl From<Package> for distrib_python::PyprojectToml {
+    fn from(input: Package) -> Self {
+        use core::str::FromStr;
+        use distrib_python::{Project, Version};
+        Self {
+            build_system: None,
+            project: Some(Project {
+                name: input.name,
+                version: Version::from_str(&input.version).ok(),
+                description: input.description,
+                readme: None,
+                requires_python: None,
+                license: None,
+                license_files: None,
+                authors: None,
+                maintainers: None,
+                keywords: None,
+                classifiers: None,
+                urls: None,
+                entry_points: None,
+                scripts: None,
+                gui_scripts: None,
+                dependencies: None,
+                optional_dependencies: None, // TODO: distrib
+                dynamic: None,
+            }),
+            dependency_groups: None,
+        }
+    }
+}

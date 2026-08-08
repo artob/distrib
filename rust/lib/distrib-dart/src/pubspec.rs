@@ -9,7 +9,7 @@ pub type Map<K, V = serde_json::Value> = indexmap::IndexMap<K, V>;
 #[cfg_attr(feature = "serde", serde_with::serde_as)]
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
-#[cfg_attr(feature = "serde", serde(default, tag = "@type"))]
+#[cfg_attr(feature = "serde", serde(default))]
 pub struct Pubspec {
     /// See: <https://dart.dev/tools/pub/pubspec#name>
     pub name: PackageName,
@@ -95,6 +95,13 @@ pub struct Pubspec {
     #[cfg(all(feature = "alloc", feature = "serde"))]
     #[cfg_attr(feature = "serde", serde(skip_serializing_if = "Option::is_none"))]
     pub hooks: Option<Map<String, Hook>>,
+}
+
+#[cfg(all(feature = "serde"))]
+impl Pubspec {
+    pub fn try_to_string(&self) -> Result<String, serde_norway::Error> {
+        serde_norway::to_string(self)
+    }
 }
 
 /// See: <https://dart.dev/tools/pub/pubspec#dependencies>

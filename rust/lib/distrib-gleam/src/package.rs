@@ -8,7 +8,7 @@ pub type Map<K, V> = indexmap::IndexMap<K, V>;
 #[cfg_attr(feature = "serde", serde_with::serde_as)]
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
-#[cfg_attr(feature = "serde", serde(default, tag = "@type"))]
+#[cfg_attr(feature = "serde", serde(default))]
 pub struct PackageConfig {
     /// See: <https://gleam.run/documentation/gleam-toml-reference/#name>
     pub name: PackageName,
@@ -39,6 +39,13 @@ pub struct PackageConfig {
     /// See: <https://gleam.run/documentation/gleam-toml-reference/#dev_dependencies>
     #[cfg_attr(feature = "serde", serde(skip_serializing_if = "Option::is_none"))]
     pub dev_dependencies: Option<Map<String, PackageVersionConstraint>>,
+}
+
+#[cfg(all(feature = "serde"))]
+impl PackageConfig {
+    pub fn try_to_string(&self) -> Result<String, toml1::ser::Error> {
+        toml1::to_string(self)
+    }
 }
 
 /// See: <https://gleam.run/documentation/gleam-toml-reference/#name>

@@ -32,3 +32,23 @@ impl TryFrom<distrib_gleam::PackageConfig> for Package {
         })
     }
 }
+
+impl From<Package> for distrib_gleam::PackageConfig {
+    fn from(input: Package) -> Self {
+        use distrib_gleam::{Map, PackageRepository};
+        Self {
+            name: input.name,
+            version: input.version,
+            licenses: Some(input.licenses),
+            description: input.description,
+            repository: Some(PackageRepository {
+                r#type: "custom".to_string(), // TODO
+                url: input.repository,
+                ..Default::default()
+            }),
+            links: None, // TODO
+            dependencies: Some(Map::default()),
+            dev_dependencies: Some(Map::default()), // TODO: distrib
+        }
+    }
+}

@@ -26,3 +26,18 @@ impl TryFrom<distrib_ruby::Gemspec> for Package {
         })
     }
 }
+
+impl From<Package> for distrib_ruby::Gemspec {
+    fn from(input: Package) -> Self {
+        use distrib_ruby::Version;
+        Self {
+            name: input.name,
+            version: Version {
+                version: input.version,
+            },
+            summary: input.description.unwrap_or_default(),
+            dependencies: None, // TODO: distrib
+            ..Default::default()
+        }
+    }
+}
