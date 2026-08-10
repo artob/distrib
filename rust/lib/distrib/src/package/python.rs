@@ -34,6 +34,7 @@ impl TryFrom<distrib_python::PyprojectToml> for Package {
             },
             repository: project_urls.get("Repository").cloned(),
             //metadata: None, // TODO
+            config: None,
         })
     }
 }
@@ -41,7 +42,9 @@ impl TryFrom<distrib_python::PyprojectToml> for Package {
 impl From<Package> for distrib_python::PyprojectToml {
     fn from(input: Package) -> Self {
         use core::str::FromStr;
-        use distrib_python::{Project, Version};
+        use distrib_python::{Operator, Project, Version, VersionSpecifier, VersionSpecifiers};
+        let config = input.config.unwrap_or_default();
+        let python = config.lang.python.unwrap_or_default();
         Self {
             build_system: None,
             project: Some(Project {
@@ -49,7 +52,11 @@ impl From<Package> for distrib_python::PyprojectToml {
                 version: Version::from_str(&input.version).ok(),
                 description: input.description,
                 readme: None,
-                requires_python: None,
+                requires_python: VersionSpecifiers::from_str(&format!(
+                    ">={}",
+                    python.version.unwrap_or_else(|| "3.9".into())
+                ))
+                .ok(),
                 license: None,
                 license_files: None,
                 authors: None,

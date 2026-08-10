@@ -1,0 +1,51 @@
+# See: https://distrib.sh
+
+[lang.dart]
+version = "3.11"
+
+[lang.gleam]
+version = "1.18"
+
+[lang.javascript]
+
+[lang.python]
+version = "3.14"
+
+[lang.ruby]
+version = "4.0"
+
+[lang.rust]
+version = "1.85"
+
+[lang.typescript]
+version = "5.4"
+
+[tool.bun]
+
+[tool.bundle]
+
+[tool.cargo]
+
+[tool.deno]
+
+[tool.gem]
+
+[tool.gleam]
+
+[tool.hex]
+
+[tool.jsr]
+
+[tool.npm]
+
+[tool.pip]
+
+[tool.pub]
+
+[tool.rebar3]
+
+[tool.rustc]
+
+[tool.tsc]
+
+[tool.uv]

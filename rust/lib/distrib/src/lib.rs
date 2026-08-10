@@ -65,14 +65,14 @@ pub use distrib_rust as rust;
 #[cfg(feature = "wasm")]
 pub use distrib_wasm as wasm;
 
+mod config;
+pub use config::*;
+
 mod load_error;
 pub use load_error::*;
 
 mod package;
 pub use package::*;
-
-mod package_config;
-pub use package_config::*;
 
 #[doc = include_str!("../../../README.md")]
 #[cfg(doctest)]

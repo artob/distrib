@@ -37,6 +37,7 @@ impl TryFrom<distrib_rust::Manifest> for Package {
             },
             repository: package.repository.map(|x| x.unwrap()),
             //metadata: package.metadata.map(|x| x.try_into()).transpose()?,
+            config: None,
         })
     }
 }

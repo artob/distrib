@@ -1,6 +1,11 @@
 // This is free and unencumbered software released into the public domain.
 
-use alloc::{collections::BTreeMap, string::String, vec::Vec};
+use alloc::{
+    collections::BTreeMap,
+    string::{String, ToString},
+    vec,
+    vec::Vec,
+};
 use indexmap::IndexMap;
 
 pub type Gemspec = Specification;
@@ -144,10 +149,33 @@ impl<T: serde::Serialize> Specification<T> {
 #[cfg_attr(feature = "serde", serde(default))]
 pub struct Dependency {
     pub name: String,
-    pub requirement: Requirement,
     pub r#type: String,
     pub prerelease: bool,
+    pub requirement: Requirement,
     pub version_requirements: Requirement,
+}
+
+impl Dependency {
+    pub fn development(name: impl Into<String>, requirement: (&str, &str)) -> Self {
+        let requirement = Requirement::from(requirement);
+        Self::new(name, "development", false, requirement.clone(), requirement)
+    }
+
+    pub fn new(
+        name: impl Into<String>,
+        r#type: impl Into<String>,
+        prerelease: bool,
+        requirement: Requirement,
+        version_requirements: Requirement,
+    ) -> Self {
+        Self {
+            name: name.into(),
+            r#type: r#type.into(),
+            prerelease,
+            requirement,
+            version_requirements,
+        }
+    }
 }
 
 /// `!ruby/object:Gem::Requirement`
@@ -158,12 +186,38 @@ pub struct Requirement {
     pub requirements: Vec<(String, Version)>,
 }
 
+impl From<(&str, &str)> for Requirement {
+    fn from((input0, input1): (&str, &str)) -> Self {
+        From::from((input0.to_string(), input1.to_string()))
+    }
+}
+
+impl From<(String, String)> for Requirement {
+    fn from((input0, input1): (String, String)) -> Self {
+        From::from((input0, Version::from(input1)))
+    }
+}
+
+impl From<(String, Version)> for Requirement {
+    fn from((input0, input1): (String, Version)) -> Self {
+        Self {
+            requirements: vec![(input0, input1)],
+        }
+    }
+}
+
 /// `!ruby/object:Gem::Version`
 #[derive(Clone, Debug, Default, Eq, Hash, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 #[cfg_attr(feature = "serde", serde(default))]
 pub struct Version {
     pub version: String,
+}
+
+impl From<String> for Version {
+    fn from(version: String) -> Self {
+        Self { version }
+    }
 }
 
 #[derive(Clone, Debug, Default, Eq, Hash, PartialEq)]

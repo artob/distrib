@@ -28,7 +28,8 @@ impl TryFrom<distrib_gleam::PackageConfig> for Package {
             categories: vec![], // N/A
             licenses: input.licenses.unwrap_or_default(),
             repository: None, // TODO: input.repository
-                              //metadata: None,   // TODO
+            //metadata: None,   // TODO
+            config: None,
         })
     }
 }
@@ -36,6 +37,8 @@ impl TryFrom<distrib_gleam::PackageConfig> for Package {
 impl From<Package> for distrib_gleam::PackageConfig {
     fn from(input: Package) -> Self {
         use distrib_gleam::{Map, PackageRepository};
+        let config = input.config.unwrap_or_default();
+        let gleam = config.lang.gleam.unwrap_or_default();
         Self {
             name: input.name,
             version: input.version,

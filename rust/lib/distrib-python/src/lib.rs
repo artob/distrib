@@ -17,7 +17,7 @@ extern crate std;
 #[doc(hidden)]
 pub use pyo3;
 
-pub use pep440_rs::{Version, VersionParseError};
+pub use pep440_rs::{Operator, Version, VersionParseError, VersionSpecifier, VersionSpecifiers};
 
 mod error;
 pub use error::*;

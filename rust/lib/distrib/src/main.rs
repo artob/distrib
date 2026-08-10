@@ -6,7 +6,7 @@ use clientele::{
     crates::camino::Utf8PathBuf,
     crates::clap::{Parser, Subcommand},
 };
-use distrib::{LoadError, Package, PackageKind, PackageManager, PackageRegistry, Tool};
+use distrib::{Config, LoadError, Package, PackageKind, PackageManager, PackageRegistry, Tool};
 use glob::glob;
 use std::env::set_current_dir;
 use thiserror::Error;
@@ -187,6 +187,9 @@ pub fn run() -> Result<(), ProgramError> {
 
     let result = Ok(());
 
+    let config_str = std::fs::read_to_string("../.config/distrib.toml").unwrap(); // FIXME
+    let config: Config = toml1::from_str(&config_str).unwrap();
+
     if let Some(cwd) = options.cwd {
         debug!("Changing the current directory to `{}`...", cwd);
         set_current_dir(&cwd)?;
@@ -202,7 +205,11 @@ pub fn run() -> Result<(), ProgramError> {
                 "Loading the {} manifest `{}`...",
                 package_kind, manifest_path
             );
-            match Package::load(&manifest_path, Some(package_kind.clone())) {
+            match Package::load(
+                &manifest_path,
+                Some(package_kind.clone()),
+                Some(config.clone()),
+            ) {
                 Ok(package) => {
                     packages.push(package);
                     info!("Loaded the {} manifest `{}`.", package_kind, manifest_path);

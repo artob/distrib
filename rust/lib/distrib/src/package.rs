@@ -1,7 +1,7 @@
 // This is free and unencumbered software released into the public domain.
 
 use super::LoadError;
-use crate::Utf8Path;
+use crate::{Config, Utf8Path};
 use alloc::{
     borrow::Cow,
     boxed::Box,
@@ -51,49 +51,28 @@ pub struct Package {
 
     /// The package repository.
     pub repository: Option<String>,
-    ///// The package metadata, if any.
+
+    /// The package configuration, if any.
+    pub config: Option<Config>,
+    // The package metadata, if any.
     //pub metadata: Option<Value>,
 }
 
 impl Package {
-    pub fn locate(dir_path: impl AsRef<Utf8Path>) -> Result<Self, LoadError> {
-        let dir_path = dir_path.as_ref();
-        for file_name in [
-            #[cfg(feature = "gleam")]
-            "gleam.toml",
-            #[cfg(feature = "js")]
-            "package.json",
-            #[cfg(feature = "dart")]
-            "pubspec.yaml",
-            #[cfg(feature = "python")]
-            "pyproject.toml",
-            #[cfg(feature = "ruby")]
-            ".gemspec.yaml", // TODO
-            // This should be last, to support polyglot projects:
-            #[cfg(feature = "rust")]
-            "Cargo.toml",
-        ] {
-            let file_path = dir_path.join(file_name);
-            if file_path.exists() {
-                return Self::load(file_path, None);
-            }
-        }
-        Err(LoadError::NoPackageFound(dir_path.into()))
-    }
-
     pub fn load(
         file_path: impl AsRef<Utf8Path>,
-        package_kind: Option<PackageKind>,
+        kind: Option<PackageKind>,
+        config: Option<Config>,
     ) -> Result<Self, LoadError> {
         use PackageKind::*;
         let file_path = file_path.as_ref();
-        let package_kind = match package_kind {
+        let kind = match kind {
             Some(kind) => kind,
             None => {
                 PackageKind::try_from(file_path).map_err(|err| LoadError::Other(Box::new(err)))?
             },
         };
-        Ok(match package_kind {
+        let package = match kind {
             #[cfg(feature = "rust")]
             Cargo => distrib_rust::load_cargo_toml(file_path)?.try_into()?,
             #[cfg(feature = "gleam")]
@@ -111,7 +90,16 @@ impl Package {
             _ => {
                 return Err(LoadError::UnknownPackageFormat(file_path.into()));
             },
-        })
+        };
+        Ok(Package { config, ..package })
+    }
+
+    pub fn summary(&self) -> Option<&String> {
+        self.description.as_ref() // TODO: first sentence only
+    }
+
+    pub fn description(&self) -> Option<&String> {
+        self.description.as_ref()
     }
 
     pub fn homepage(&self) -> Option<&String> {

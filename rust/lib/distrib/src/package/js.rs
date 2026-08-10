@@ -36,12 +36,15 @@ impl TryFrom<distrib_js::PackageJson> for Package {
                 _ => None,
             },
             //metadata: None, // TODO: Some(serde_json::Value::Object(input_metadata.other)),
+            config: None,
         })
     }
 }
 
 impl From<Package> for distrib_js::PackageJson {
     fn from(input: Package) -> Self {
+        let config = input.config.unwrap_or_default();
+        let gleam = config.lang.javascript.unwrap_or_default();
         Self {
             name: Some(input.name),
             version: Some(input.version),

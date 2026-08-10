@@ -22,6 +22,7 @@ impl TryFrom<distrib_dart::Pubspec> for Package {
             licenses: vec![],   // TODO: detect from `LICENSE` file
             repository: input.repository,
             //metadata: None, // TODO
+            config: None,
         })
     }
 }
@@ -32,6 +33,8 @@ impl From<Package> for distrib_dart::Pubspec {
         let homepage = input.homepage().cloned();
         let repository = input.repository().cloned();
         let issue_tracker = input.issue_tracker().map(|s| s.into_owned());
+        let config = input.config.unwrap_or_default();
+        let dart = config.lang.dart.unwrap_or_default();
         Self {
             name: input.name,
             version: Some(input.version),
@@ -48,7 +51,7 @@ impl From<Package> for distrib_dart::Pubspec {
             ])),
             dependency_overrides: None,
             environment: Some(Environment {
-                sdk: "^3.11.0".into(),
+                sdk: format!("^{}.0", dart.version.unwrap_or_else(|| "3.0".into())),
                 ..Default::default()
             }),
             executables: None,

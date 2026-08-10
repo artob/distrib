@@ -45,7 +45,7 @@ alloc = [
     "dogma/alloc",
     "itertools/use_alloc",
 ]
-cli = ["serde", "std", "clientele", "clientele/default", "clientele/tracing", "dep:clap", "dep:serde_json", "dep:tracing", "dep:tracing-subscriber"]
+cli = ["serde", "std", "clientele", "clientele/default", "clientele/tracing", "dep:clap", "dep:serde_json", "dep:toml1", "dep:tracing", "dep:tracing-subscriber"]
 std = [
     "alloc",
     "distrib-common/std",
@@ -184,6 +184,7 @@ distrib-rust = { workspace = true, optional = true }
 clap = { workspace = true, optional = true }
 clientele = { workspace = true, optional = true }
 serde_json = { workspace = true, optional = true }
+toml1 = { workspace = true, optional = true, features = ["parse", "serde"] }
 tracing-subscriber = { workspace = true, optional = true }
 
 [[bin]]
