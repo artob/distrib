@@ -28,25 +28,36 @@ impl TryFrom<distrib_dart::Pubspec> for Package {
 
 impl From<Package> for distrib_dart::Pubspec {
     fn from(input: Package) -> Self {
+        use distrib_dart::{Map, pubspec::Environment};
+        let homepage = input.homepage().cloned();
+        let repository = input.repository().cloned();
+        let issue_tracker = input.issue_tracker().map(|s| s.into_owned());
         Self {
             name: input.name,
             version: Some(input.version),
-            description: input.description,
-            homepage: input.homepage,
-            repository: input.repository,
-            issue_tracker: None,
-            documentation: None,
+            description: input.description, // TODO: 60-180 characters
+            homepage,
+            repository,
+            issue_tracker,
+            documentation: None, // TODO
             dependencies: None,
-            dev_dependencies: None, // TODO: distrib
+            dev_dependencies: Some(Map::from_iter([
+                ("distrib".into(), format!("^{}", env!("CARGO_PKG_VERSION"))),
+                ("lints".into(), "^6.0.0".into()),
+                ("test".into(), "^1.25.0".into()),
+            ])),
             dependency_overrides: None,
-            environment: None,
+            environment: Some(Environment {
+                sdk: "^3.11.0".into(),
+                ..Default::default()
+            }),
             executables: None,
             platforms: None,
-            publish_to: None,
+            publish_to: None, // "none" for private packages
             funding: None,
             false_secrets: None,
             screenshots: None,
-            topics: None,
+            topics: None, // TODO: limit to 5 topics
             ignored_advisories: None,
             hooks: None,
         }

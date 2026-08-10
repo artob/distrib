@@ -46,9 +46,24 @@ impl From<Package> for distrib_gleam::PackageConfig {
                 url: input.repository,
                 ..Default::default()
             }),
-            links: None, // TODO
-            dependencies: Some(Map::default()),
-            dev_dependencies: Some(Map::default()), // TODO: distrib
+            links: match input.homepage {
+                Some(url) => Some(vec![distrib_gleam::PackageLink {
+                    title: "Website".to_string(),
+                    href: url.into(),
+                }]),
+                None => None,
+            },
+            dependencies: Some(Map::from_iter([(
+                "gleam_stdlib".into(),
+                ">= 1.0.0 and < 2.0.0".into(),
+            )])),
+            dev_dependencies: Some(Map::from_iter([
+                (
+                    "distrib".into(),
+                    format!(">= {} and < 0.1.0", env!("CARGO_PKG_VERSION")),
+                ),
+                ("gleeunit".into(), ">= 1.0.0 and < 2.0.0".into()),
+            ])),
         }
     }
 }

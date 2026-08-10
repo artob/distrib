@@ -114,6 +114,23 @@ impl Package {
         })
     }
 
+    pub fn homepage(&self) -> Option<&String> {
+        self.homepage.as_ref()
+    }
+
+    pub fn repository(&self) -> Option<&String> {
+        self.repository.as_ref()
+    }
+
+    pub fn issue_tracker(&self) -> Option<Cow<'_, str>> {
+        match self.repository.as_deref() {
+            Some(repo) if repo.starts_with("https://github.com/") => {
+                Some(format!("{}/issues", repo).into())
+            },
+            Some(_) | None => None,
+        }
+    }
+
     pub fn registry(&self) -> Option<PackageRegistry> {
         Some(PackageRegistry::Crates)
     }

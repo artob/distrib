@@ -31,4 +31,4 @@ mod program;
 pub use program::*;
 
 pub mod pubspec;
-pub use pubspec::Pubspec;
+pub use pubspec::*;
