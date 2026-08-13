@@ -39,7 +39,7 @@ module Distrib::Ruby::Gemspec
       s.files += Dir['ext/**/*.{rb,rs,lock,toml}']
       s.extensions = Dir['ext/*/extconf.rb']
 
-      s.required_ruby_version = '>= 4.0'  # just a default
+      s.required_ruby_version = '>= 3.3'  # Ubuntu 26.04 LTS
 
       s.add_dependency 'rb_sys' if File.exist?('Cargo.toml')
 

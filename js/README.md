@@ -27,7 +27,7 @@
 
 ## 🛠️ Prerequisites
 
-- [Node] 24+
+- [Node] 22+
 
 ## ⬇️ Installation
 

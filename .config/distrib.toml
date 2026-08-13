@@ -1,24 +1,64 @@
 # See: https://distrib.sh
 
+# https://dart.dev/changelog
+# https://dart.dev/resources/whats-new
 [lang.dart]
 version = "3.11"
 
+# https://endoflife.date/elixir
+# https://packages.ubuntu.com/resolute/elixir
+# https://elixir-lang.org/blog/?category=Releases
+# https://github.com/elixir-lang/elixir/releases
+[lang.elixir]
+version = "1.18"
+
+# https://endoflife.date/erlang
+# https://packages.ubuntu.com/resolute/erlang
+# https://erlang.org/downloads
+# https://github.com/erlang/otp/releases
+[lang.erlang]
+version = "27"
+
+# https://endoflife.date/gleam
+# https://gleam.run/roadmap/#version-history
+# https://gleam.run/news/
+# https://github.com/gleam-lang/gleam/releases
 [lang.gleam]
 version = "1.18"
 
+# https://endoflife.date/nodejs
+# https://packages.ubuntu.com/resolute/nodejs
+# https://nodejs.org/en/about/previous-releases
+# https://github.com/nodejs/node/releases
 [lang.javascript]
+#version = "22"
 
+# https://endoflife.date/python
+# https://packages.ubuntu.com/resolute/python3
+# https://test-devguide.readthedocs.io/en/latest/versions/
+# https://github.com/python/cpython/tags
 [lang.python]
 version = "3.14"
 
+# https://endoflife.date/ruby
+# https://packages.ubuntu.com/resolute/ruby
+# https://rubyreferences.github.io/rubychanges/
+# https://github.com/ruby/ruby/releases
 [lang.ruby]
-version = "4.0"
+version = "3.3"
 
+# https://endoflife.date/rust
+# https://packages.ubuntu.com/resolute/rustc
+# https://releases.rs
+# https://github.com/rust-lang/rust/releases
 [lang.rust]
 version = "1.85"
 
+# https://packages.ubuntu.com/resolute/node-typescript
+# https://devblogs.microsoft.com/typescript/
+# https://github.com/microsoft/typescript/releases
 [lang.typescript]
-version = "5.4"
+version = "5.2"
 
 [tool.bun]
 
