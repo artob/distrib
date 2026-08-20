@@ -40,7 +40,7 @@ wasm-bindgen = []
 [dependencies]
 darling = ">=0.20.0, <0.24.0"
 quote = "1"
-syn = { version = "2", features = ["full"] }
+syn = { version = "3", features = ["full"] }
 
 [lib]
 proc-macro = true
