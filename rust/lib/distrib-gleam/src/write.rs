@@ -5,6 +5,7 @@ use alloc::{
     boxed::Box,
     string::{String, ToString},
 };
+use distrib_common::BoxError;
 use std::path::Path;
 use thiserror::Error;
 
@@ -25,5 +26,5 @@ pub enum WriteError {
     Io(#[from] std::io::Error),
 
     #[error(transparent)]
-    Other(#[from] Box<dyn core::error::Error>),
+    Other(#[from] BoxError),
 }

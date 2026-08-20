@@ -13,10 +13,9 @@ extern crate alloc;
 #[cfg(feature = "std")]
 extern crate std;
 
-use alloc::boxed::Box;
-use core::error::Error;
+pub use distrib_common::BoxError;
 
-pub fn all() -> Result<(), Box<dyn Error>> {
+pub fn all() -> Result<(), BoxError> {
     #[cfg(feature = "dart")]
     dart()?;
     #[cfg(feature = "js")]
@@ -33,12 +32,12 @@ pub fn all() -> Result<(), Box<dyn Error>> {
 }
 
 #[cfg(feature = "dart")]
-pub fn dart() -> Result<(), Box<dyn Error>> {
+pub fn dart() -> Result<(), BoxError> {
     Ok(())
 }
 
 #[cfg(feature = "js")]
-pub fn js() -> Result<(), Box<dyn Error>> {
+pub fn js() -> Result<(), BoxError> {
     // See: <https://crates.io/crates/napi-build>
     // See: <https://docs.rs/napi-build/latest/napi_build/fn.setup.html>
     napi_build::setup();
@@ -46,7 +45,7 @@ pub fn js() -> Result<(), Box<dyn Error>> {
 }
 
 #[cfg(feature = "python")]
-pub fn python() -> Result<(), Box<dyn Error>> {
+pub fn python() -> Result<(), BoxError> {
     pyo3_build_config::add_python_framework_link_args();
     //pyo3_build_config::add_libpython_rpath_link_args();
     //pyo3_build_config::add_extension_module_link_args();
@@ -54,16 +53,16 @@ pub fn python() -> Result<(), Box<dyn Error>> {
 }
 
 #[cfg(feature = "ruby")]
-pub fn ruby() -> Result<rb_sys_env::RbEnv, Box<dyn Error>> {
-    rb_sys_env::activate()
+pub fn ruby() -> Result<rb_sys_env::RbEnv, BoxError> {
+    Ok(rb_sys_env::activate().unwrap()) // FIXME
 }
 
 #[cfg(feature = "rust")]
-pub fn rust() -> Result<(), Box<dyn Error>> {
+pub fn rust() -> Result<(), BoxError> {
     Ok(())
 }
 
 #[cfg(feature = "wasm")]
-pub fn wasm() -> Result<(), Box<dyn Error>> {
+pub fn wasm() -> Result<(), BoxError> {
     Ok(())
 }

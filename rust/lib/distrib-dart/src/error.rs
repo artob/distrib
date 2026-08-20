@@ -4,12 +4,13 @@ use alloc::{
     boxed::Box,
     string::{String, ToString},
 };
+use distrib_common::BoxError;
 use thiserror::Error;
 
 #[derive(Debug, Error)]
 pub enum LoadPubspecError {
     #[error(transparent)]
-    Other(#[from] Box<dyn core::error::Error>),
+    Other(#[from] BoxError),
 }
 
 #[cfg(feature = "std")]

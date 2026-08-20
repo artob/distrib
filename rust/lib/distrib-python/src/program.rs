@@ -2,7 +2,7 @@
 
 use alloc::{boxed::Box, string::String, vec::Vec};
 use core::error::Error;
-use distrib_common::{Build, Clean, PackageRegistry, Publish, Tool, Utf8PathBuf};
+use distrib_common::{BoxError, Build, Clean, PackageRegistry, Publish, Tool, Utf8PathBuf};
 use std::process::Command;
 
 pub const PIP_COMMAND: &str = "pip";
@@ -42,13 +42,13 @@ impl PipProgram {}
 impl Tool for PipProgram {}
 
 impl Clean for PipProgram {
-    fn clean(&self) -> Result<(), Box<dyn Error>> {
+    fn clean(&self) -> Result<(), BoxError> {
         Ok(())
     }
 }
 
 impl Build for PipProgram {
-    fn build(&self) -> Result<(), Box<dyn Error>> {
+    fn build(&self) -> Result<(), BoxError> {
         let mut cmd = Command::from(self.clone());
         cmd.args(["build"]);
 
@@ -61,7 +61,7 @@ impl Build for PipProgram {
 }
 
 impl Publish for PipProgram {
-    fn publish(&self, _registry: Option<PackageRegistry>) -> Result<(), Box<dyn Error>> {
+    fn publish(&self, _registry: Option<PackageRegistry>) -> Result<(), BoxError> {
         todo!() // TODO
     }
 }

@@ -13,6 +13,9 @@ extern crate alloc;
 #[cfg(feature = "std")]
 extern crate std;
 
+#[cfg(feature = "alloc")]
+pub type BoxError = alloc::boxed::Box<dyn core::error::Error + Send + Sync>;
+
 #[cfg(feature = "std")]
 pub use camino::{Utf8Path, Utf8PathBuf};
 

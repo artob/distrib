@@ -2,7 +2,7 @@
 
 use alloc::{boxed::Box, string::String, vec::Vec};
 use core::error::Error;
-use distrib_common::{Build, Clean, PackageRegistry, Publish, Tool, Utf8PathBuf};
+use distrib_common::{BoxError, Build, Clean, PackageRegistry, Publish, Tool, Utf8PathBuf};
 use std::process::Command;
 
 pub const NPM_COMMAND: &str = "npm";
@@ -42,13 +42,13 @@ impl NpmProgram {}
 impl Tool for NpmProgram {}
 
 impl Clean for NpmProgram {
-    fn clean(&self) -> Result<(), Box<dyn Error>> {
+    fn clean(&self) -> Result<(), BoxError> {
         Ok(())
     }
 }
 
 impl Build for NpmProgram {
-    fn build(&self) -> Result<(), Box<dyn Error>> {
+    fn build(&self) -> Result<(), BoxError> {
         let mut cmd = Command::from(self.clone());
         cmd.args(["run", "build"]);
 
@@ -61,7 +61,7 @@ impl Build for NpmProgram {
 }
 
 impl Publish for NpmProgram {
-    fn publish(&self, _registry: Option<PackageRegistry>) -> Result<(), Box<dyn Error>> {
+    fn publish(&self, _registry: Option<PackageRegistry>) -> Result<(), BoxError> {
         todo!() // TODO
     }
 }

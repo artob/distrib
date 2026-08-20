@@ -6,7 +6,9 @@ use clientele::{
     crates::camino::Utf8PathBuf,
     crates::clap::{Parser, Subcommand},
 };
-use distrib::{Config, LoadError, Package, PackageKind, PackageManager, PackageRegistry, Tool};
+use distrib::{
+    BoxError, Config, LoadError, Package, PackageKind, PackageManager, PackageRegistry, Tool,
+};
 use glob::glob;
 use std::env::set_current_dir;
 use thiserror::Error;
@@ -107,7 +109,7 @@ pub enum ProgramError {
     Exit(#[from] SysexitsError),
 
     #[error(transparent)]
-    Other(#[from] Box<dyn core::error::Error>),
+    Other(#[from] BoxError),
 }
 
 impl From<ProgramError> for SysexitsError {

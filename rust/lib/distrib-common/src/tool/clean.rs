@@ -1,8 +1,7 @@
 // This is free and unencumbered software released into the public domain.
 
-use alloc::boxed::Box;
-use core::error::Error;
+use crate::BoxError;
 
 pub trait Clean {
-    fn clean(&self) -> Result<(), Box<dyn Error>>;
+    fn clean(&self) -> Result<(), BoxError>;
 }

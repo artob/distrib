@@ -2,7 +2,7 @@
 
 use alloc::{boxed::Box, string::String, vec::Vec};
 use core::error::Error;
-use distrib_common::{Build, Clean, PackageRegistry, Publish, Tool, Utf8PathBuf};
+use distrib_common::{BoxError, Build, Clean, PackageRegistry, Publish, Tool, Utf8PathBuf};
 use std::process::Command;
 
 pub const CARGO_COMMAND: &str = "cargo";
@@ -42,7 +42,7 @@ impl CargoProgram {}
 impl Tool for CargoProgram {}
 
 impl Clean for CargoProgram {
-    fn clean(&self) -> Result<(), Box<dyn Error>> {
+    fn clean(&self) -> Result<(), BoxError> {
         let mut cmd = Command::from(self.clone());
         cmd.args(["clean"]);
 
@@ -55,7 +55,7 @@ impl Clean for CargoProgram {
 }
 
 impl Build for CargoProgram {
-    fn build(&self) -> Result<(), Box<dyn Error>> {
+    fn build(&self) -> Result<(), BoxError> {
         let mut cmd = Command::from(self.clone());
         cmd.args(["build"]);
 
@@ -68,7 +68,7 @@ impl Build for CargoProgram {
 }
 
 impl Publish for CargoProgram {
-    fn publish(&self, _registry: Option<PackageRegistry>) -> Result<(), Box<dyn Error>> {
+    fn publish(&self, _registry: Option<PackageRegistry>) -> Result<(), BoxError> {
         todo!() // TODO
     }
 }

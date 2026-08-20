@@ -4,6 +4,7 @@ use alloc::{
     boxed::Box,
     string::{String, ToString},
 };
+use distrib_common::BoxError;
 use thiserror::Error;
 
 #[derive(Debug, Error)]
@@ -13,5 +14,5 @@ pub enum LoadPackageError {
     Io(#[from] std::io::Error),
 
     #[error(transparent)]
-    Other(#[from] Box<dyn core::error::Error>),
+    Other(#[from] BoxError),
 }
