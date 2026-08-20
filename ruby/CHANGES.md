@@ -5,7 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 0.0.3 - 2026-08-03
+## 0.0.4 - 2026-08-20
+### Added
+- Implement `distrib inspect`
+- Implement `distrib manifest`
+- Parse config from `.config/distrib.toml`
+- Anchor defaults to Ubuntu 26.04 LTS
+
+## 0.0.4 - 2026-08-03
 ### Added
 - BEAM support
 - Gleam: Implement `distrib_gleam::load_package_config()`

@@ -385,7 +385,7 @@ dependencies = [
 
 [[package]]
 name = "distrib"
-version = "0.0.3"
+version = "0.0.4"
 dependencies = [
  "clap",
  "clientele",
@@ -416,7 +416,7 @@ dependencies = [
 
 [[package]]
 name = "distrib-beam"
-version = "0.0.3"
+version = "0.0.4"
 dependencies = [
  "derive_more",
  "distrib-common",
@@ -430,7 +430,7 @@ dependencies = [
 
 [[package]]
 name = "distrib-build"
-version = "0.0.3"
+version = "0.0.4"
 dependencies = [
  "distrib-common",
  "napi-build",
@@ -441,7 +441,7 @@ dependencies = [
 
 [[package]]
 name = "distrib-common"
-version = "0.0.3"
+version = "0.0.4"
 dependencies = [
  "camino",
  "derive_more",
@@ -453,7 +453,7 @@ dependencies = [
 
 [[package]]
 name = "distrib-dart"
-version = "0.0.3"
+version = "0.0.4"
 dependencies = [
  "dart-sys",
  "derive_more",
@@ -470,7 +470,7 @@ dependencies = [
 
 [[package]]
 name = "distrib-gleam"
-version = "0.0.3"
+version = "0.0.4"
 dependencies = [
  "derive_more",
  "distrib-beam",
@@ -486,7 +486,7 @@ dependencies = [
 
 [[package]]
 name = "distrib-js"
-version = "0.0.3"
+version = "0.0.4"
 dependencies = [
  "derive_more",
  "distrib-common",
@@ -501,7 +501,7 @@ dependencies = [
 
 [[package]]
 name = "distrib-jsr"
-version = "0.0.3"
+version = "0.0.4"
 dependencies = [
  "derive_more",
  "distrib-common",
@@ -514,7 +514,7 @@ dependencies = [
 
 [[package]]
 name = "distrib-macros"
-version = "0.0.3"
+version = "0.0.4"
 dependencies = [
  "darling",
  "quote",
@@ -523,7 +523,7 @@ dependencies = [
 
 [[package]]
 name = "distrib-node"
-version = "0.0.3"
+version = "0.0.4"
 dependencies = [
  "derive_more",
  "distrib-common",
@@ -538,7 +538,7 @@ dependencies = [
 
 [[package]]
 name = "distrib-npm"
-version = "0.0.3"
+version = "0.0.4"
 dependencies = [
  "derive_more",
  "distrib-common",
@@ -554,7 +554,7 @@ dependencies = [
 
 [[package]]
 name = "distrib-python"
-version = "0.0.3"
+version = "0.0.4"
 dependencies = [
  "derive_more",
  "distrib-common",
@@ -571,7 +571,7 @@ dependencies = [
 
 [[package]]
 name = "distrib-ruby"
-version = "0.0.3"
+version = "0.0.4"
 dependencies = [
  "derive_more",
  "distrib-common",
@@ -588,7 +588,7 @@ dependencies = [
 
 [[package]]
 name = "distrib-rust"
-version = "0.0.3"
+version = "0.0.4"
 dependencies = [
  "cargo_toml",
  "derive_more",
@@ -603,7 +603,7 @@ dependencies = [
 
 [[package]]
 name = "distrib-wasm"
-version = "0.0.3"
+version = "0.0.4"
 dependencies = [
  "derive_more",
  "distrib-common",

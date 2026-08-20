@@ -8,5 +8,5 @@ exclude-newer-span = "P3D"
 
 [[package]]
 name = "distrib-sh"
-version = "0.0.3"
+version = "0.0.4"
 source = { editable = "." }
