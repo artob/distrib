@@ -6,12 +6,16 @@ use alloc::{
     vec,
     vec::Vec,
 };
-use indexmap::IndexMap;
 
 pub type Gemspec = Specification;
 
-#[cfg(all(feature = "alloc", feature = "serde"))]
-pub type Map<K, V = serde_json::Value> = IndexMap<K, V>;
+/// Manifest mapping; insertion-ordered with `std`, key-ordered without it.
+#[cfg(all(feature = "std", feature = "serde"))]
+pub type Map<K, V = serde_json::Value> = indexmap::IndexMap<K, V>;
+
+/// Manifest mapping; insertion-ordered with `std`, key-ordered without it.
+#[cfg(all(not(feature = "std"), feature = "serde"))]
+pub type Map<K, V = serde_json::Value> = alloc::collections::BTreeMap<K, V>;
 
 /// The package information for a gem, typically defined in a `.gemspec` file.
 ///
@@ -136,7 +140,7 @@ pub struct Specification<T = Metadata> {
     pub version: Version,
 }
 
-#[cfg(all(feature = "serde"))]
+#[cfg(all(feature = "std", feature = "serde"))]
 impl<T: serde::Serialize> Specification<T> {
     pub fn try_to_string(&self) -> Result<String, serde_norway::Error> {
         serde_norway::to_string(self)

@@ -24,32 +24,21 @@ summary = "Distrib helps you distribute your software."
 [features]
 default = ["all", "std"]
 all = []
-alloc = []
-std = ["alloc"]
+alloc = ["distrib-common/alloc", "distrib-node/alloc", "distrib-npm/alloc"]
+std = ["alloc", "distrib-common/std", "distrib-node/std", "distrib-npm/std"]
 unstable = []
 
 # Features:
 export = ["distrib-node/export"]
-tracing = ["dep:tracing"]
+tracing = ["distrib-node/tracing", "distrib-npm/tracing"]
 
 # Interoperability:
-serde = ["dep:serde", "dep:serde_json"]
+serde = ["distrib-node/serde", "distrib-npm/serde"]
 
 [dependencies]
 distrib-common.workspace = true
 distrib-node.workspace = true
 distrib-npm.workspace = true
-
-derive_more = { workspace = true, features = ["display", "from_str"] }
-dogma.workspace = true
-thiserror.workspace = true
-
-# Features:
-tracing = { workspace = true, optional = true }
-
-# Interoperability:
-serde = { workspace = true, optional = true }
-serde_json = { workspace = true, optional = true }
 
 # Preview locally with: RUSTDOCFLAGS="--cfg docsrs" cargo +nightly doc --all-features
 [package.metadata.docs.rs]

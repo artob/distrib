@@ -1,0 +1,9 @@
+name = "feature_fixture"
+version = "1.2.3"
+description = "An isolated Gleam serialization fixture."
+
+[dependencies]
+gleam_stdlib = ">= 1.0.0 and < 2.0.0"
+
+[dev_dependencies]
+gleeunit = ">= 1.0.0 and < 2.0.0"

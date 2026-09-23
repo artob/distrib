@@ -6,7 +6,7 @@ inside this repository; do not inspect parent directories.
 ## Code map
 
 - `rust/`: Cargo workspace, members `lib/*`; shared dependencies/local patches
-  in `Cargo.toml`. Edition 2024; declared minimum Rust 1.85.
+  in `Cargo.toml`. Edition 2024; minimum Rust 1.97.1.
 - `rust/lib/distrib/src/`: `main.rs` handles CLI/discovery/dispatch; `config.rs`
   models `.config/distrib.toml`; `package.rs` normalizes metadata;
   `package/*.rs` converts ecosystem manifests to/from `Package`.
@@ -48,7 +48,11 @@ CLI requires `cli`; defaults omit it. Check changed crates independently with
 `cargo check -p NAME --locked`; feature changes also need `--no-default-features`
 and intended feature combinations. Workspace feature unification can mask bugs.
 `--all-features` pulls native FFI dependencies; it is not the baseline.
-Known gaps: no-default-feature builds fail; locked dependencies exceed Rust 1.85.
+Run `python3 etc/check-features.py` for isolated host feature checks, and
+`python3 etc/check-features.py --target thumbv7em-none-eabi` after installing that
+target for allocation-only checks. Set `RUSTUP_TOOLCHAIN=1.97.1` to check the MSRV.
+Export regression tests need `python,export` and `wasm,export` separately and
+together; Python tests require a linkable interpreter selected by `PYO3_PYTHON`.
 Report actual failures; compilation alone is not behavioral coverage.
 
 Other packages (commands run in the named directory):

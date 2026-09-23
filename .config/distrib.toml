@@ -52,7 +52,7 @@ version = "3.3"
 # https://releases.rs
 # https://github.com/rust-lang/rust/releases
 [lang.rust]
-version = "1.85"
+version = "1.97.1"
 
 # https://packages.ubuntu.com/resolute/node-typescript
 # https://devblogs.microsoft.com/typescript/

@@ -90,6 +90,9 @@ pub enum ProgramError {
     #[error("unknown --output format: {0}")]
     UnknownOutputFormat(String),
 
+    #[error("manifest generation is unavailable for {0} in this build")]
+    UnsupportedManifest(PackageKind),
+
     #[error("missing --with tool (auto-detection failed)")]
     MissingWithTool,
 
@@ -233,7 +236,6 @@ pub fn run() -> Result<(), ProgramError> {
     let command = options.command.unwrap_or_default();
     for package in packages {
         use Command::*;
-        use PackageKind::*;
         match command {
             Inspect { ref output } => match output.as_str() {
                 "json" => {
@@ -256,39 +258,57 @@ pub fn run() -> Result<(), ProgramError> {
                 let _ = program.clean()?;
             },
 
-            Manifest { r#for: Gleam } => {
+            #[cfg(feature = "gleam")]
+            Manifest {
+                r#for: PackageKind::Gleam,
+            } => {
                 use distrib_gleam::PackageConfig;
                 let manifest: PackageConfig = package.into();
                 let output = manifest.try_to_string().map_err(|e| Other(e.into()))?;
                 print!("# {}\n\n{}", MANIFEST_COMMENT, output);
             },
 
-            Manifest { r#for: Jsr } => {
+            #[cfg(feature = "jsr")]
+            Manifest {
+                r#for: PackageKind::Jsr,
+            } => {
                 print!("// {}\n", MANIFEST_COMMENT); // TODO
             },
 
-            Manifest { r#for: Npm } => {
+            #[cfg(feature = "npm")]
+            Manifest {
+                r#for: PackageKind::Npm,
+            } => {
                 // use distrib_npm::PackageJson;
                 // let manifest: PackageConfig = package.into();
                 // let output = manifest.to_string().map_err(|e| Other(e.into()))?;
                 print!("// {}\n", MANIFEST_COMMENT); // TODO
             },
 
-            Manifest { r#for: Pub } => {
+            #[cfg(feature = "dart")]
+            Manifest {
+                r#for: PackageKind::Pub,
+            } => {
                 use distrib_dart::Pubspec;
                 let manifest: Pubspec = package.into();
                 let output = manifest.try_to_string().map_err(|e| Other(e.into()))?;
                 print!("# {}\n---\n{}", MANIFEST_COMMENT, output);
             },
 
-            Manifest { r#for: Python } => {
+            #[cfg(feature = "python")]
+            Manifest {
+                r#for: PackageKind::Python,
+            } => {
                 use distrib_python::{PyprojectToml, PyprojectTomlExt};
                 let manifest: PyprojectToml = package.into();
                 let output = manifest.try_to_string().map_err(|e| Other(e.into()))?;
                 print!("# {}\n\n{}", MANIFEST_COMMENT, output);
             },
 
-            Manifest { r#for: Ruby } => {
+            #[cfg(feature = "ruby")]
+            Manifest {
+                r#for: PackageKind::Ruby,
+            } => {
                 use distrib_ruby::Gemspec;
                 let manifest: Gemspec = package.into();
                 let output = manifest.try_to_string().map_err(|e| Other(e.into()))?;
@@ -296,7 +316,7 @@ pub fn run() -> Result<(), ProgramError> {
             },
 
             Manifest { ref r#for } => {
-                todo!("unimplemented manifest format: {:?}", r#for) // TODO
+                return Err(UnsupportedManifest(r#for.clone()));
             },
 
             Build { with: None } => {
@@ -328,22 +348,39 @@ pub fn run() -> Result<(), ProgramError> {
 }
 
 fn tool_for(input: PackageManager) -> Result<Box<dyn Tool>, ProgramError> {
-    use distrib::PackageManager::*;
-    Ok(match input {
+    match input {
         #[cfg(feature = "rust")]
-        Cargo => Box::new(distrib_rust::CargoProgram::default()),
+        PackageManager::Cargo => Ok(Box::new(distrib_rust::CargoProgram::default())),
+        #[cfg(feature = "gleam")]
+        PackageManager::Gleam => Ok(Box::new(distrib_gleam::GleamProgram::default())),
         #[cfg(feature = "jsr")]
-        Jsr => Box::new(distrib_jsr::JsrProgram::default()),
+        PackageManager::Jsr => Ok(Box::new(distrib_jsr::JsrProgram::default())),
         //#[cfg(feature = "mix")]
         //Mix => Some(Box::new(distrib_rust::MixProgram::default())),
         #[cfg(feature = "npm")]
-        Npm => Box::new(distrib_npm::NpmProgram::default()),
+        PackageManager::Npm => Ok(Box::new(distrib_npm::NpmProgram::default())),
         #[cfg(feature = "dart")]
-        Pub => Box::new(distrib_dart::DartProgram::default()),
+        PackageManager::Pub => Ok(Box::new(distrib_dart::DartProgram::default())),
         #[cfg(feature = "python")]
-        PyPi => Box::new(distrib_python::PipProgram::default()),
+        PackageManager::PyPi => Ok(Box::new(distrib_python::PipProgram::default())),
         #[cfg(feature = "ruby")]
-        RubyGems => Box::new(distrib_ruby::GemProgram::default()),
-        _ => return Err(ProgramError::UnknownWithTool(input)),
-    })
+        PackageManager::RubyGems => Ok(Box::new(distrib_ruby::GemProgram::default())),
+        _ => Err(ProgramError::UnknownWithTool(input)),
+    }
+}
+
+#[cfg(all(test, feature = "gleam"))]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn loaded_gleam_package_has_a_dispatchable_tool() {
+        let package = Package::load(
+            concat!(env!("CARGO_MANIFEST_DIR"), "/tests/fixtures/gleam.toml"),
+            None,
+            None,
+        )
+        .expect("load Gleam fixture");
+        assert!(tool_for(package.tool().expect("detected tool")).is_ok());
+    }
 }

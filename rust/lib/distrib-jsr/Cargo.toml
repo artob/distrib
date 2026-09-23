@@ -24,22 +24,18 @@ summary = "Distrib helps you distribute your software."
 [features]
 default = ["all", "std"]
 all = []
-alloc = []
-std = ["alloc"]
+alloc = ["distrib-common/alloc", "serde?/alloc"]
+std = ["alloc", "distrib-common/std", "serde?/std", "serde_json?/preserve_order"]
 unstable = []
 
 # Features:
 tracing = ["dep:tracing"]
 
 # Interoperability:
-serde = ["dep:serde", "dep:serde_json"]
+serde = ["alloc", "dep:serde", "dep:serde_json"]
 
 [dependencies]
 distrib-common.workspace = true
-
-derive_more = { workspace = true, features = ["display", "from_str"] }
-dogma.workspace = true
-thiserror.workspace = true
 
 # Features:
 tracing = { workspace = true, optional = true }

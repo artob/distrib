@@ -2,8 +2,13 @@
 
 use alloc::{string::String, vec::Vec};
 
-#[cfg(all(feature = "alloc", feature = "serde"))]
+/// Manifest mapping; insertion-ordered with `std`, key-ordered without it.
+#[cfg(all(feature = "std", feature = "serde"))]
 pub type Map<K, V = serde_json::Value> = indexmap::IndexMap<K, V>;
+
+/// Manifest mapping; insertion-ordered with `std`, key-ordered without it.
+#[cfg(all(not(feature = "std"), feature = "serde"))]
+pub type Map<K, V = serde_json::Value> = alloc::collections::BTreeMap<K, V>;
 
 /// See: <https://dart.dev/tools/pub/pubspec>
 #[cfg_attr(feature = "serde", serde_with::serde_as)]
@@ -97,7 +102,7 @@ pub struct Pubspec {
     pub hooks: Option<Map<String, Hook>>,
 }
 
-#[cfg(all(feature = "serde"))]
+#[cfg(all(feature = "std", feature = "serde"))]
 impl Pubspec {
     pub fn try_to_string(&self) -> Result<String, serde_norway::Error> {
         serde_norway::to_string(self)

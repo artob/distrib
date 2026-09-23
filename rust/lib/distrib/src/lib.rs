@@ -1,6 +1,24 @@
 // This is free and unencumbered software released into the public domain.
 
 //! Distrib helps you distribute your software.
+//!
+//! # Feature requirements
+//!
+//! With no default features, only the allocation-free common types are exposed.
+//! `alloc` adds `Package` and `Config`; `serde` adds their serialization.
+//! `std` enables filesystem loading and process adapters for selected ecosystems.
+//! The CLI requires `cli`; select ecosystems separately when disabling defaults,
+//! for example `--no-default-features --features cli,rust`.
+//!
+//! Dart, Ruby, and Gleam models support allocation-only builds. Their maps retain
+//! insertion order with `std` and use key order otherwise. The upstream Cargo,
+//! npm, and Python manifest models require `std`. YAML text encoding also
+//! requires `std`.
+//!
+//! `export` activates the attribute macro backends for the enabled languages:
+//! `python,export` generates PyO3 functions and `wasm,export` generates
+//! wasm-bindgen functions. Other runtime features currently expose FFI libraries
+//! but do not implement attribute-macro function exports.
 
 #![no_std]
 #![allow(unused)]
@@ -65,15 +83,25 @@ pub use distrib_rust as rust;
 #[cfg(feature = "wasm")]
 pub use distrib_wasm as wasm;
 
+#[cfg(feature = "alloc")]
 mod config;
+#[cfg(feature = "alloc")]
 pub use config::*;
 
+#[cfg(feature = "std")]
 mod load_error;
+#[cfg(feature = "std")]
 pub use load_error::*;
 
+#[cfg(feature = "alloc")]
 mod package;
+#[cfg(feature = "alloc")]
 pub use package::*;
 
 #[doc = include_str!("../../../README.md")]
 #[cfg(doctest)]
 pub struct ReadmeDoctests;
+
+#[cfg(all(doctest, feature = "wasm", feature = "export"))]
+#[doc = include_str!("../tests/fixtures/wasm-export.md")]
+mod wasm_export_contract {}

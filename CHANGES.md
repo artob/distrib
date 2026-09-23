@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+### Changed
+- Raise the minimum supported Rust version to 1.97.1.
+- Make internal Rust dependencies opt out of default features and document the
+  `core`/`alloc`/`std` API boundaries.
+
+### Fixed
+- Build crates independently with minimal and serialization-only features.
+- Enable TOML serialization and dependency-map serialization in isolated Gleam builds.
+- Forward Python and WebAssembly export features to their attribute-macro backends.
+- Build the CLI with selected ecosystems, load npm packages without the JavaScript
+  facade, and dispatch the enabled Gleam tool.
+
+### Added
+- MSRV, feature-isolation, bare-metal, manifest-fixture, and export regression checks.
+
 ## 0.0.4 - 2026-08-20
 ### Added
 - Implement `distrib inspect`

@@ -15,7 +15,9 @@ extern crate std;
 
 pub use distrib_beam::*;
 
+#[cfg(feature = "alloc")]
 mod error;
+#[cfg(feature = "alloc")]
 pub use error::*;
 
 #[cfg(all(feature = "std", feature = "serde"))]
@@ -23,9 +25,9 @@ mod load;
 #[cfg(all(feature = "std", feature = "serde"))]
 pub use load::*;
 
-#[cfg(all(feature = "parse"))]
+#[cfg(feature = "alloc")]
 pub mod package;
-#[cfg(all(feature = "parse"))]
+#[cfg(feature = "alloc")]
 pub use package::*;
 
 #[cfg(feature = "std")]

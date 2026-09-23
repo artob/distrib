@@ -1,12 +1,12 @@
 // This is free and unencumbered software released into the public domain.
 
-use alloc::string::String;
-use derive_more::{Display, FromStr};
+use derive_more::Display;
 
 /// A supported programming language.
 ///
 /// See: <https://www.tiobe.com/tiobe-index/>
-#[derive(Clone, Debug, Display, Default, Eq, FromStr, Hash, Ord, PartialEq, PartialOrd)]
+#[derive(Clone, Debug, Display, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[cfg_attr(feature = "alloc", derive(derive_more::FromStr))]
 #[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 #[cfg_attr(
     feature = "serde",

@@ -4,7 +4,7 @@
 version = "0.0.4"
 authors = ["Arto Bendiken"]
 edition = "2024"
-rust-version = "1.85"
+rust-version = "1.97.1"
 description = "Distrib helps you distribute your software."
 #documentation = "https://docs.rs/distrib"
 readme = true
@@ -20,27 +20,27 @@ members = ["lib/*"]
 resolver = "2"
 
 [workspace.dependencies]
-distrib = { version = "=0.0.4", default-features = true }
-distrib-build = { version = "=0.0.4", default-features = true }
-distrib-common = { version = "=0.0.4", default-features = true }
-distrib-macros = { version = "=0.0.4", default-features = true }
+distrib = { version = "=0.0.4", default-features = false }
+distrib-build = { version = "=0.0.4", default-features = false }
+distrib-common = { version = "=0.0.4", default-features = false }
+distrib-macros = { version = "=0.0.4", default-features = false }
 
 # Packaging:
-distrib-jsr = { version = "=0.0.4", default-features = true }
-distrib-npm = { version = "=0.0.4", default-features = true }
+distrib-jsr = { version = "=0.0.4", default-features = false }
+distrib-npm = { version = "=0.0.4", default-features = false }
 
 # Runtimes:
-distrib-beam = { version = "=0.0.4", default-features = true }
-distrib-node = { version = "=0.0.4", default-features = true }
-distrib-wasm = { version = "=0.0.4", default-features = true }
+distrib-beam = { version = "=0.0.4", default-features = false }
+distrib-node = { version = "=0.0.4", default-features = false }
+distrib-wasm = { version = "=0.0.4", default-features = false }
 
 # Languages:
-distrib-dart = { version = "=0.0.4", default-features = true }
-distrib-gleam = { version = "=0.0.4", default-features = true }
-distrib-js = { version = "=0.0.4", default-features = true }
-distrib-python = { version = "=0.0.4", default-features = true }
-distrib-ruby = { version = "=0.0.4", default-features = true }
-distrib-rust = { version = "=0.0.4", default-features = true }
+distrib-dart = { version = "=0.0.4", default-features = false }
+distrib-gleam = { version = "=0.0.4", default-features = false }
+distrib-js = { version = "=0.0.4", default-features = false }
+distrib-python = { version = "=0.0.4", default-features = false }
+distrib-ruby = { version = "=0.0.4", default-features = false }
+distrib-rust = { version = "=0.0.4", default-features = false }
 
 # Languages - Dart:
 dart-sys = { version = "4.1.5", default-features = false }
@@ -96,7 +96,7 @@ tracing-subscriber = { version = "0.3", default-features = false, features = ["e
 
 # Interoperability:
 serde = { version = "1", default-features = false, features = ["derive"] }
-serde_json = { version = "1", default-features = false, features = ["preserve_order"] }
+serde_json = { version = "1", default-features = false, features = ["alloc"] }
 serde_with = { version = "3.21", default-features = false, features = ["macros"] }
 toml0 = { package = "toml", version = "0.9", default-features = false }
 toml1 = { package = "toml", version = "1.0", default-features = false }

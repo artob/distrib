@@ -24,8 +24,8 @@ summary = "Distrib helps you distribute your software."
 [features]
 default = ["all", "std"]
 all = []
-alloc = []
-std = ["alloc", "dep:camino"]
+alloc = ["serde?/alloc"]
+std = ["alloc", "dep:camino", "derive_more/std", "serde?/std"]
 unstable = []
 
 # Features:
@@ -36,8 +36,6 @@ serde = ["dep:serde"]
 
 [dependencies]
 derive_more = { workspace = true, features = ["display", "from_str"] }
-dogma.workspace = true
-thiserror.workspace = true
 
 camino = { workspace = true, optional = true }
 

@@ -20,6 +20,7 @@ impl From<std::io::Error> for LoadPyprojectError {
     }
 }
 
+#[cfg(feature = "std")]
 impl From<toml0::de::Error> for LoadPyprojectError {
     fn from(error: toml0::de::Error) -> Self {
         Self::Other(error.into())

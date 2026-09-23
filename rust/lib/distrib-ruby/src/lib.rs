@@ -17,10 +17,14 @@ extern crate std;
 #[doc(hidden)]
 pub use magnus;
 
+#[cfg(feature = "alloc")]
 mod error;
+#[cfg(feature = "alloc")]
 pub use error::*;
 
+#[cfg(feature = "alloc")]
 pub mod gemspec;
+#[cfg(feature = "alloc")]
 pub use gemspec::*;
 
 #[cfg(all(feature = "std", feature = "serde"))]

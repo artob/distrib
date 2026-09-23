@@ -2,7 +2,13 @@
 
 use alloc::{string::String, vec::Vec};
 
+/// Manifest mapping; insertion-ordered with `std`, key-ordered without it.
+#[cfg(feature = "std")]
 pub type Map<K, V> = indexmap::IndexMap<K, V>;
+
+/// Manifest mapping; insertion-ordered with `std`, key-ordered without it.
+#[cfg(not(feature = "std"))]
+pub type Map<K, V> = alloc::collections::BTreeMap<K, V>;
 
 /// See: <https://gleam.run/documentation/gleam-toml-reference/>
 #[cfg_attr(feature = "serde", serde_with::serde_as)]
@@ -41,7 +47,7 @@ pub struct PackageConfig {
     pub dev_dependencies: Option<Map<String, PackageVersionConstraint>>,
 }
 
-#[cfg(all(feature = "serde"))]
+#[cfg(feature = "serde")]
 impl PackageConfig {
     pub fn try_to_string(&self) -> Result<String, toml1::ser::Error> {
         toml1::to_string(self)

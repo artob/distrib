@@ -24,27 +24,24 @@ summary = "Distrib helps you distribute your software."
 [features]
 default = ["all", "std"]
 all = []
-alloc = []
-std = ["alloc"]
+alloc = ["distrib-common/alloc", "serde?/alloc"]
+std = ["alloc", "distrib-common/std", "serde?/std", "wasm-bindgen?/std"]
 unstable = []
 
 # Features:
-export = ["wasm-bindgen"]
+export = ["wasm-bindgen", "dep:distrib-macros", "distrib-macros/wasm-bindgen"]
 tracing = ["dep:tracing"]
 
 # Interoperability:
 serde = ["dep:serde"]
-wasm-bindgen = ["dep:wasm-bindgen"]
+wasm-bindgen = ["alloc", "dep:wasm-bindgen"]
 
 [dependencies]
 distrib-common.workspace = true
 
-derive_more = { workspace = true, features = ["display", "from_str"] }
-dogma.workspace = true
-thiserror.workspace = true
-
 # Features:
 tracing = { workspace = true, optional = true }
+distrib-macros = { workspace = true, optional = true }
 
 # Interoperability:
 serde = { workspace = true, optional = true }

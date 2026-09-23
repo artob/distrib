@@ -7,7 +7,7 @@
 #![forbid(unsafe_code)]
 #![cfg_attr(docsrs, feature(doc_cfg))]
 
-#[cfg(feature = "alloc")]
+// Procedural macros always run on the host, independently of target features.
 extern crate alloc;
 
 #[cfg(feature = "std")]
@@ -37,7 +37,16 @@ struct ExportRenameArgs {
     wasm: Option<String>,
 }
 
-/// A proc macro used to export Rust types to other languages.
+/// Export a Rust function through the enabled PyO3 and/or wasm-bindgen backends.
+///
+/// Prefer enabling `python,export` or `wasm,export` on `distrib`; these forward
+/// the backend flags and provide the generated code's runtime dependencies.
+/// With no backend selected, the function remains an ordinary Rust function.
+/// Other runtime backends are not yet implemented by this attribute.
+///
+/// Names can be overridden with `rename(python = "name", wasm = "name")`.
+/// Invalid attribute syntax or unsupported function signatures are reported as
+/// compiler errors by this macro or the selected backend.
 #[proc_macro_attribute]
 pub fn export(args: TokenStream, input: TokenStream) -> TokenStream {
     let args: ExportArgs = match syn::parse(args) {

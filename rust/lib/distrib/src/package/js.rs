@@ -1,10 +1,10 @@
 // This is free and unencumbered software released into the public domain.
 
-impl TryFrom<distrib_js::PackageJson> for Package {
-    type Error = distrib_js::LoadPackageError;
+impl TryFrom<distrib_npm::PackageJson> for Package {
+    type Error = distrib_npm::LoadPackageError;
 
-    fn try_from(input: distrib_js::PackageJson) -> Result<Self, Self::Error> {
-        use distrib_js::{Person, PersonObject, Repository};
+    fn try_from(input: distrib_npm::PackageJson) -> Result<Self, Self::Error> {
+        use distrib_npm::{Person, PersonObject, Repository};
         Ok(Self {
             kind: PackageKind::Npm,
             language: Language::JavaScript,
@@ -41,7 +41,7 @@ impl TryFrom<distrib_js::PackageJson> for Package {
     }
 }
 
-impl From<Package> for distrib_js::PackageJson {
+impl From<Package> for distrib_npm::PackageJson {
     fn from(input: Package) -> Self {
         let config = input.config.unwrap_or_default();
         let gleam = config.lang.javascript.unwrap_or_default();

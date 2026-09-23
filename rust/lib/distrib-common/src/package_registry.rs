@@ -1,9 +1,9 @@
 // This is free and unencumbered software released into the public domain.
 
-use alloc::string::String;
-use derive_more::{Display, FromStr};
+use derive_more::Display;
 
-#[derive(Clone, Debug, Display, Eq, FromStr, Hash, Ord, PartialEq, PartialOrd)]
+#[derive(Clone, Debug, Display, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[cfg_attr(feature = "alloc", derive(derive_more::FromStr))]
 #[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 #[non_exhaustive]
 pub enum PackageRegistry {

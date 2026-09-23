@@ -24,8 +24,8 @@ summary = "Distrib helps you distribute your software."
 [features]
 default = ["all", "std"]
 all = []
-alloc = []
-std = ["alloc", "indexmap/std"]
+alloc = ["distrib-common/alloc", "serde?/alloc", "serde_with?/alloc"]
+std = ["alloc", "distrib-common/std", "dep:indexmap", "indexmap/std", "dep:serde_norway", "serde?/std", "serde_json?/preserve_order", "serde_with?/std"]
 unstable = []
 
 # Features:
@@ -33,16 +33,14 @@ export = ["dart-sys"]
 tracing = ["dep:tracing"]
 
 # Interoperability:
-dart-sys = ["dep:dart-sys"]
-serde = ["indexmap/serde", "dep:serde", "dep:serde_json", "dep:serde_with"]
+dart-sys = ["std", "dep:dart-sys"]
+serde = ["alloc", "indexmap?/serde", "dep:serde", "dep:serde_json", "dep:serde_with"]
 
 [dependencies]
 distrib-common.workspace = true
 
-derive_more = { workspace = true, features = ["display", "from_str"] }
-dogma.workspace = true
-indexmap.workspace = true
-serde_norway.workspace = true
+indexmap = { workspace = true, optional = true }
+serde_norway = { workspace = true, optional = true }
 thiserror.workspace = true
 
 # Features:

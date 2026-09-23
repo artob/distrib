@@ -13,8 +13,11 @@ extern crate alloc;
 #[cfg(feature = "std")]
 extern crate std;
 
+#[cfg(feature = "alloc")]
 pub use distrib_common::BoxError;
 
+/// Configure the enabled build-script backends. Requires `std`.
+#[cfg(feature = "std")]
 pub fn all() -> Result<(), BoxError> {
     #[cfg(feature = "dart")]
     dart()?;

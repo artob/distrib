@@ -17,7 +17,9 @@ extern crate std;
 #[doc(hidden)]
 pub use dart_sys;
 
+#[cfg(feature = "alloc")]
 mod error;
+#[cfg(feature = "alloc")]
 pub use error::*;
 
 #[cfg(all(feature = "std", feature = "serde"))]
@@ -30,5 +32,7 @@ mod program;
 #[cfg(feature = "std")]
 pub use program::*;
 
+#[cfg(feature = "alloc")]
 pub mod pubspec;
+#[cfg(feature = "alloc")]
 pub use pubspec::*;

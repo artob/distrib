@@ -1,6 +1,11 @@
 // This is free and unencumbered software released into the public domain.
 
 //! Distrib helps you distribute your software.
+//!
+//! Without default features, the enums and their formatting implementations use
+//! only `core`. `alloc` adds case-insensitive parsing, boxed errors, and tool
+//! traits. `std` additionally exposes filesystem path types. Serialization is
+//! independently available through `serde`.
 
 #![no_std]
 #![allow(unused)]
@@ -34,5 +39,7 @@ pub use package_registry::*;
 mod runtime;
 pub use runtime::*;
 
+#[cfg(feature = "alloc")]
 mod tool;
+#[cfg(feature = "alloc")]
 pub use tool::*;

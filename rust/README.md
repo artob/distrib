@@ -1,7 +1,7 @@
 # Distrib
 
 [![License](https://img.shields.io/badge/license-Public%20Domain-blue.svg)](https://unlicense.org)
-[![Compatibility](https://img.shields.io/badge/rust-2024%2B-blue)](https://endoflife.date/rust)
+[![Compatibility](https://img.shields.io/badge/rust-1.97.1%2B-blue)](https://endoflife.date/rust)
 [![Package on Crates.io](https://img.shields.io/crates/v/distrib)](https://crates.io/crates/distrib)
 [![Documentation](https://img.shields.io/docsrs/distrib?label=docs.rs)](https://docs.rs/distrib)
 
@@ -32,7 +32,7 @@
 
 ## 🛠️ Prerequisites
 
-- [Rust] 2024+
+- [Rust] 1.97.1+ (edition 2024).
 
 ## ⬇️ Installation
 
@@ -110,6 +110,15 @@ use distrib::*;
 
 ### Exporting Functions
 
+Enable `python,export` for PyO3 or `wasm,export` for wasm-bindgen. Both can be
+enabled together. Other runtime features currently expose their FFI libraries;
+function-export attributes are implemented for Python and WebAssembly.
+
+```toml
+[dependencies]
+distrib = { version = "0", default-features = false, features = ["wasm", "export"] }
+```
+
 ```rust,ignore
 #[distrib::export]
 pub fn square(n: i64) -> i64 {
@@ -125,6 +134,17 @@ pub fn square(n: i64) -> i64 {
 
 ### Feature Flags
 
+- With defaults disabled, common enums and formatting require only `core`.
+- `alloc` adds package/configuration metadata, boxed errors, and enum parsing.
+- `serde` adds serialization without requiring `std`.
+- `std` adds filesystem loading, subprocess adapters, and upstream manifest types
+  that require the standard library (Cargo, npm, and Python).
+- Dart, Ruby, and Gleam models support allocation-only builds. Their maps use
+  insertion order with `std` and key order otherwise; YAML text encoding requires
+  `std`.
+- `cli` enables the executable. With defaults disabled, select ecosystems
+  explicitly, for example `cargo run --features cli,rust --no-default-features -- --help`.
+
 #### Interoperability
 
 | Feature          | Version  | Summary |
@@ -135,6 +155,14 @@ pub fn square(n: i64) -> i64 {
 
 ```bash
 git clone https://github.com/artob/distrib.git
+```
+
+From `rust/`, check feature combinations independently with:
+
+```bash
+RUSTUP_TOOLCHAIN=1.97.1 python3 etc/check-features.py
+rustup target add --toolchain 1.97.1 thumbv7em-none-eabi
+RUSTUP_TOOLCHAIN=1.97.1 python3 etc/check-features.py --target thumbv7em-none-eabi
 ```
 
 ---

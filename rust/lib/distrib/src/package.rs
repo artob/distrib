@@ -1,7 +1,10 @@
 // This is free and unencumbered software released into the public domain.
 
+#[cfg(feature = "std")]
 use super::LoadError;
-use crate::{Config, Utf8Path};
+use crate::Config;
+#[cfg(feature = "std")]
+use crate::Utf8Path;
 use alloc::{
     borrow::Cow,
     boxed::Box,
@@ -59,6 +62,10 @@ pub struct Package {
 }
 
 impl Package {
+    /// Load an enabled ecosystem's manifest. Requires `std`.
+    ///
+    /// Returns [`LoadError`] when the format is disabled or loading fails.
+    #[cfg(feature = "std")]
     pub fn load(
         file_path: impl AsRef<Utf8Path>,
         kind: Option<PackageKind>,
@@ -72,15 +79,15 @@ impl Package {
                 PackageKind::try_from(file_path).map_err(|err| LoadError::Other(Box::new(err)))?
             },
         };
-        let package = match kind {
+        let package: Self = match kind {
             #[cfg(feature = "rust")]
             Cargo => distrib_rust::load_cargo_toml(file_path)?.try_into()?,
             #[cfg(feature = "gleam")]
             Gleam => distrib_gleam::load_package_config(file_path)?.try_into()?,
             // #[cfg(feature = "jsr")]
             // Jsr => distrib_jsr::load_package_json(file_path)?.try_into()?,
-            #[cfg(feature = "js")]
-            Npm => distrib_js::load_package_json(file_path)?.try_into()?,
+            #[cfg(feature = "npm")]
+            Npm => distrib_npm::load_package_json(file_path)?.try_into()?,
             #[cfg(feature = "dart")]
             Pub => distrib_dart::load_pubspec(file_path)?.try_into()?,
             #[cfg(feature = "python")]
@@ -130,7 +137,7 @@ impl Package {
             Cargo => PackageManager::Cargo,
             #[cfg(feature = "gleam")]
             Gleam => PackageManager::Gleam,
-            #[cfg(feature = "js")]
+            #[cfg(feature = "npm")]
             Npm => PackageManager::Npm,
             #[cfg(feature = "dart")]
             Pub => PackageManager::Pub,
@@ -149,14 +156,14 @@ include!("package/dart.rs");
 #[cfg(feature = "gleam")]
 include!("package/gleam.rs");
 
-#[cfg(feature = "js")]
+#[cfg(all(feature = "std", feature = "npm"))]
 include!("package/js.rs");
 
-#[cfg(feature = "python")]
+#[cfg(all(feature = "std", feature = "python"))]
 include!("package/python.rs");
 
 #[cfg(feature = "ruby")]
 include!("package/ruby.rs");
 
-#[cfg(feature = "rust")]
+#[cfg(all(feature = "std", feature = "rust"))]
 include!("package/rust.rs");

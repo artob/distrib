@@ -24,8 +24,8 @@ summary = "Distrib helps you distribute your software."
 [features]
 default = ["all", "std"]
 all = []
-alloc = []
-std = ["alloc"]
+alloc = ["distrib-common/alloc", "serde?/alloc"]
+std = ["alloc", "distrib-common/std", "serde?/std"]
 unstable = []
 
 # Features:
@@ -33,16 +33,12 @@ export = ["rustler"]
 tracing = ["dep:tracing"]
 
 # Interoperability:
-otter = ["dep:otter"]
-rustler = ["dep:rustler"]
+otter = ["std", "dep:otter"]
+rustler = ["std", "dep:rustler"]
 serde = ["dep:serde"]
 
 [dependencies]
 distrib-common.workspace = true
-
-derive_more = { workspace = true, features = ["display", "from_str"] }
-dogma.workspace = true
-thiserror.workspace = true
 
 # Features:
 tracing = { workspace = true, optional = true }

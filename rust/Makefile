@@ -3,8 +3,9 @@ READMER = readmer
 
 all: README.md
 
-README.md: ../.config/readmer/rust/README.md.liquid
-	$(READMER) render $< > $@
+README.md: ../.config/readmer/rust/README.md.liquid Cargo.toml lib/distrib/Cargo.toml
+	cd lib/distrib && $(READMER) render ../../../.config/readmer/rust/README.md.liquid > ../../README.md.tmp
+	mv README.md.tmp README.md
 
 build: Cargo.toml
 	$(CARGO) build --release

@@ -24,30 +24,29 @@ summary = "Distrib helps you distribute your software."
 [features]
 default = ["all", "std"]
 all = []
-alloc = []
-std = ["alloc"]
+alloc = ["distrib-common/alloc", "serde?/alloc"]
+std = ["alloc", "distrib-common/std", "dep:pep440_rs", "dep:pyproject-toml", "dep:toml0", "toml0/std", "serde?/std", "serde_json?/preserve_order"]
 unstable = []
 
 # Features:
-export = ["pyo3"]
+export = ["pyo3", "dep:distrib-macros", "distrib-macros/pyo3"]
 tracing = ["dep:tracing"]
 
 # Interoperability:
-pyo3 = ["dep:pyo3"]
-serde = ["dep:serde", "dep:serde_json", "toml0/serde"]
+pyo3 = ["std", "dep:pyo3", "pyo3/macros"]
+serde = ["alloc", "dep:serde", "dep:serde_json"]
 
 [dependencies]
 distrib-common.workspace = true
 
-derive_more = { workspace = true, features = ["display", "from_str"] }
-dogma.workspace = true
-pep440_rs.workspace = true
-pyproject-toml.workspace = true
+pep440_rs = { workspace = true, optional = true }
+pyproject-toml = { workspace = true, optional = true }
 thiserror.workspace = true
-toml0 = { workspace = true, features = ["display"] }
+toml0 = { workspace = true, optional = true, features = ["parse", "display", "serde"] }
 
 # Features:
 tracing = { workspace = true, optional = true }
+distrib-macros = { workspace = true, optional = true }
 
 # Interoperability:
 pyo3 = { workspace = true, optional = true }

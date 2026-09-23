@@ -11,28 +11,74 @@ on:
 env:
   CARGO_TERM_COLOR: always
 
+defaults:
+  run:
+    working-directory: rust
+
 jobs:
-  build-ubuntu:
-    name: Build on Ubuntu
+  rust:
+    name: Rust ${{ matrix.toolchain }} on ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        toolchain: [stable]
+        include:
+          - os: ubuntu-latest
+            toolchain: 1.97.1
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ matrix.toolchain }}
+          components: rustfmt, clippy
+      - name: Check formatting
+        run: cargo fmt --all -- --check
+      - name: Test default features
+        run: cargo test --workspace --locked
+      - name: Test CLI features
+        run: cargo test --workspace --locked --features distrib/cli
+      - name: Check Clippy
+        run: cargo clippy --workspace --all-targets --locked --features distrib/cli
+      - name: Build documentation
+        run: cargo doc --workspace --no-deps --locked --features distrib/cli
+      - name: Check CLI startup
+        run: cargo run -p distrib --locked --features cli -- --help
+
+  features:
+    name: Isolated features on Rust ${{ matrix.toolchain }}
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        toolchain: [1.97.1, stable]
+    env:
+      PYO3_PYTHON: python
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Build
-        run: cd rust && cargo build
-      - name: Build examples
-        run: cd rust && cargo build --examples
-      - name: Run tests
-        run: cd rust && cargo test
-  build-windows:
-    name: Build on Windows
-    runs-on: windows-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Build
-        run: cd rust && cargo build
-      - name: Build examples
-        run: cd rust && cargo build --examples
-      - name: Run tests
-        run: cd rust && cargo test
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ matrix.toolchain }}
+          targets: thumbv7em-none-eabi, wasm32-unknown-unknown
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - name: Check each crate and feature boundary independently
+        run: python3 etc/check-features.py
+      - name: Check without a standard library
+        run: python3 etc/check-features.py --target thumbv7em-none-eabi
+      - name: Test isolated manifest serialization and dispatch
+        run: |
+          cargo test -p distrib-gleam --locked --no-default-features --features serde
+          cargo test -p distrib-gleam --locked --features serde
+          cargo test -p distrib --locked --no-default-features --features cli
+          cargo test -p distrib --locked --no-default-features --features cli,npm
+          cargo test -p distrib --locked --no-default-features --features cli,gleam
+      - name: Test export backends independently and together
+        run: |
+          cargo test -p distrib --locked --no-default-features --features export
+          cargo test -p distrib --locked --no-default-features --features python,export
+          cargo test -p distrib --locked --no-default-features --features wasm,export
+          cargo test -p distrib --locked --no-default-features --features std,python,wasm,export
+          cargo check -p distrib --locked --no-default-features --features wasm,export --target wasm32-unknown-unknown --example wasm_export

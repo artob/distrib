@@ -34,9 +34,9 @@ impl From<distrib_gleam::LoadPackageError> for LoadError {
     }
 }
 
-#[cfg(feature = "js")]
-impl From<distrib_js::LoadPackageError> for LoadError {
-    fn from(error: distrib_js::LoadPackageError) -> Self {
+#[cfg(feature = "npm")]
+impl From<distrib_npm::LoadPackageError> for LoadError {
+    fn from(error: distrib_npm::LoadPackageError) -> Self {
         LoadError::Other(error.into())
     }
 }

@@ -20,6 +20,7 @@ impl From<std::io::Error> for LoadGemspecError {
     }
 }
 
+#[cfg(feature = "std")]
 impl From<serde_norway::Error> for LoadGemspecError {
     fn from(error: serde_norway::Error) -> Self {
         Self::Other(error.into())

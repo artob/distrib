@@ -42,10 +42,10 @@ alloc = [
     "distrib-ruby?/alloc",
     "distrib-rust?/alloc",
     # Miscellaneous:
-    "dogma/alloc",
-    "itertools/use_alloc",
+    "serde?/alloc",
+    "itertools?/use_alloc",
 ]
-cli = ["serde", "std", "clientele", "clientele/default", "clientele/tracing", "dep:clap", "dep:serde_json", "dep:toml1", "dep:tracing", "dep:tracing-subscriber"]
+cli = ["serde", "std", "clientele", "clientele/default", "clientele/tracing", "dep:clap", "dep:glob", "dep:serde_json", "dep:toml1", "dep:tracing", "dep:tracing-subscriber"]
 std = [
     "alloc",
     "distrib-common/std",
@@ -65,10 +65,10 @@ std = [
     "distrib-ruby?/std",
     "distrib-rust?/std",
     # Miscellaneous:
-    "derive_more/std",
-    "dogma/std",
+    "serde?/std",
+    "serde_json?/preserve_order",
 ]
-unstable = []
+unstable = ["distrib-common/unstable"]
 
 # Features:
 export = [
@@ -108,6 +108,7 @@ tracing = [
 # Interoperability:
 interop = ["serde"]
 serde = [
+    "alloc",
     "dep:serde",
     "distrib-common/serde",
     # Packaging:
@@ -129,7 +130,7 @@ serde = [
 # Packaging:
 packaging = ["jsr", "npm"]
 jsr = ["dep:distrib-jsr"]
-npm = ["dep:distrib-npm"]
+npm = ["alloc", "dep:distrib-npm"]
 
 # Runtimes:
 runtimes = ["beam", "node", "wasm"]
@@ -139,20 +140,18 @@ wasm = ["dep:distrib-wasm"]
 
 # Languages:
 languages = ["dart", "elixir", "erlang", "gleam", "js", "python", "ruby", "rust"]
-dart = ["dep:distrib-dart"]
+dart = ["alloc", "dep:distrib-dart", "distrib-dart/serde", "dep:itertools"]
 elixir = ["beam"]
 erlang = ["beam"]
-gleam = ["dep:distrib-gleam", "beam"]
-js = ["dep:distrib-js", "node"]
-python = ["dep:distrib-python"]
-ruby = ["dep:distrib-ruby"]
-rust = ["dep:distrib-rust"]
+gleam = ["alloc", "dep:distrib-gleam", "distrib-gleam/parse", "beam"]
+js = ["dep:distrib-js", "node", "npm"]
+python = ["alloc", "dep:distrib-python"]
+ruby = ["alloc", "dep:distrib-ruby", "distrib-ruby/serde"]
+rust = ["alloc", "dep:distrib-rust"]
 
 [dependencies]
-derive_more = { workspace = true, features = ["display", "from_str"] }
-dogma.workspace = true
-glob.workspace = true
-itertools.workspace = true
+glob = { workspace = true, optional = true }
+itertools = { workspace = true, optional = true, features = ["use_alloc"] }
 thiserror.workspace = true
 
 # Features:

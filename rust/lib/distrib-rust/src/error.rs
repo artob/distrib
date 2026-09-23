@@ -20,12 +20,14 @@ impl From<std::io::Error> for LoadManifestError {
     }
 }
 
+#[cfg(feature = "std")]
 impl From<toml1::de::Error> for LoadManifestError {
     fn from(error: toml1::de::Error) -> Self {
         Self::Other(error.into())
     }
 }
 
+#[cfg(feature = "std")]
 impl From<cargo_toml::Error> for LoadManifestError {
     fn from(error: cargo_toml::Error) -> Self {
         Self::Other(error.into())
